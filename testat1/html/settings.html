@@ -5,6 +5,41 @@
     <title>Title</title>
 </head>
 <body>
+    <h1>Profile Settings</h1>
+    <fieldset>
+        <legend>Base Data</legend>
+        <div>
+            <label>First Name</label>
+            <input placeholder="Your name">
+        </div>
+        <div>
+            <label>Last Name</label>
+            <input placeholder="Your surname">
+        </div>
+        <label>Coffee or Tea?</label>
+        <select name="coffeOrTeaSelection">
+            <option value="coffee">Coffee</option>
+            <option value="tea">Tea</option>
+            <option value="nor">Neither</option>
+        </select>
+    </fieldset>
+    <fieldset>
+        <legend>Tell Something About You</legend>
+        <textarea placeholder="Leave a comment"></textarea>
+    </fieldset>
 
+    <fieldset>
+        <legend>Preferred Chat Layout</legend>
+        <div>
+            <input type="radio" id="oneLine" name="preferredChatLayout">
+            <label for="oneLine">Username and message in one line</label>
+        </div>
+        <div>
+            <input type="radio" id="sepLine" name="preferredChatLayout">
+            <label for="sepLine">Username and message in separate line</label>
+        </div>
+    </fieldset>
+    <button onclick="location.href = 'testat1/html/friends.html';">Cancel</button>
+    <button >Save</button>
 </body>
 </html>
