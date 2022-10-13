@@ -1,0 +1,99 @@
+/*style sheet for desings of friends.html, chat.html and profile.html*/
+
+* {
+    /*layout*/
+    text-align: left;
+    margin: auto;
+    max-width: 700px;
+    margin-top: 10px;
+
+    /*text-formatting*/
+    font-family: sans-serif;
+    font-size: 15px;
+
+    background-color: rgb(240, 240, 240);
+}
+
+h1 {
+    font-size: 35px;
+    font-weight: bold;
+}
+
+h2 {
+    font-size: 20px;
+}
+
+fieldset {
+    background-color: #fff;
+    border: 1px solid rgb(185, 185, 185);
+    border-radius: 10px;
+
+    max-width: 600px;
+}
+
+legend {
+    margin-left: 20px;
+}
+
+a:link {
+    text-decoration: none;
+}
+
+a:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+input {
+    background-color: #fff;
+    border: 1px solid rgb(185, 185, 185);
+    border-radius: 4px;
+
+    width: 80%;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+button {
+    background-color: rgb(118, 118, 118);
+    color: white;
+    border: none;
+    border-radius: 4px;
+
+    padding: 10px 25px;
+    margin: 10px;
+
+    text-align: center;
+}
+
+#specialButton {
+    background-color: rgb(0, 106, 255);
+    color: white;
+    border: none;
+    border-radius: 4px;
+
+    padding: 10px 25px;
+
+    text-align: center;
+}
+
+div {
+    background-color: #fff;
+    border: 2px solid rgb(200, 200, 200);
+    border-radius: 5px;
+
+    margin: 10px;
+}
+
+ul {
+    background-color: #fff;
+    list-style-type: none;
+}
+
+ul li {
+    background-color: #fff;
+}
+
+hr {
+    border: dotted 2px rgb(185, 189, 232);
+}
