@@ -1,32 +1,36 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta charset="UTF-8">
         <title>Register</title>
         <link rel="stylesheet" type="text/css" href="../css/style_2.css">
     </head>
     <body>
         <img src="../../images/user.png">
-        <h1>Register yourself</h1>
+        <h1 class="align-center">Register yourself</h1>
         
         <form action="friends.html" method="post">
             <fieldset>
                 <legend>Register</legend>
-                <label for="uname">Username</label>
-                <input id="uname" type="text" name="uname" placeholder="Username">
-                <br>
-                <label for="pwd">Password</label>
-                <input id="pwd" type="password" name="pwd" placeholder="Password">
-                <br>
-                <label for="confirm-pwd">Confirm Password</label>
-                <input id="confirm-pwd" type="password" name="confirm-pwd" placeholder="Confirm Password">
-                <br>
+                <div class="container-fieldset">
+                    <label for="uname">Username</label>
+                    <input id="uname" type="text" name="uname" placeholder="Username">
+                    <br>
+                    <label for="pwd">Password</label>
+                    <input id="pwd" type="password" name="pwd" placeholder="Password">
+                    <br>
+                    <label for="confirm-pwd">Confirm Password</label>
+                    <input id="confirm-pwd" type="password" name="confirm-pwd" placeholder="Confirm Password">
+                </div>
             </fieldset>
 
-            <a href="login.html">
-                <button type="button">Cancel</button>
-            </a>
-            <button type="submit">Create Account</button>
+            <div class="container-buttons">
+                <a href="login.html">
+                    <button type="button">Cancel</button>
+                </a>
+                <button type="submit">Create Account</button>
+            </div>
         </form>
     </body>
 </html>

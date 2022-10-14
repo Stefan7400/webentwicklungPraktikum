@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta charset="UTF-8">
         <title>Chat</title>
         <link rel="stylesheet" type="text/css" href="../css/style_2.css">
@@ -8,12 +9,28 @@
     <body>
         <h1>Chat with Tom</h1>
 
-        <a href="friends.html">&lt; Back</a> | <a href="profile.html">Profile</a> | <a href="friends.html">Remove Friend</a>
+        <a href="friends.html">&lt; Back</a> | <a href="profile.html">Profile</a> | <a class="special-url" href="friends.html">Remove Friend</a>
 
-        <p>Tom: Hallo, Welt!</p>
-        <p>Jerry: Wie gehts?</p>
+        <hr>
 
-        <input id="message" type="text" name="message" placeholder="New Message">
-        <button>Send</button>
+        <div class="rounded-window flex-layout">
+            <div class="window-left">
+                Tom: Hallo, Welt!
+                <br>
+                Jerry: Wie gehts?
+            </div>
+            <div class="window-right">
+                19:43:01
+                <br>
+                19:57:20
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="flex-layout">
+            <input class="text-message" id="message" type="text" name="message" placeholder="New Message">
+            <button class="text-button" type="button">Send</button>
+        </div>
     </body>
 </html>
