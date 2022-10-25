@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <title>Settings</title>
+    <link rel="stylesheet" type="text/css" href="../css/style.css">
+</head>
+<body>
+    <h1>Profile Settings</h1>
+    <form>
+        <fieldset class="align-center">
+            <legend>Base Data</legend>
+            
+            <div class="clear-float">
+                <label>First Name</label>
+                <input placeholder="Your name">
+            </div>
+            
+            <div class="clear-float">
+                <label>Last Name</label>
+                <input placeholder="Your surname">
+            </div>
+
+            <div class="clear-float">
+                <label>Coffee or Tea?</label>
+                <select id="selector" name="coffeOrTeaSelection">
+                    <option value="coffee">Coffee</option>
+                    <option value="tea">Tea</option>
+                    <option value="nor">Neither nor</option>
+                </select>
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>Tell Something About You</legend>
+            <textarea placeholder="Leave a comment"></textarea>
+        </fieldset>
+
+        <fieldset class="align-left">
+            <legend>Preferred Chat Layout</legend>
+            <div>
+                <input type="radio" id="oneLine" name="preferredChatLayout">
+                <label for="oneLine">Username and message in one line</label>
+            </div>
+            <div>
+                <input type="radio" id="sepLine" name="preferredChatLayout">
+                <label for="sepLine">Username and message in separated lines</label>
+            </div>
+        </fieldset>
+
+        <div class="align-center">
+            <a href="friends.html">
+                <button type="button">Cancel</button>
+            </a>
+            <button type="submit">Save</button>
+       </div> 
+    </form>
+</body>
+</html>

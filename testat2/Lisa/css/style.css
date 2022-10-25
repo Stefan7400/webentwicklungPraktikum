@@ -1,0 +1,242 @@
+body {
+    color: black;
+    background-color: #f2f2f2;
+    font-family: Arial, Helvetica, Verdana, sans-serif;
+    font-size: 15px;
+    max-width: 900px;
+    padding-top: 25px;
+    margin: auto;
+}
+
+#profile-img {
+    border-radius: 0%;
+    width: 250px;
+    height: 250px;
+}
+
+img {
+    border-radius: 50%;
+    width: 114px;
+    height: 114px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+h1 {
+    font-size: 32px;
+    font-weight: bold;
+    text-align: left;
+}
+
+a.special-url {
+    color: #e60000;
+}
+
+a:hover, a:active {
+    text-decoration: underline;
+}
+
+a {
+    color: royalblue;
+    font-size: 14px;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+hr {
+    border: none;
+    border-top: 2px dotted gray;
+    margin: 10px 0px;
+}
+
+ul > li > a {
+    color: black;
+}
+
+ul > li > span.timestamp {
+    color: lightgray;
+    font-size: 13px;
+}
+
+ul > li > span.notification {
+    color: white;
+    background-color: royalblue;
+    font-size: 14px;
+    width: fit-content;
+    line-height: normal;
+    padding: 0px 4px;
+    margin-top: 9px;
+}
+
+ul > li > span {
+    float: right;
+}
+
+ul {
+    list-style-type: none;
+    border: 1px solid silver;
+    border-radius: 5px;
+    background-color: white;
+    line-height: 200%;
+    padding: 15px;
+}
+
+textarea {
+    width: 99%;
+    height: 150px;
+}
+
+input[type=radio] {
+    width: 30px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+input {
+    width: 40%;
+}
+
+select {
+    border: 1px solid gray;
+    border-radius: 0%;
+    background-color: white;
+    height: 22px;
+    width: 168px;
+    margin-top: 3px;
+}
+
+button[type=submit] {
+    background-color: #0066ff;
+}
+
+form button {
+    margin: 10px 1px;
+}
+
+button:hover, button:active {
+    border: 1px solid black;
+    color: black;
+}
+
+button {
+    cursor: pointer;
+    border: none;
+    color: white;
+    background-color: #b3b3b3;
+    padding: 8px;
+    width: 135px;
+}
+
+.flex-layout > .rounded-window {
+    margin-left: 40px;
+}
+
+.rounded-window > p, .rounded-window > dl {
+    line-height: 110%;
+}
+
+.rounded-window {
+    border: 1px solid silver;
+    border-radius: 5px;
+    background-color: white;
+    line-height: 200%;
+    padding: 15px;
+}
+
+fieldset.align-center label {
+    width: 45%;
+    text-align: right;
+    float: inline-start;
+}
+
+fieldset.align-center input {
+    height: 16px;
+    width: 160px;
+}
+
+fieldset.align-center select {
+    border: 1px solid gray;
+    border-radius: 0%;
+    background-color: white;
+    height: 22px;
+    width: 168px;
+}
+
+fieldset.align-center input, fieldset.align-center select {
+    margin-top: 3px;
+    margin-left: 10px;
+    float: left;
+}
+
+fieldset.small {
+    max-width: 425px;
+    margin: auto;
+}
+
+fieldset {
+    border: 2px dotted silver;
+    background-color: white;
+    line-height: 215%;
+    text-align: center;
+}
+
+div.col-1 > input {
+    padding: 6px 10px;
+    width: 95%;
+}
+
+div.col-2 > button {
+    width: 100%;
+    margin: 0px;
+}
+
+[class*='col-'] {
+    float: left;
+    padding: 5x;
+}
+
+.col-1 {
+    width: 80%;
+}
+
+.col-2 {
+    width: 20%;
+}
+
+.clear-float {
+    clear: both;
+}
+
+.flex-layout {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    margin-top: 20px;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.align-center {
+    text-align: center;
+}
+
+.align-left {
+    text-align: left;
+}
+
+.align-right {
+    padding-right: 25px;
+    text-align: right;
+}
+
+/*
+@media (max-width: 450px) {
+
+    button {
+        width: 100%
+    }
+
+}
