@@ -32,6 +32,10 @@ a.special-url {
     color: #e60000;
 }
 
+form a:hover, form a:active {
+    text-decoration: none;
+}
+
 a:hover, a:active {
     text-decoration: underline;
 }
@@ -65,7 +69,7 @@ ul > li > span.notification {
     width: fit-content;
     line-height: normal;
     padding: 0px 4px;
-    margin-top: 9px;
+    margin-top: 8px;
 }
 
 ul > li > span {
@@ -169,7 +173,7 @@ fieldset.align-center input, fieldset.align-center select {
 }
 
 fieldset.small {
-    max-width: 425px;
+    width: 75%;
     margin: auto;
 }
 
@@ -232,11 +236,67 @@ div.col-2 > button {
     text-align: right;
 }
 
-/*
-@media (max-width: 450px) {
+@media (max-width: 500px) {
 
-    button {
-        width: 100%
+    body {
+        margin: 5px;
+    }
+
+    fieldset.small, [class*='col-'] {
+        width: 100%;
+    }
+
+    fieldset.align-center label {
+        text-align: left;
+    }
+    
+    fieldset.align-center input {
+        height: 20px;
+    }
+    
+    fieldset.align-center select {
+        height: 25px;
+    }
+    
+    fieldset.align-center input, fieldset.align-center select {
+        width: 100%;
+        margin-top: 0px;
+        margin-left: 0px;
+        float: none;
+    }    
+
+    label, input {
+        text-align: left;
+        height: 20px;
+        width: 100%;
+        padding-bottom: 2px;
+    }
+        
+    button, form button {
+        width: 100%;
+        margin: 1px 0px;
+    }
+
+    ul > li > span.timestamp {
+        color: gray;
+    }
+
+    ul > li > span {
+        float: left;
+        margin-right: 5px;
+    }
+
+    .flex-layout > .rounded-window {
+        margin: 5px 0px 0px;
+    }
+
+    .flex-layout {
+        flex-direction: column;
+    }
+
+    form div.align-right {
+        padding-right: 0px;
+        text-align: left;
     }
 
 }
