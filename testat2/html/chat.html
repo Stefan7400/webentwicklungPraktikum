@@ -1,36 +1,34 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta charset="UTF-8">
-        <title>Chat</title>
-        <link rel="stylesheet" type="text/css" href="../css/style_2.css">
-    </head>
-    <body>
-        <h1>Chat with Tom</h1>
 
-        <a href="friends.html">&lt; Back</a> | <a href="profile.html">Profile</a> | <a class="special-url" href="friends.html">Remove Friend</a>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1-0, user-scalable=no">
+    <title>Chat</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
 
-        <hr>
+<body>
+    <h1>Chat with Tom</h1>
 
-        <div class="rounded-window flex-layout">
-            <div class="window-left">
-                Tom: Hallo, Welt!
-                <br>
-                Jerry: Wie gehts?
-            </div>
-            <div class="window-right">
-                19:43:01
-                <br>
-                19:57:20
-            </div>
+    <a href="friends.html">&lt; Back</a> | <a href="profile.html">Profile</a> | <a href="friends.html"
+                                                                                   class="remove">Remove Friend</a>
+    <hr>
+    <div class="comBox">
+        <div class="flex">
+            <div>Tom: Hallo, Welt!</div>
+            <div class="time">19:43:01</div>
         </div>
-
-        <hr>
-
-        <div class="flex-layout">
-            <input class="text-message" id="message" type="text" name="message" placeholder="New Message">
-            <button class="text-button" type="button">Send</button>
+        <div class="flex">
+            <div>Jerry: Wie gehts?</div>
+            <div class="time">19:57:20</div>
         </div>
-    </body>
+    </div>
+    <hr>
+    <div class="flex">
+        <input id="message" type="text" name="message" placeholder="New Message" class="longType">
+        <button class="longButton">Send</button>
+    </div>
+</body>
+
 </html>

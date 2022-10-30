@@ -3,9 +3,9 @@
 
 <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1-0, user-scalable=no">
     <title>Friends</title>
-    <link rel="stylesheet" href="../css/style_1.css">
-
+    <link rel="stylesheet" href="../css/style.css">
 </head>
 
 <body>
@@ -13,15 +13,13 @@
     <p>
         <a href="logout.html">&lt Logout</a> | <a href="settings.html">Settings</a>
     </p>
-
     <hr>
-
-    <div>
+    <div class="comBox">
         <ul>
-            <li><a href="chat.html">Tom</a> 3</li>
-            <li><a href="chat.html">Marvin</a> 1</li>
-            <li><a href="chat.html">Tick</a></li>
-            <li><a href="chat.html">Trick</a></li>
+            <li class="flex"><a href="chat.html">Tom</a><div>3</div></li>
+            <li class="flex"><a href="chat.html">Marvin</a><div>1</div></li>
+            <li class="flex"><a href="chat.html">Tick</a></li>
+            <li class="flex"><a href="chat.html">Trick</a></li>
         </ul>
     </div>
     <hr>
@@ -31,8 +29,11 @@
     </ol>
     <hr>
     <form>
-        <input placeholder="Add Friend to List" id="addFriend" />
-        <button type="button">Add</button>
+        <div class="flex">
+            <input placeholder="Add Friend to List" id="addFriend" class="longType">
+            <button type="button" class="longButton">Add</button>
+        </div>
+
     </form>
 </body>
 
