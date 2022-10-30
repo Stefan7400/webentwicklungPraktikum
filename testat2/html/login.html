@@ -11,19 +11,19 @@
 <body>
 
     <header>
-        <img src="../images/chat.png" alt="chat icon" class="center">
+        <img src="../../images/chat.png" alt="chat icon" class="center">
     </header>
 
     <h1 class="center">Please sign in</h1>
 
-    <form>
+    <form action="chat.html">
         <fieldset>
             <legend>Login</legend>
             <label for="username">Username
-                <input placeholder="Username" id="username" />
+                <input required placeholder="Username" id="username" />
             </label><br>
             <label for="password">Password
-                <input type="password" placeholder="Password" id="password" />
+                <input required type="password" placeholder="Password" id="password" />
             </label><br>
         </fieldset>
         <div class="center">
@@ -31,9 +31,8 @@
                 <button type="button">Register</button>
             </a>
 
-            <a href="friends.html">
-                <button type="submit" class="blueButton">Login</button>
-            </a>
+            <button type="submit" class="blueButton">Login</button>
+
         </div>
     </form>
 </body>
