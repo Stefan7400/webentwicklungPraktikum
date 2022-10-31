@@ -1,0 +1,204 @@
+body {
+    background-color: #f8f9fb;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 15px;
+    max-width: 900px;
+    padding-top: 20px;
+    margin: auto;
+}
+
+img {
+    border-radius: 100px;
+    width: 114px;
+    height: 114px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+h1 {
+    font-size: 30px;
+}
+
+.center {
+    margin: auto;
+    text-align: center;
+    padding: 10px;
+}
+
+fieldset {
+    background-color: #ffff;
+    border: 2px dotted #d3d4d6;
+    max-width: 450px;
+    line-height: 200%;
+    margin: auto;
+    text-align: right;
+    padding: 10px;
+}
+
+legend {
+    text-align: left;
+}
+
+.long{
+    width: 100%;
+    text-align: center;
+}
+
+
+button {
+    cursor: pointer;
+    border: none;
+    color: white;
+    background-color: #a9a9a9;
+    padding: 8px;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.blueButton {
+    background-color: #317df5;
+}
+
+a:not(ul li a):link,
+a:not(ul li a):visited {
+    text-decoration: none;
+    color: #317df5;
+}
+
+a:not(ul li a):hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+a:not(ul li a):link.remove,
+a:not(ul li a):visited.remove {
+    color: #c54e53;
+}
+
+.comBox {
+    background-color: #ffff;
+    border-radius: 5px;
+    border: solid 2px #d3d4d6;
+    padding: 10px;
+    padding-left: 15px;
+    margin: auto;
+    line-height: 2;
+}
+
+hr {
+    border-top: dashed 1px #aeafb1;
+}
+
+.longType {
+    width: 80%;
+    padding: 8px;
+    margin: 3px;
+    margin-right: auto;
+}
+
+.longButton {
+    padding-left: 5%;
+    padding-right: 5%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    max-width: 150px;
+    text-align: center;
+}
+
+.flex {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+ul {
+    list-style-type: none;
+    padding: 5px;
+    margin: auto;
+}
+
+ul li a {
+    color: black;
+    text-decoration: none;
+    margin-right: auto;
+}
+
+ul li div {
+    text-align: center;
+    color: #ffffff;
+    background-color: #317df5;
+    width: 17px;
+    height: 17px;    
+    line-height: normal;
+}
+
+.time {
+    color: #d4d4d4;
+    margin-left: auto;
+}
+
+select{
+    width: 170px;
+}
+
+textarea {
+    width: 95%;
+    height: 125px;
+    margin: 5px;
+}
+
+img.profile{
+    width:30%;
+    height: 30%;
+    border-radius: 0;
+    margin-left: 0;
+    margin-right:2%;
+}
+
+div.comBox.profile {
+    line-height: 1.2;
+    width: 60%;
+    padding-left: 25px;
+}
+
+dt{
+    font-weight: bold;
+}
+
+input[type=radio]{
+    width: 12px;
+    margin: 5px;
+}
+
+@media(max-width: 700px) {
+
+    fieldset {
+        text-align: left;
+    }
+    button, input{
+        max-width: 425px;
+        width: 100%;
+        margin: 3px;
+    }
+    .longType{
+        width: 100%;
+        margin: 3px;
+        max-width: none;
+    }
+    .longButton{
+        width: 100%;
+        max-width: none;
+    }
+    div.comBox.profile {
+        display: block;
+        width: 100%;
+    }
+    select{
+        width: 100%;
+    }
+    textarea{
+        height: 50px;
+    }
+    
+}
