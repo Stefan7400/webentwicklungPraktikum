@@ -34,6 +34,7 @@ fieldset {
     margin: auto;
     text-align: right;
     padding: 10px;
+    padding-right: 100px;
 }
 
 legend {
@@ -175,6 +176,7 @@ input[type=radio]{
 
     fieldset {
         text-align: left;
+        padding-right: 10px
     }
     button, input{
         max-width: 425px;
