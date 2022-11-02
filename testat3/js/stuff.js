@@ -8,10 +8,10 @@ usernameInput.addEventListener("keyup", e => {
 
     if(isUsernameValid()){
         usernameInput.style.outline = "none";
-        usernameInput.style.borderColor = "red"
+        usernameInput.style.borderColor = "green"
     } else {
         usernameInput.style.outline = "none";
-        usernameInput.style.borderColor = "green"
+        usernameInput.style.borderColor = "red"
     }
 
 })
@@ -48,7 +48,7 @@ form.addEventListener("submit", e => {
 function isUsernameValid(){
     //TODO check if username is already used
     const username = usernameInput.value
-    if(username.length >= 3){
+    if(username.length < 3){
         return false;
     }
 
