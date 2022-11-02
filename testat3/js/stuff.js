@@ -1,18 +1,19 @@
-let usernameInput = document.getElementById("uname")
-let passwordInput = document.getElementById("pwd");
-let confirmPasswordInput = document.getElementById("confirm-pwd");
+const usernameInput = document.getElementById("uname")
+const passwordInput = document.getElementById("pwd");
+const confirmPasswordInput = document.getElementById("confirm-pwd");
+const form = document.getElementById("form");
 
 
 usernameInput.addEventListener("keyup", e => {
-    const currentInput = usernameInput.value
-    if(currentInput.length <= 3){
+
+    if(isUsernameValid()){
         usernameInput.style.outline = "none";
         usernameInput.style.borderColor = "red"
     } else {
         usernameInput.style.outline = "none";
         usernameInput.style.borderColor = "green"
     }
-    //TODO check if username is already used
+
 })
 
 passwordInput.addEventListener("keyup", e => {
@@ -28,9 +29,7 @@ passwordInput.addEventListener("keyup", e => {
 
 
 confirmPasswordInput.addEventListener("keyup", e => {
-    const currentInput = confirmPasswordInput.value;
-    const shouldEqual = passwordInput.value;
-    if(currentInput === shouldEqual){
+    if(passwordsMatch()){
         confirmPasswordInput.style.outline = "none";
         confirmPasswordInput.style.borderColor = "green"
     } else {
@@ -38,3 +37,39 @@ confirmPasswordInput.addEventListener("keyup", e => {
         confirmPasswordInput.style.borderColor = "red"
     }
 })
+
+form.addEventListener("submit", e => {
+    if(!isValid()){
+        e.preventDefault()
+        window.history.back()
+    }
+})
+
+function isUsernameValid(){
+    //TODO check if username is already used
+    const username = usernameInput.value
+    if(username.length >= 3){
+        return false;
+    }
+
+
+
+    return true;
+}
+
+
+function isPasswordValid(){
+    const currentPassword = passwordInput.value;
+
+    return currentPassword.length < 8;
+}
+
+function passwordsMatch(){
+    return passwordInput.value === confirmPasswordInput.value;
+}
+
+
+function isValid() {
+    return isUsernameValid() && isPasswordValid() && passwordsMatch()
+
+}
