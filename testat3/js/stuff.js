@@ -3,6 +3,24 @@ const passwordInput = document.getElementById("pwd");
 const confirmPasswordInput = document.getElementById("confirm-pwd");
 const form = document.getElementById("form");
 
+window.chatToken = "...";
+window.chatCollectionId = "...";
+window.chatServer = "https://online-lectures-cs.thi.de/chat"
+
+var xmlhttp = new XMLHttpRequest();
+xmlhttp.onreadystatechange = function () {
+    if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
+        let data = JSON.parse(xmlhttp.responseText);
+        console.log(data);
+    }
+};
+// Chat Server URL und Collection ID als Teil der URL
+xmlhttp.open("GET", window.chatServer + "/" + window.chatCollectionId +
+    "/user", true);
+// Das Token zur Authentifizierung, wenn notwendig
+xmlhttp.setRequestHeader('Authorization', 'Bearer ' + window.chatToken);
+xmlhttp.send();
+
 
 usernameInput.addEventListener("keyup", e => {
 
@@ -25,6 +43,7 @@ passwordInput.addEventListener("keyup", e => {
         passwordInput.style.outline = "none";
         passwordInput.style.borderColor = "green"
     }
+    highlightPasswordDifference()
 })
 
 
@@ -61,11 +80,24 @@ function isUsernameValid(){
 function isPasswordValid(){
     const currentPassword = passwordInput.value;
 
-    return currentPassword.length < 8;
+    return currentPassword.length >= 8;
 }
 
 function passwordsMatch(){
     return passwordInput.value === confirmPasswordInput.value;
+}
+
+function highlightPasswordDifference(){
+    if(confirmPasswordInput.value.length === 0){
+        //Ignore when there is not input for the cofirm password
+        return;
+    }
+
+    if(!passwordsMatch()){
+        //passwords do not match
+        confirmPasswordInput.style.borderColor = "red"
+    }
+
 }
 
 
