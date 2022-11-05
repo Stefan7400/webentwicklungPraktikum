@@ -133,6 +133,16 @@ ul li div {
     line-height: normal;
 }
 
+.errorBorder {
+    outline: none;
+    border-color: red;
+}
+
+.okBorder {
+    outline: none;
+    border-color: green
+}
+
 .time {
     color: #d4d4d4;
     margin-left: auto;
