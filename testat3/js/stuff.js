@@ -25,8 +25,10 @@ xmlhttp.send();
 usernameInput.addEventListener("keyup", e => {
 
     if(isUsernameValid()){
+        console.log("VALID")
         setOkBorder(usernameInput)
     } else {
+        console.log("INVALID")
         setErrorBorder(usernameInput)
     }
 
@@ -58,10 +60,12 @@ form.addEventListener("submit", e => {
 })
 
 function setErrorBorder(element) {
+    element.classList.remove("okBorder")
     element.classList.add("errorBorder")
 }
 
 function setOkBorder(element){
+    element.classList.remove("errorBorder")
     element.classList.add("okBorder")
 }
 
@@ -108,7 +112,7 @@ function highlightPasswordDifference(){
 
     if(!passwordsMatch() || isPasswordValid()){
         //passwords do not match
-        confirmPasswordInput.style.borderColor = "red"
+        setErrorBorder(confirmPasswordInput)
     }
 
 }
