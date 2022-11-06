@@ -7,20 +7,6 @@ window.chatToken = "...";
 window.chatCollectionId = "89b60f9b-5632-448a-ac19-9895d76000d2";
 window.chatServer = "https://online-lectures-cs.thi.de/chat"
 
-const xmlhttp = new XMLHttpRequest();
-xmlhttp.onreadystatechange = function () {
-    if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
-        let data = JSON.parse(xmlhttp.responseText);
-        console.log(data);
-    }
-};
-// Chat Server URL und Collection ID als Teil der URL
-xmlhttp.open("GET", window.chatServer + "/" + window.chatCollectionId +
-    "/user", true);
-// Das Token zur Authentifizierung, wenn notwendig
-xmlhttp.setRequestHeader('Authorization', 'Bearer ' + window.chatToken);
-xmlhttp.send();
-
 
 usernameInput.addEventListener("keyup", e => {
 
@@ -53,10 +39,37 @@ confirmPasswordInput.addEventListener("keyup", e => {
 })
 
 form.addEventListener("submit", e => {
+
+    const username = usernameInput.value;
+    e.preventDefault()
+    window.history.back()
+
+
+
     if(!isValid()){
-        e.preventDefault()
-        window.history.back()
+        return
     }
+
+
+    const xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function () {
+        console.log(xmlhttp.readyState)
+        console.log(xmlhttp.status)
+        if (xmlhttp.readyState === 4) {
+            if(xmlhttp.status === 404) {
+                document.location.href = "friends.html"
+            }
+        }
+    };
+    xmlhttp.open("GET", "https://online-lectures-cs.thi.de/chat/89b60f9b-5632-448a-ac19-9895d76000d2/user/" + username, true);
+    xmlhttp.send();
+
+
+
+
+
+
+
 })
 
 function setErrorBorder(element) {
@@ -79,24 +92,19 @@ function isUsernameValid(){
     xmlhttp.onreadystatechange = function () {
         if (xmlhttp.readyState === 4) {
             if(xmlhttp.status === 204) {
-                console.log("Exists");
                 setErrorBorder(usernameInput)
             } else if(xmlhttp.status === 404) {
-                console.log("Does not exist");
                 setOkBorder(usernameInput)
             }
         }
     };
     xmlhttp.open("GET", "https://online-lectures-cs.thi.de/chat/89b60f9b-5632-448a-ac19-9895d76000d2/user/" + username, true);
     xmlhttp.send();
-
-
 }
 
 
 function isPasswordValid(){
     const currentPassword = passwordInput.value;
-
     return currentPassword.length >= 8;
 }
 
@@ -117,8 +125,6 @@ function highlightPasswordDifference(){
 
 }
 
-
 function isValid() {
-    return isUsernameValid() && isPasswordValid() && passwordsMatch()
-
+    return isPasswordValid() && passwordsMatch()
 }
