@@ -181,6 +181,21 @@ input[type=radio]{
     margin: 5px;
 }
 
+
+.autocompleteFriends {
+    border: 1px solid #d4d4d4;
+    border-bottom: none;
+    border-top: none;
+  }
+  
+  .autocompleteFriends div {
+    padding: 10px;
+    cursor: pointer;
+    background-color: #fff; 
+    border-bottom: 1px solid #d4d4d4; 
+  }
+
+
 @media(max-width: 700px) {
 
     fieldset {

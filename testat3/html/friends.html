@@ -28,13 +28,14 @@
         <li><a href="profile.html">Friend request form <b>Track</b></a> </li>
     </ol>
     <hr>
-    <form>
+    <form id="friendForm" autocomplete="off" onsubmit="return validateFriendForm();"> 
         <div class="flex">
-            <input placeholder="Add Friend to List" id="addFriend" class="longType">
-            <button type="button" class="longButton">Add</button>
+            <input id="friendlistInput" placeholder="Add Friend to List"class="longType">
+            <button id="addFriendButton" type="submit" class="longButton">Add</button>
         </div>
 
     </form>
+    <script src="../js/friends.js"></script>
 </body>
 
 </html>
