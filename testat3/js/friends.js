@@ -6,10 +6,10 @@ window.chatServer = "https://online-lectures-cs.thi.de/chat";
 const FriendsInput = document.getElementById("friendlistInput");
 const SumbitFriend = document.getElementById("addFriendButton");
 const FriendForm = document.getElementById("friendForm");
-var friendsArray;
+let friendsArray;
 
 // server nach definierten usern fragen
-var xmlhttp = new XMLHttpRequest();
+let xmlhttp = new XMLHttpRequest();
 xmlhttp.onreadystatechange = function () {
     if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
         friendsArray = JSON.parse(xmlhttp.responseText);
@@ -23,29 +23,29 @@ xmlhttp.setRequestHeader('Authorization', 'Bearer ' + window.chatToken);
 xmlhttp.send();
 
 
-//set action for every keystrole
+// set action for every keystroke
 FriendsInput.addEventListener("keyup", event => {
     curInput = FriendsInput.value;
     // delete previous suggestions
     cleanUp();
 
     // div to display the suggestions
-    var friendlist = document.createElement("div");
-    friendlist.setAttribute("class", "autocompleteFriends");
-    FriendsInput.parentNode.appendChild(friendlist);
-    var nameHit;
+    let friendlistDiv = document.createElement("div");
+    friendlistDiv.setAttribute("class", "autocompleteFriends");
+    FriendsInput.parentNode.appendChild(friendlistDiv);
+    let nameHitDiv;
 
     // check if we have a fitting name in database
-    for (var i = 0; i < friendsArray.length; i++) {
+    for (let i = 0; i < friendsArray.length; i++) {
         if (friendsArray[i].substring(0, curInput.length).toLowerCase() == curInput.toLowerCase()) {
             // if yes, add to div
-            var hit = friendsArray[i];
-            nameHit = document.createElement("div");
-            nameHit.innerHTML = hit;
-            friendlist.appendChild(nameHit);
+            let hit = friendsArray[i];
+            nameHitDiv = document.createElement("div");
+            nameHitDiv.innerHTML = hit;
+            friendlistDiv.appendChild(nameHitDiv);
 
             // autofill if clicked on name
-            nameHit.addEventListener("click", event => {
+            nameHitDiv.addEventListener("click", event => {
                 FriendsInput.value = hit;
                 cleanUp();
             })
@@ -55,8 +55,8 @@ FriendsInput.addEventListener("keyup", event => {
 
 // delete previous suggestions
 function cleanUp() {
-    var elements = document.getElementsByClassName("autocompleteFriends");
-    for (var i = 0; i < elements.length; i++) {
+    let elements = document.getElementsByClassName("autocompleteFriends");
+    for (let i = 0; i < elements.length; i++) {
         elements[i].parentNode.removeChild(elements[i]);
     }
 }
@@ -64,7 +64,7 @@ function cleanUp() {
 // only send form for existing friends
 function validateFriendForm() {
     // look up if we have the wanted user
-    for (var i = 0; i < friendsArray.length; i++) {
+    for (let i = 0; i < friendsArray.length; i++) {
         if (FriendsInput.value.toLowerCase() == friendsArray[i].toLowerCase()) {
             document.getElementById("FriendForm").submit();
             return true;
