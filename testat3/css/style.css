@@ -87,6 +87,7 @@ a:not(ul li a):visited.remove {
 }
 
 hr {
+    border: none;
     border-top: dashed 1px #aeafb1;
 }
 
