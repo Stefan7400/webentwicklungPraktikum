@@ -1,8 +1,9 @@
 var messageCount = 0;
 var xmlhttp = new XMLHttpRequest();
 
-var chatbox = document.getElementById("chatbox");
-var recipient = "Tom";
+const input = document.getElementById("message");
+const chatbox = document.getElementById("chatbox");
+const recipient = "Tom";
 
 document.getElementById("sendMessage").addEventListener("click", sendMessage);
 document.getElementById("message").addEventListener("keyup", (e) => {
@@ -12,8 +13,7 @@ document.getElementById("message").addEventListener("keyup", (e) => {
 });
 
 function sendMessage() {
-    const input = document.getElementById("message");
-    if (input.value !== undefined && input.value !== null && input.value !== "") {
+    if (input.value !== undefined && input.value !== null && input.value !== "" && input.value !== " ") {
         xmlhttp.onreadystatechange = function () {
             if (xmlhttp.readyState == 4 && xmlhttp.status == 204) {
                 console.log("sent message");
@@ -28,8 +28,8 @@ function sendMessage() {
             message: input.value,
             to: recipient
         }
-        let jsonString = JSON.stringify(data);      // Serialize as JSON
-        xmlhttp.send(jsonString);                   // Send JSON-data to server
+        let jsonString = JSON.stringify(data);
+        xmlhttp.send(jsonString);
         
         input.value = "";
     }
