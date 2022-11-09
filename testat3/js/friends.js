@@ -1,7 +1,3 @@
-// chat token (tom)
-window.chatToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiVG9tIiwiaWF0IjoxNjY3NTU5NDM1fQ.uxDqhtYomc51BlCZ9R2Ua3KbPogaVIi2SUfL5A0cuCM";
-window.chatCollectionId = "c2df5e51-285f-441f-9baa-3c510f5f4663";
-window.chatServer = "https://online-lectures-cs.thi.de/chat";
 // variabls
 const FriendsInput = document.getElementById("friendlistInput");
 const SumbitFriend = document.getElementById("addFriendButton");
