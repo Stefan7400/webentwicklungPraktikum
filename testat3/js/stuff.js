@@ -3,18 +3,11 @@ const passwordInput = document.getElementById("pwd");
 const confirmPasswordInput = document.getElementById("confirm-pwd");
 const form = document.getElementById("form");
 
-window.chatToken = "...";
-window.chatCollectionId = "89b60f9b-5632-448a-ac19-9895d76000d2";
-window.chatServer = "https://online-lectures-cs.thi.de/chat"
-
-
 usernameInput.addEventListener("keyup", e => {
 
     if(isUsernameValid()){
-        console.log("VALID")
         setOkBorder(usernameInput)
     } else {
-        console.log("INVALID")
         setErrorBorder(usernameInput)
     }
 
@@ -44,8 +37,6 @@ form.addEventListener("submit", e => {
     e.preventDefault()
     window.history.back()
 
-
-
     if(!isValid()){
         return
     }
@@ -53,23 +44,14 @@ form.addEventListener("submit", e => {
 
     const xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function () {
-        console.log(xmlhttp.readyState)
-        console.log(xmlhttp.status)
         if (xmlhttp.readyState === 4) {
             if(xmlhttp.status === 404) {
                 document.location.href = "friends.html"
             }
         }
     };
-    xmlhttp.open("GET", "https://online-lectures-cs.thi.de/chat/89b60f9b-5632-448a-ac19-9895d76000d2/user/" + username, true);
+    xmlhttp.open("GET", window.chatServer + "/" + window.chatCollectionId + "/user/" + username, true);
     xmlhttp.send();
-
-
-
-
-
-
-
 })
 
 function setErrorBorder(element) {
@@ -98,7 +80,7 @@ function isUsernameValid(){
             }
         }
     };
-    xmlhttp.open("GET", "https://online-lectures-cs.thi.de/chat/89b60f9b-5632-448a-ac19-9895d76000d2/user/" + username, true);
+    xmlhttp.open("GET", window.chatServer + "/" + window.chatCollectionId + "/user/" + username, true);
     xmlhttp.send();
 }
 
@@ -118,9 +100,11 @@ function highlightPasswordDifference(){
         return;
     }
 
-    if(!passwordsMatch() || isPasswordValid()){
+    if(!passwordsMatch() || !isPasswordValid()){
         //passwords do not match
         setErrorBorder(confirmPasswordInput)
+    } else {
+        setOkBorder(confirmPasswordInput)
     }
 
 }
