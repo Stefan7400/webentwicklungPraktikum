@@ -42,6 +42,9 @@ form.addEventListener("submit", e => {
         return
     }
 
+    if(username.length < 3){
+        return false;
+    }
 
     xmlhttp.onreadystatechange = function () {
         if (xmlhttp.readyState === 4) {
