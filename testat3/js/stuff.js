@@ -2,6 +2,7 @@ const usernameInput = document.getElementById("uname")
 const passwordInput = document.getElementById("pwd");
 const confirmPasswordInput = document.getElementById("confirm-pwd");
 const form = document.getElementById("form");
+const xmlhttp = new XMLHttpRequest();
 
 usernameInput.addEventListener("keyup", e => {
 
@@ -42,7 +43,6 @@ form.addEventListener("submit", e => {
     }
 
 
-    const xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function () {
         if (xmlhttp.readyState === 4) {
             if(xmlhttp.status === 404) {
@@ -70,7 +70,6 @@ function isUsernameValid(){
         return false;
     }
 
-    const xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function () {
         if (xmlhttp.readyState === 4) {
             if(xmlhttp.status === 204) {
