@@ -7,10 +7,38 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RegisterComponent implements OnInit {
 
-    public constructor() { 
-    }
+  isInputValid = false
+  isUsernameValid = false
+  isPasswordValid = false
+  doesPasswordMatch = false
+  usernameAlreadyUsed = false
+  isPasswordToShort = false
+  doPasswordMatch = true
 
-    public ngOnInit(): void {
-    }
+  usernameInputString : string = "";
+  firstPasswordInputString : string = "";
+  secondPasswordInputString : string = "";
+
+
+  constructor() { }
+
+  ngOnInit(): void {
+  }
+
+  checkUsername() {
+
+  }
+
+  createAccount() {
+
+  }
+
+  checkFirstPassword() {
+    this.isPasswordToShort = this.firstPasswordInputString.length < 9
+  }
+
+  checkSecondPassword(){
+    this.doPasswordMatch = this.firstPasswordInputString === this.secondPasswordInputString;
+  }
 
 }

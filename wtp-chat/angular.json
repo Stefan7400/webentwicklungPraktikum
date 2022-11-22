@@ -102,6 +102,9 @@
         }
       }
     },
-    "defaultProject": "wtp-chat"
+    "defaultProject": "wtp-chat",
+    "cli": {
+      "analytics": "64eb722e-735d-489d-a19a-5832686856ab"
+    }
   }
   

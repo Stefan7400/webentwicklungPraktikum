@@ -33,7 +33,7 @@ FriendsInput.addEventListener("keyup", event => {
 
     // check if we have a fitting name in database
     for (let i = 0; i < friendsArray.length; i++) {
-        if (friendsArray[i].substring(0, curInput.length).toLowerCase() == curInput.toLowerCase()) {
+        if (friendsArray[i].substring(0, curInput.length).toLowerCase() === curInput.toLowerCase()) {
             // if yes, add to div
             let hit = friendsArray[i];
             nameHitDiv = document.createElement("div");
