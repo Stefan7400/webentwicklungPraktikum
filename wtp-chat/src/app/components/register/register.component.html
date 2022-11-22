@@ -16,14 +16,17 @@
     <legend>Register</legend>
     <label for="uname">Username</label>
     <input (keyup)="checkUsername()" [(ngModel)]="usernameInputString" required id="uname" type="text" name="uname" placeholder="Username">
+    <p class="errorHighlight" *ngIf="isUsernameTooShort">Username is too short</p>
     <p class="errorHighlight" *ngIf="usernameAlreadyUsed">Username already used!</p>
-    <br>
-    <label for="pwd">Password</label>
-    <input required id="pwd" [(ngModel)]="firstPasswordInputString" (keyup)="checkFirstPassword()" type="password" name="pwd" placeholder="Password">
-    <p class="errorHighlight" *ngIf="isPasswordToShort">Password too short</p>
-    <br>
-    <label for="confirm-pwd">Confirm Password</label>
-    <input required id="confirm-pwd" (keyup)="checkSecondPassword()" [ngModel]="secondPasswordInputString" type="password" name="confirm-pwd" placeholder="Confirm Password">
+    <p>
+      <label>Password</label>
+      <input required id="pwd" [(ngModel)]="firstPasswordInputString" (keyup)="checkFirstPassword()" type="password" name="pwd" placeholder="Password">
+    </p>
+    <p class="errorHighlight" *ngIf="isPasswordToShort">Password too short (min. 8 chars)</p>
+    <p>
+      <label for="confirm-pwd">Confirm Password</label>
+      <input required id="confirm-pwd" (keyup)="checkSecondPassword()" [(ngModel)]="secondPasswordInputString" type="password" name="confirm-pwd" placeholder="Confirm Password">
+    </p>
     <p class="errorHighlight" *ngIf="!doPasswordMatch">Passwords do not match!</p>
     <br>
   </fieldset>

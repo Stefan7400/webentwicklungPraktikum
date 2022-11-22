@@ -14,10 +14,12 @@ export class RegisterComponent implements OnInit {
   usernameAlreadyUsed = false
   isPasswordToShort = false
   doPasswordMatch = true
+  isUsernameTooShort = false;
 
   usernameInputString : string = "";
   firstPasswordInputString : string = "";
   secondPasswordInputString : string = "";
+
 
 
   constructor() { }
@@ -26,7 +28,8 @@ export class RegisterComponent implements OnInit {
   }
 
   checkUsername() {
-
+      this.isUsernameTooShort = this.usernameInputString.length !== 0 && this.usernameInputString.length < 3;
+      console.log(this.isUsernameTooShort)
   }
 
   createAccount() {

@@ -1,0 +1,12 @@
+.errorHighlight {
+  margin: 0;
+  color: red;
+}
+
+p {
+  margin: 0;
+}
+
+br {
+  line-height: 0;
+}
