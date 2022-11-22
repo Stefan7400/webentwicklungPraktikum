@@ -31,19 +31,11 @@
     <br>
   </fieldset>
   <div class="center">
-    <a href="login.html">
-      <button type="button" (click)="createAccount()">Cancel</button>
-    </a>
-    <button [disabled]="isInputValid" type="submit" class="blueButton">Create Account</button>
+      <button type="button" >Cancel</button>
+    <button [disabled]="!doPasswordMatch || isPasswordToShort || usernameAlreadyUsed" type="button" (click)="createAccount()" class="blueButton">Create Account</button>
   </div>
 </form>
 </body>
-
-<script>
-  window.chatToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiSmVycnkiLCJpYXQiOjE2Njc2NzY4MTZ9.6de3Btm3Et1ZvQ1iVFNwSa_zB9XLFDXGIXfr3bxhdCo";
-  window.chatCollectionId = "b91a2173-80ce-4500-9230-444f5ec567e7";
-  window.chatServer = "https://online-lectures-cs.thi.de/chat";
-</script>
 
 </html>
 
