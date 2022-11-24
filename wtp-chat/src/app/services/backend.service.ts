@@ -1,11 +1,11 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Friend } from '../../../../../../Downloads/wtp-chat (1)/wtp-chat/src/app/models/Friend';
-import { Message } from '../../../../../../Downloads/wtp-chat (1)/wtp-chat/src/app/models/Message';
-import { Profile } from '../../../../../../Downloads/wtp-chat (1)/wtp-chat/src/app/models/Profile';
-import { User } from '../../../../../../Downloads/wtp-chat (1)/wtp-chat/src/app/models/User';
-import { ContextService } from '../../../../../../Downloads/wtp-chat (1)/wtp-chat/src/app/services/context.service';
+import { Friend } from '../models/Friend';
+import { Message } from '../models/Message';
+import { Profile } from '../models/Profile';
+import { User } from '../models/User';
+import { ContextService } from './context.service';
 
 @Injectable({
     providedIn: 'root'
