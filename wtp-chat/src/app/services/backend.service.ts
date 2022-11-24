@@ -1,11 +1,11 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Friend } from '../models/Friend';
-import { Message } from '../models/Message';
-import { Profile } from '../models/Profile';
-import { User } from '../models/User';
-import { ContextService } from './context.service';
+import { Friend } from '../../../../../../Downloads/wtp-chat (1)/wtp-chat/src/app/models/Friend';
+import { Message } from '../../../../../../Downloads/wtp-chat (1)/wtp-chat/src/app/models/Message';
+import { Profile } from '../../../../../../Downloads/wtp-chat (1)/wtp-chat/src/app/models/Profile';
+import { User } from '../../../../../../Downloads/wtp-chat (1)/wtp-chat/src/app/models/User';
+import { ContextService } from '../../../../../../Downloads/wtp-chat (1)/wtp-chat/src/app/services/context.service';
 
 @Injectable({
     providedIn: 'root'
@@ -16,7 +16,7 @@ export class BackendService {
     private restServerURL: string = this.baseURL + this.serverId + '/';
     private headers: any; // header for token
 
-    public constructor(private httpClient: HttpClient, private context: ContextService) { 
+    public constructor(private httpClient: HttpClient, private context: ContextService) {
     }
 
     public login(username: string, password: string): Observable<boolean> {
@@ -33,8 +33,8 @@ export class BackendService {
                     subscriber.next(false); // yield result to caller of login()
                 }
             });
-        }); 
-        
+        });
+
         return observable;
     }
 
@@ -52,8 +52,8 @@ export class BackendService {
                     subscriber.next(false); // yield result to caller of register()
                 }
             });
-        }); 
-        
+        });
+
         return observable;
     }
 
@@ -62,15 +62,15 @@ export class BackendService {
             const serverCall = this.httpClient.get(this.restServerURL + 'user/' + username);
             serverCall.subscribe({
                 next: token => {
-                    subscriber.next(true); // yield result to caller 
+                    subscriber.next(true); // yield result to caller
                 },
                 error: err => {
                     console.log('backend service error: ' + err);
                     subscriber.next(false); // yield result to caller
                 }
             });
-        }); 
-        
+        });
+
         return observable;
     }
 
@@ -81,60 +81,60 @@ export class BackendService {
     public loadUser(username: string): Observable<User | null> {
         const observable = new Observable<User | null>(subscriber => {
             const serverCall = this.httpClient.get(
-                this.restServerURL + 'user/' + username, 
+                this.restServerURL + 'user/' + username,
                 this.headers);
             serverCall.subscribe({
                 next: (buffer: any) => {
                     const user = buffer as User;
-                    subscriber.next(user); // yield result to caller 
+                    subscriber.next(user); // yield result to caller
                 },
                 error: err => {
                     console.log('backend service error: ' + err);
                     subscriber.next(null); // yield result to caller
                 }
             });
-        }); 
-        
+        });
+
         return observable;
     }
 
     public loadFriends(): Observable<Array<Friend>> {
         const observable = new Observable<Array<Friend>>(subscriber => {
             const serverCall = this.httpClient.get(
-                this.restServerURL + 'friend', 
+                this.restServerURL + 'friend',
                 this.headers);
             serverCall.subscribe({
                 next: (buffer: any) => {
                     const friends = buffer as Array<Friend>;
-                    subscriber.next(friends); // yield result to caller 
+                    subscriber.next(friends); // yield result to caller
                 },
                 error: err => {
                     console.log('backend service error: ' + err);
                     subscriber.next([]); // yield result to caller
                 }
             });
-        }); 
-        
+        });
+
         return observable;
     }
 
     public listUsers(): Observable<Array<string>> {
         const observable = new Observable<Array<string>>(subscriber => {
             const serverCall = this.httpClient.get(
-                this.restServerURL + 'user', 
+                this.restServerURL + 'user',
                 this.headers);
             serverCall.subscribe({
                 next: (buffer: any) => {
                     const users = buffer as Array<string>;
-                    subscriber.next(users); // yield result to caller 
+                    subscriber.next(users); // yield result to caller
                 },
                 error: err => {
                     console.log('backend service error: ' + err);
                     subscriber.next([]); // yield result to caller
                 }
             });
-        }); 
-        
+        });
+
         return observable;
     }
 
@@ -143,35 +143,35 @@ export class BackendService {
             const serverCall = this.httpClient.put(this.restServerURL + 'user', profile, this.headers);
             serverCall.subscribe({
                 next: (_) => {
-                    subscriber.next(true); // yield result to caller 
+                    subscriber.next(true); // yield result to caller
                 },
                 error: err => {
                     console.log('backend service error: ' + err);
                     subscriber.next(false); // yield result to caller
                 }
             });
-        }); 
-        
+        });
+
         return observable;
     }
 
     public friendRequest(username: string): Observable<boolean> {
         const observable = new Observable<boolean>(subscriber => {
             const serverCall = this.httpClient.post(
-                this.restServerURL + 'friend', 
+                this.restServerURL + 'friend',
                 { "username": username },
                 this.headers);
             serverCall.subscribe({
                 next: (_) => {
-                    subscriber.next(true); // yield result to caller 
+                    subscriber.next(true); // yield result to caller
                 },
                 error: err => {
                     console.log('backend service error: ' + err);
                     subscriber.next(false); // yield result to caller
                 }
             });
-        }); 
-        
+        });
+
         return observable;
     }
 
@@ -191,41 +191,41 @@ export class BackendService {
                 this.headers);
             serverCall.subscribe({
                 next: (_) => {
-                    subscriber.next(true); // yield result to caller 
+                    subscriber.next(true); // yield result to caller
                 },
                 error: err => {
                     console.log('backend service error: ' + err);
                     subscriber.next(false); // yield result to caller
                 }
             });
-        }); 
-        
+        });
+
         return observable;
     }
 
     public removeFriend(username: string): Observable<boolean> {
         const observable = new Observable<boolean>(subscriber => {
             const serverCall = this.httpClient.delete(
-                this.restServerURL + 'friend/' + username, 
+                this.restServerURL + 'friend/' + username,
                 this.headers);
             serverCall.subscribe({
                 next: (_) => {
-                    subscriber.next(true); // yield result to caller 
+                    subscriber.next(true); // yield result to caller
                 },
                 error: err => {
                     console.log('backend service error: ' + err);
                     subscriber.next(false); // yield result to caller
                 }
             });
-        }); 
-        
+        });
+
         return observable;
     }
 
     public unreadMessageCounts(): Observable<Map<string, number>> {
         const observable = new Observable<Map<string, number>>(subscriber => {
             const serverCall = this.httpClient.get(
-                this.restServerURL + 'unread', 
+                this.restServerURL + 'unread',
                 this.headers);
             serverCall.subscribe({
                 next: (result: any) => {
@@ -234,35 +234,35 @@ export class BackendService {
                     for (let key of Object.keys(result)) {
                         map.set(key, result[key]);
                     }
-                    subscriber.next(map); // yield result to caller 
+                    subscriber.next(map); // yield result to caller
                 },
                 error: err => {
                     console.log('backend service error: ' + err);
                     subscriber.next(new Map<string, number>()); // yield result to caller
                 }
             });
-        }); 
-        
+        });
+
         return observable;
     }
 
     public listMessages(otherUser: string): Observable<Array<Message>> {
         const observable = new Observable<Array<Message>>(subscriber => {
             const serverCall = this.httpClient.get(
-                this.restServerURL + 'message/' + otherUser, 
+                this.restServerURL + 'message/' + otherUser,
                 this.headers);
             serverCall.subscribe({
                 next: (result: any) => {
                     const messages = result as Array<Message>;
-                    subscriber.next(messages); // yield result to caller 
+                    subscriber.next(messages); // yield result to caller
                 },
                 error: err => {
                     console.log('backend service error: ' + err);
                     subscriber.next([]); // yield result to caller
                 }
             });
-        }); 
-        
+        });
+
         return observable;
     }
 
@@ -272,15 +272,15 @@ export class BackendService {
             const serverCall = this.httpClient.post(this.restServerURL + 'message', body, this.headers);
             serverCall.subscribe({
                 next: token => {
-                    subscriber.next(true); // yield result to caller 
+                    subscriber.next(true); // yield result to caller
                 },
                 error: err => {
                     console.log('backend service error: ' + err);
                     subscriber.next(false); // yield result to caller
                 }
             });
-        }); 
-        
+        });
+
         return observable;
     }
 
