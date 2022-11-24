@@ -15,22 +15,22 @@
 
 <h1 class="center">Please sign in</h1>
 
+<p class="errorHighlight" *ngIf="authFailed">Authentication failed</p>
 <form >
   <fieldset>
     <legend>Login</legend>
     <label for="username">Username
-      <input required placeholder="Username" id="username" />
+      <input [(ngModel)]="usernameInput" required placeholder="Username" id="username" />
     </label><br>
     <label for="password">Password
-      <input required type="password" placeholder="Password" id="password" />
+      <input [(ngModel)]="passwordInput" required type="password" placeholder="Password" id="password" />
     </label><br>
   </fieldset>
   <div class="center">
     <a [routerLink]="['/register']">
       <button type="button">Register</button>
     </a>
-
-    <button type="submit" class="blueButton">Login</button>
+    <button (click)="onLogin()" type="submit" class="blueButton">Login</button>
 
   </div>
 </form>

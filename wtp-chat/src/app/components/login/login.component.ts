@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {BackendService} from "../../services/backend.service";
 
 @Component({
     selector: 'app-login',
@@ -6,11 +7,22 @@ import { Component, OnInit } from '@angular/core';
     styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
+    authFailed: boolean = false;
+    usernameInput : string = "";
+    passwordInput : string = "";
 
-    public constructor() { 
+
+    public constructor(private backendService : BackendService) {
     }
 
     public ngOnInit(): void {
+    }
+
+    public onLogin(){
+      console.log("YOO")
+      this.backendService.login(this.usernameInput,this.passwordInput).subscribe(data => {
+        this.authFailed = !data;
+      })
     }
 
 }

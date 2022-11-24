@@ -31,7 +31,7 @@
     <br>
   </fieldset>
   <div class="center">
-      <button type="button" >Cancel</button>
+      <button [routerLink]="'/login'" type="button" >Cancel</button>
     <button [disabled]="!doPasswordMatch || isPasswordToShort || usernameAlreadyUsed" type="button" (click)="createAccount()" class="blueButton">Create Account</button>
   </div>
 </form>
