@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {BackendService} from "../../services/backend.service";
+import {Router} from "@angular/router";
 
 @Component({
     selector: 'app-register',
@@ -16,14 +17,15 @@ export class RegisterComponent implements OnInit {
   isPasswordToShort = false
   doPasswordMatch = true
   isUsernameTooShort = false;
+  doPasswordsMatchAndValid = false;
 
   usernameInputString : string = "";
   firstPasswordInputString : string = "";
-  secondPasswordInputString : string = "";
+  secondPasswordInputString : string = "";l
 
 
 
-  constructor(private backendService : BackendService) { }
+  constructor(private backendService : BackendService, private router : Router) { }
 
   ngOnInit(): void {
   }
@@ -49,15 +51,23 @@ export class RegisterComponent implements OnInit {
   createAccount() {
     console.log("YOOO")
     this.backendService.register(this.usernameInputString,this.firstPasswordInputString);
-    //TODO redirect!
+    this.router.navigate(['/chat'])
   }
 
   checkFirstPassword() {
     this.isPasswordToShort = this.firstPasswordInputString.length < 9
+    this.updateGuard();
   }
 
   checkSecondPassword(){
     this.doPasswordMatch = this.firstPasswordInputString === this.secondPasswordInputString;
+    this.updateGuard();
+  }
+
+  updateGuard(){
+    this.doPasswordsMatchAndValid = this.doesPasswordMatch && this.isPasswordToShort;
+
+
   }
 
 }
