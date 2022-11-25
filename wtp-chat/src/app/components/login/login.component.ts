@@ -19,10 +19,12 @@ export class LoginComponent implements OnInit {
     }
 
     public onLogin(){
-      console.log("YOO")
       this.backendService.login(this.usernameInput,this.passwordInput).subscribe(data => {
         this.authFailed = !data;
       })
     }
 
+  onInput() {
+    this.authFailed = false;
+  }
 }

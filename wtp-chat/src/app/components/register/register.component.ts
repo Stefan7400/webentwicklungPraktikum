@@ -9,9 +9,7 @@ import {Router} from "@angular/router";
 })
 export class RegisterComponent implements OnInit {
 
-  isInputValid = false
   isUsernameValid = false
-  isPasswordValid = false
   doesPasswordMatch = false
   usernameAlreadyUsed = false
   isPasswordToShort = false
@@ -21,7 +19,9 @@ export class RegisterComponent implements OnInit {
 
   usernameInputString : string = "";
   firstPasswordInputString : string = "";
-  secondPasswordInputString : string = "";l
+  secondPasswordInputString : string = "";
+
+  activated : boolean = false;
 
 
 
@@ -31,43 +31,55 @@ export class RegisterComponent implements OnInit {
   }
 
   checkUsername() {
+      this.activated = false;
       this.isUsernameValid = false
       this.isUsernameTooShort = this.usernameInputString.length !== 0 && this.usernameInputString.length < 3;
-      console.log(this.isUsernameTooShort)
       if(this.isUsernameTooShort){
-        this.usernameAlreadyUsed = false;
         return;
       }
       this.backendService.userExists(this.usernameInputString).subscribe(data => {
         this.usernameAlreadyUsed = data;
 
-        if (!data) {
+        if(!data){
           this.isUsernameValid = true;
         }
       })
 
   }
 
-  createAccount() {
-    console.log("YOOO")
-    this.backendService.register(this.usernameInputString,this.firstPasswordInputString);
-    this.router.navigate(['/chat'])
+  createAccount(event: MouseEvent) {
+    console.log(this.activated)
+    if(!this.activated){
+      event.preventDefault();
+      return;
+    }
+
+
+    this.backendService.register(this.usernameInputString,this.firstPasswordInputString).subscribe(done => {
+      if(done){
+        this.router.navigate(['/chat'])
+      }
+    })
   }
 
   checkFirstPassword() {
+    this.activated = false;
     this.isPasswordToShort = this.firstPasswordInputString.length < 9
     this.updateGuard();
   }
 
   checkSecondPassword(){
+    this.activated = false;
     this.doPasswordMatch = this.firstPasswordInputString === this.secondPasswordInputString;
     this.updateGuard();
   }
 
   updateGuard(){
-    this.doPasswordsMatchAndValid = this.doesPasswordMatch && this.isPasswordToShort;
+    this.doPasswordsMatchAndValid = this.doPasswordMatch && !this.isPasswordToShort;
 
-
+    if(this.doPasswordsMatchAndValid && this.isUsernameValid){
+      this.activated = true;
+    }
   }
 
 }
