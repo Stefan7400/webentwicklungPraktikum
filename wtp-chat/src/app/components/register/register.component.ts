@@ -42,6 +42,10 @@ export class RegisterComponent implements OnInit {
 
         if(!data){
           this.isUsernameValid = true;
+
+          if(this.doPasswordMatch && !this.isPasswordToShort){
+            this.activated = true
+          }
         }
       })
 
@@ -57,7 +61,7 @@ export class RegisterComponent implements OnInit {
 
     this.backendService.register(this.usernameInputString,this.firstPasswordInputString).subscribe(done => {
       if(done){
-        this.router.navigate(['/chat'])
+        this.router.navigate(['/friends'])
       }
     })
   }
