@@ -20,10 +20,10 @@
   <fieldset>
     <legend>Login</legend>
     <label for="username">Username
-      <input (keyup)="onInput()" [(ngModel)]="usernameInput" required placeholder="Username" id="username" />
+      <input (keyup)="onInput()" [(ngModel)]="usernameInput" name="username" required placeholder="Username" id="username" />
     </label><br>
     <label for="password">Password
-      <input (keyup)="onInput()" [(ngModel)]="passwordInput" required type="password" placeholder="Password" id="password" />
+      <input (keyup)="onInput()" [(ngModel)]="passwordInput" name="password" required type="password" placeholder="Password" id="password" />
     </label><br>
   </fieldset>
   <div class="center">

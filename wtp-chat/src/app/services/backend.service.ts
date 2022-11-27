@@ -12,7 +12,7 @@ import { ContextService } from './context.service';
 })
 export class BackendService {
     private baseURL: string = 'https://online-lectures-cs.thi.de/chat/';
-    private serverId: string = '7290151c-8682-452f-a07c-66ee53340f77';
+    private serverId: string = 'b91a2173-80ce-4500-9230-444f5ec567e7';
     private restServerURL: string = this.baseURL + this.serverId + '/';
     private headers: any; // header for token
 
