@@ -1,1 +1,57 @@
-<h1>FriendsComponent works!</h1>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1-0, user-scalable=no">
+    <title>Friends</title>
+    <link rel="stylesheet" href="friends.component.css">
+</head>
+
+<body>
+    <h1>Friends</h1>
+    <p>
+        <a [routerLink]="['/logout']">&lt; Logout</a> | <a [routerLink]="['/settings']">Settings</a>
+    </p>
+    <hr>
+    <div class="comBox">
+        <ul>
+            <div *ngFor="let friend of friends">
+                <ng-template [ngIf]="friend.status === 'accepted'">
+                    <li class="flex">
+                        <a [routerLink]="['/chat']">{{friend.username}}</a><div>{{friend.unreadMessages}}</div>
+                    </li>
+                </ng-template>
+            </div>
+        </ul>
+    </div>
+    <hr>
+    <h2>New Requests</h2>
+    <ol>
+        <div *ngFor="let friend of friends">
+            <ng-template [ngIf]="friend.status === 'requested'">
+                <li class="request">
+                    <a [routerLink]="['/profile']">Friend request from <b>{{friend.username}}</b></a>
+                    <button ng-click="acceptRequest()" class="request">Accept</button>
+                    <button #requestDecline class="request">Decline</button>
+                </li>
+            </ng-template>
+        </div>
+    </ol>
+    <hr>
+    <form id="friendForm" autocomplete="off" onsubmit="return validateFriendForm();"> 
+        <div class="flex">
+            <input id="friendlistInput" placeholder="Add Friend to List"class="longType">
+            <button id="addFriendButton" type="submit" class="longButton">Add</button>
+        </div>
+
+    </form>
+    <script>
+        window.chatToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiSmVycnkiLCJpYXQiOjE2Njc2NzY4MTZ9.6de3Btm3Et1ZvQ1iVFNwSa_zB9XLFDXGIXfr3bxhdCo";
+        window.chatCollectionId = "b91a2173-80ce-4500-9230-444f5ec567e7";
+        window.chatServer = "https://online-lectures-cs.thi.de/chat";
+    </script>
+    <script src="../js/friends.js"></script>
+</body>
+
+</html>

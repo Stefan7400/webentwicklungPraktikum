@@ -45,6 +45,9 @@ legend {
   text-align: center;
 }
 
+button.request {
+  margin-left: 7px;
+}
 
 button {
   cursor: pointer;
@@ -60,8 +63,13 @@ button {
   background-color: #317df5;
 }
 
-a:not(ul li a):link,
-a:not(ul li a):visited {
+.request a {
+text-decoration: none;
+color: black;
+}
+
+a:not(ul li a):not(.request a ):link,
+a:not(ul li a):not(.request a):visited {
   text-decoration: none;
   color: #317df5;
 }
@@ -228,12 +236,3 @@ input[type=radio]{
   }
 
 }
-
-.errorHighlight {
-  margin: 0;
-  color: red;
-  width: 100%;
-  text-align: center;
-}
-
-

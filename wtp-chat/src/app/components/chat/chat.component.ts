@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AfterViewChecked, ElementRef, ViewChild } from '@angular/core';
+import { Message } from 'src/app/models/Message';
 
 @Component({
   selector: 'app-chat',
@@ -8,6 +9,8 @@ import { AfterViewChecked, ElementRef, ViewChild } from '@angular/core';
 })
 
 export class ChatComponent implements OnInit, AfterViewChecked {
+    public messages: Array<Message> = [];
+
     // DIV für Nachrichten (s. Template) als Kind-Element für Aufrufe (s. scrollToBottom()) nutzen
     @ViewChild('messagesDiv') private myScrollContainer: ElementRef;
 
