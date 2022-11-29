@@ -7,17 +7,28 @@
         <link rel="stylesheet" href="chat.component.css">
     </head>
     <body>
-        <h1>Chat with Tom</h1>
+        <h1>{{username}}'s chat with {{recipient}}</h1>
 
-        <a [routerLink]="['/friends']">&lt; Back</a> | <a [routerLink]="['/profile']">Profile</a> | <a [routerLink]="['/friends']" class="remove">Remove Friend</a>
+        <a [routerLink]="['/friends']">&lt; Back</a> | <a [routerLink]="['/profile']">Profile</a>
+        | <a (click)="removeFriend()" [routerLink]="['/friends']" class="remove">Remove Friend</a>
         
         <hr>
 
         <div id="chatbox" class="comBox" #messagesDiv>
-            <div *ngFor="let message of messages" class="flex">
-                <div>{{message.from}}: {{message.msg}}</div>
-                <div class="time">{{message.time}}</div>
-            </div>
+            <ng-template [ngIf]="sameLine">
+                <div *ngFor="let message of messages" class="flex">
+                    <div>{{message.from}}: {{message.msg}}</div>
+                    <div class="time">{{message.time}}</div>
+                </div>
+            </ng-template>
+            <ng-template [ngIf]="!sameLine">
+                <div *ngFor="let message of messages" class="flex">
+                    <ul class="seperatedMessage">{{message.from}}:
+                        <li>{{message.msg}}</li>
+                    </ul>
+                    <div class="time">{{message.time}}</div>
+                </div>
+            </ng-template>
         </div>
 
         <hr> 

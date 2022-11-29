@@ -57,27 +57,7 @@ export class FriendsComponent implements OnInit {
         });
     }
 
-    public addFriend(): void {
-        if (this.isValidInput()) {
-            this.backendService.friendRequest(this.addedFriendName)
-            .subscribe((ok: boolean) => {
-                if (ok) {
-                    console.log('added friend: ', this.addedFriendName);
-                } else {
-                    console.log('error while adding friend!');
-                }
-            });
-        }
-    }
-
-    public isValidInput(): boolean {
-        if (this.hasUser(this.addedFriendName) && !this.isFriend(this.addedFriendName)) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
+    
     private hasUser(username: string): boolean {
         this.backendService.userExists(username)
         .subscribe((ok: boolean) => {
@@ -104,6 +84,27 @@ export class FriendsComponent implements OnInit {
         }
         this.isInFriendlist = false;
         return false;
+    }
+
+    public isValidInput(): boolean {
+        if (this.hasUser(this.addedFriendName) && !this.isFriend(this.addedFriendName)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public addFriend(): void {
+        if (this.isValidInput()) {
+            this.backendService.friendRequest(this.addedFriendName)
+            .subscribe((ok: boolean) => {
+                if (ok) {
+                    console.log('added friend: ', this.addedFriendName);
+                } else {
+                    console.log('error while adding friend!');
+                }
+            });
+        }
     }
 
     private getFriends(): void {

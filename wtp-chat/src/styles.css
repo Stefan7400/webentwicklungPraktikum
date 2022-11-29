@@ -68,8 +68,8 @@ text-decoration: none;
 color: black;
 }
 
-a:not(ul li a):not(.request a ):link,
-a:not(ul li a):not(.request a):visited {
+a:not(ul li a):not(.request a ):not(a.remove):link,
+a:not(ul li a):not(.request a):not(a.remove):visited {
   text-decoration: none;
   color: #317df5;
 }
@@ -82,6 +82,7 @@ a:not(ul li a):hover {
 a:not(ul li a):link.remove,
 a:not(ul li a):visited.remove {
   color: #c54e53;
+  text-decoration: none;
 }
 
 .comBox {
@@ -119,6 +120,15 @@ hr {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+}
+
+ul.seperatedMessage {
+  margin: 0px;
+}
+
+ul.seperatedMessage li {
+  padding-left: 15px;
+  line-height: 8px;
 }
 
 ul {
