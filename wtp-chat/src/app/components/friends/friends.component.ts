@@ -11,11 +11,27 @@ import { Friend } from 'src/app/models/Friend';
     styleUrls: ['./friends.component.css']
 })
 export class FriendsComponent implements OnInit {
-    backendService: BackendService = new BackendService(this.http, new ContextService());
+    private backendService: BackendService = new BackendService(this.http, new ContextService());
     public friends: Array<Friend> = [];
-    public friendName : string = '';
+    public addedFriendName : string = '';
+    public userExists : boolean = false;
+    public isInFriendlist : boolean = false;
 
     constructor(private http: HttpClient) {
+    }
+
+    public ngOnInit(): void {
+        this.backendService.loadCurrentUser()
+        .subscribe((ok: User | null) => {
+            if (ok) {
+                console.log('current User found: ', ok);
+            } else {
+                console.log('User not found!');
+            }
+        });
+
+        this.getFriends();
+        this.refresh();
     }
 
     public acceptRequest(username: string): void {
@@ -42,36 +58,52 @@ export class FriendsComponent implements OnInit {
     }
 
     public addFriend(): void {
-        this.backendService.friendRequest(this.friendName)
-        .subscribe((ok: boolean) => {
-            if (ok) {
-                console.log('added friend: ', this.friendName);
-            } else {
-                console.log('error while adding friend!');
-            }
-        });
+        if (this.isValidInput()) {
+            this.backendService.friendRequest(this.addedFriendName)
+            .subscribe((ok: boolean) => {
+                if (ok) {
+                    console.log('added friend: ', this.addedFriendName);
+                } else {
+                    console.log('error while adding friend!');
+                }
+            });
+        }
     }
 
-    public ngOnInit(): void {
-        this.backendService.loadCurrentUser()
-        .subscribe((ok: User | null) => {
+    public isValidInput(): boolean {
+        if (this.hasUser(this.addedFriendName) && !this.isFriend(this.addedFriendName)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private hasUser(username: string): boolean {
+        this.backendService.userExists(username)
+        .subscribe((ok: boolean) => {
             if (ok) {
-                console.log('current User found: ', ok);
+                console.log('user exists: ', username);
+                this.userExists = true;
+                return true;
             } else {
-                console.log('User not found!');
+                console.log('user does not exist!');
+                this.userExists = false;
+                return false;
             }
         });
+        this.userExists = false
+        return false;
+    }
 
-        
-        this.friends[0] = new Friend("Tom", "accepted", 5);
-        this.friends[1] = new Friend("Jerry", "accepted", 1);
-        this.friends[2] = new Friend("Lena", "requested", 3);
-        this.friends[3] = new Friend("Marvin", "accepted", 10);
-        this.friends[4] = new Friend("ABC", "requested", 12);
-        
-
-        // this.getFriends();
-        this.refresh();
+    private isFriend(username: string): boolean {
+        for (let i=0; i < this.friends.length; i++) {
+            if (this.friends[i].username === username) {
+                this.isInFriendlist = true;
+                return true;
+            }
+        }
+        this.isInFriendlist = false;
+        return false;
     }
 
     private getFriends(): void {
@@ -106,7 +138,6 @@ export class FriendsComponent implements OnInit {
     }
 
     private refresh() {
-        //TODO
         setInterval("this");
     }
 

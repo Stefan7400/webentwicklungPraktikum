@@ -39,12 +39,12 @@
         </div>
     </ol>
     <hr>
-    <form id="friendForm" autocomplete="off"> 
-        <div class="flex">
-            <input #addFriend [(ngModel)]="friendName" id="friendlistInput" placeholder="Add Friend to List"class="longType">
-            <button (click)="addFriend()" id="addFriendButton" type="submit" class="longButton">Add</button>
-        </div>
-    </form>
+    <div class="flex">
+        <input (keyup)="isValidInput()" (keyup.enter)="addFriend()" [(ngModel)]="addedFriendName" id="friendlistInput" placeholder="Add Friend to List"class="longType">
+        <button (click)="addFriend()" id="addFriendButton" type="submit" class="longButton">Add</button>
+    </div>
+    <p class="errorHighlight" *ngIf="userExists">User does not exist!</p>
+    <p class="errorHighlight" *ngIf="isInFriendlist">User is already your friend!</p>
 </body>
 
 </html>
