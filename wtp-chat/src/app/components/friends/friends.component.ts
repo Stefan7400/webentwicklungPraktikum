@@ -12,14 +12,44 @@ import { Friend } from 'src/app/models/Friend';
 })
 export class FriendsComponent implements OnInit {
     backendService: BackendService = new BackendService(this.http, new ContextService());
-    private curUser: User = new User;
     public friends: Array<Friend> = [];
+    public friendName : string = '';
 
     constructor(private http: HttpClient) {
     }
 
-    public acceptRequest(): void {
-        this.friends[2].status = "accepted";
+    public acceptRequest(username: string): void {
+        this.backendService.acceptFriendRequest(username)
+        .subscribe((ok: boolean) => {
+            if (ok) {
+                console.log('accepted request: ', username);
+            } else {
+                console.log('error while accepting the request!');
+            }
+        });
+
+    }
+
+    public declineRequest(username: string): void {
+        this.backendService.dismissFriendRequest(username)
+        .subscribe((ok: boolean) => {
+            if (ok) {
+                console.log('declined request: ', username);
+            } else {
+                console.log('error while declining the request!');
+            }
+        });
+    }
+
+    public addFriend(): void {
+        this.backendService.friendRequest(this.friendName)
+        .subscribe((ok: boolean) => {
+            if (ok) {
+                console.log('added friend: ', this.friendName);
+            } else {
+                console.log('error while adding friend!');
+            }
+        });
     }
 
     public ngOnInit(): void {
@@ -27,23 +57,21 @@ export class FriendsComponent implements OnInit {
         .subscribe((ok: User | null) => {
             if (ok) {
                 console.log('current User found: ', ok);
-                this.curUser = ok;
             } else {
                 console.log('User not found!');
             }
         });
 
-        /*
+        
         this.friends[0] = new Friend("Tom", "accepted", 5);
         this.friends[1] = new Friend("Jerry", "accepted", 1);
         this.friends[2] = new Friend("Lena", "requested", 3);
         this.friends[3] = new Friend("Marvin", "accepted", 10);
         this.friends[4] = new Friend("ABC", "requested", 12);
-        */
+        
 
-        this.getFriends();
-
-        //TODO buttons and refresh
+        // this.getFriends();
+        this.refresh();
     }
 
     private getFriends(): void {
@@ -78,7 +106,8 @@ export class FriendsComponent implements OnInit {
     }
 
     private refresh() {
-        // setInterval(...)
+        //TODO
+        setInterval("this");
     }
 
 }
