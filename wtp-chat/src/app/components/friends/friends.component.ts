@@ -113,7 +113,7 @@ export class FriendsComponent implements OnInit {
 
     public addFriend(): void {
         // TODO: says user non existent???
-        // if (this.isValidInput()) {
+        if (this.isValidInput()) {
             this.backendService.friendRequest(this.addedFriendName)
             .subscribe((ok: boolean) => {
                 if (ok) {
@@ -123,11 +123,9 @@ export class FriendsComponent implements OnInit {
                 }
             });
             this.addedFriendName = '';
-        /*
         } else {
             console.log('invalid input! did not add friend');
         }
-        */
     }
 
     public getFriends(): void {
