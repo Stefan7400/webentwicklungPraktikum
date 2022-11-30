@@ -19,7 +19,7 @@
             <div *ngFor="let friend of friends">
                 <ng-template [ngIf]="friend.status !== 'requested'">
                     <li class="flex">
-                        <a [routerLink]="['/chat']">{{friend.username}}</a>
+                        <a (click)="openChat(friend.username)" [routerLink]="['/chat']">{{friend.username}}</a>
                         <div>{{friend.unreadMessages}}</div>
                     </li>
                 </ng-template>
@@ -44,7 +44,7 @@
         <input (keyup)="isValidInput()" (keyup.enter)="addFriend()" [(ngModel)]="addedFriendName" id="friendlistInput" placeholder="Add Friend to List"class="longType">
         <button (click)="addFriend()" id="addFriendButton" type="submit" class="longButton">Add</button>
     </div>
-    <p class="errorHighlight" *ngIf="!userExists && !isSelf">User does not exist!</p>
+    <p class="errorHighlight" *ngIf="(addedFriendName !== '') && !userExists && !isSelf">User does not exist!</p>
     <p class="errorHighlight" *ngIf="isSelf">Cannot add yourself!</p>
     <p class="errorHighlight" *ngIf="isFriend">User is already your friend!</p>
 </body>

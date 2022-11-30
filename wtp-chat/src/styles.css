@@ -85,6 +85,10 @@ a:not(ul li a):visited.remove {
   text-decoration: none;
 }
 
+.remove {
+  color: red;
+}
+
 .comBox {
   background-color: #ffff;
   border-radius: 5px;

@@ -10,7 +10,7 @@
         <h1>{{username}}'s chat with {{recipient}}</h1>
 
         <a [routerLink]="['/friends']">&lt; Back</a> | <a [routerLink]="['/profile']">Profile</a>
-        | <a (click)="removeFriend()" [routerLink]="['/friends']" class="remove">Remove Friend</a>
+        | <a (click)="removeFriend()" class="remove">Remove Friend</a>
         
         <hr>
 
@@ -18,7 +18,7 @@
             <ng-template [ngIf]="sameLine">
                 <div *ngFor="let message of messages" class="flex">
                     <div>{{message.from}}: {{message.msg}}</div>
-                    <div class="time">{{message.time}}</div>
+                    <div class="time">{{message.time | date:'dd.MM.yy hh:mm:ss'}}</div>
                 </div>
             </ng-template>
             <ng-template [ngIf]="!sameLine">
@@ -26,7 +26,7 @@
                     <ul class="seperatedMessage">{{message.from}}:
                         <li>{{message.msg}}</li>
                     </ul>
-                    <div class="time">{{message.time}}</div>
+                    <div class="time">{{message.time | date:'dd.MM.yy hh:mm:ss'}}</div>
                 </div>
             </ng-template>
         </div>
@@ -34,8 +34,8 @@
         <hr> 
 
         <div class="flex">
-            <input id="message" class="longType" name="message" type="text" placeholder="New Message">
-            <button id="sendMessage" class="longButton">Send</button>
+            <input (keyup.enter)="sendMessage()" [(ngModel)]="inputMessage" id="message" class="longType" name="message" type="text" placeholder="New Message">
+            <button (click)="sendMessage()" id="sendMessage" class="longButton">Send</button>
         </div>
     </body>
 </html>

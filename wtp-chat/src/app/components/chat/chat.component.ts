@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AfterViewChecked, ElementRef, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { Message } from 'src/app/models/Message';
-import { User } from 'src/app/models/User';
 import { BackendService } from 'src/app/services/backend.service';
+import { ContextService } from 'src/app/services/context.service';
 import { IntervalService } from 'src/app/services/interval.service';
 
 @Component({
@@ -12,16 +13,18 @@ import { IntervalService } from 'src/app/services/interval.service';
 })
 
 export class ChatComponent implements OnInit, AfterViewChecked {
+[x: string]: any;
     public messages: Array<Message> = [];
     public sameLine: boolean = false;
     public username: string = "";
     public recipient: string = "";
+    public inputMessage: string = "";
 
     // DIV für Nachrichten (s. Template) als Kind-Element für Aufrufe (s. scrollToBottom()) nutzen
     @ViewChild('messagesDiv') private myScrollContainer: ElementRef;
 
-    public constructor(private backendService: BackendService, private intervalService: IntervalService) {
-        intervalService.setInterval("chat", () => this.getMessages()); 
+    public constructor(private backendService: BackendService, private contextService: ContextService,
+                        private intervalService: IntervalService, private router: Router) {
         this.myScrollContainer = new ElementRef(null);
     }
 
@@ -34,23 +37,22 @@ export class ChatComponent implements OnInit, AfterViewChecked {
      * Scrollen ans Ende.
      */
     private scrollToBottom(): void {
+        // TODO: scroll to bottom not working
         try {
             this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollHeight;
         } catch(err) { 
         }                 
     }
 
-    private isSameLine(): boolean {
+    private getIsSameLine(): void {
         // TODO: Entscheidung 2 oder 1-zeilige Chatnachrichten (s. SettingsComponent)
-        // this.sameLine = true | false;
-        return false;
+        this.sameLine = true;
     }
     
     private getMessages(): void {
-        this.backendService.listMessages("Tom")
+        this.backendService.listMessages(this.recipient)
         .subscribe((ok: Array<Message>) => {
             if (ok) {
-                console.log('loaded messages: ', ok);
                 this.messages = ok;
             } else {
                 console.log('messages couldn\'t be loaded');
@@ -58,34 +60,43 @@ export class ChatComponent implements OnInit, AfterViewChecked {
         });
     }
 
-
-
     public ngOnInit(): void {
-        // TODO: "15.09.2021 15:00:46   https://angular.io/api/common/DatePipe
-        // TODO: send message
+        this.username = this.contextService.loggedInUsername;
+        this.recipient = this.contextService.currentChatUsername;
 
-        this.backendService.loadCurrentUser()
-        .subscribe((ok: User | null) => {
-            if (ok) {
-                console.log('current User found: ', ok);
-                this.username = ok.username;
-            } else {
-                console.log('User not found!');
-            }
-        });
-
-        /*
-        this.messages[0] = new Message("Hallo", "Tom", 1);
-        this.messages[1] = new Message("Bye", "Jerry", 2);
-        this.messages[2] = new Message("Yes", "Tom", 0);
-        */
-
-        this.getMessages();
-        this.scrollToBottom();
+        this.getIsSameLine();
+        this.refresh();
     }
 
     public removeFriend() {
-        // TODO: Bestätigung mit js confirm(), danach -> [routerLink]="['/friends']"
+        if(confirm('Do you really want to remove ' + this.recipient + ' as a friend?')) {
+            this.backendService.removeFriend(this.recipient)
+            .subscribe((ok: boolean) => {
+                if (ok) {
+                    console.log('removed friend ', this.recipient);
+                } else {
+                    console.log('error while removing!');
+                }
+            });
+            this.router.navigate(['/friends']);
+        }
+    }
+
+    public sendMessage() {
+        this.backendService.sendMessage(this.recipient, this.inputMessage)
+        .subscribe((ok: boolean) => {
+            if (ok) {
+                console.log('sent message: ', this.inputMessage);
+            } else {
+                console.log('error while sending message!');
+            }
+        });
+        this.inputMessage = '';
+    }
+
+    private refresh() {
+        this.intervalService.setInterval("chat", () => this.getMessages());
+        this.intervalService.setInterval("chat", () => this.scrollToBottom());
     }
 
 }

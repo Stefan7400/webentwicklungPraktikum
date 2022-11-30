@@ -3,6 +3,7 @@ import { IntervalService } from 'src/app/services/interval.service';
 import { BackendService } from 'src/app/services/backend.service';
 import { User } from 'src/app/models/User';
 import { Friend } from 'src/app/models/Friend';
+import { ContextService } from 'src/app/services/context.service';
 
 @Component({
     selector: 'app-friends',
@@ -12,26 +13,31 @@ import { Friend } from 'src/app/models/Friend';
 export class FriendsComponent implements OnInit {
     public friends: Array<Friend> = [];
     public addedFriendName : string = '';
-    public userExists : boolean = false;
+    public userExists : boolean = true;
     public isSelf : boolean = false;
     public isFriend : boolean = false;
-    private curUser : any;
 
-    public constructor(private backendService: BackendService, private intervalService: IntervalService) {
-        intervalService.setInterval("friends", () => this.getFriends());
+    public constructor(private backendService: BackendService, private contextService: ContextService,
+            private intervalService: IntervalService) {
     }
+
+    // TODO: doesn't refresh on page reload
 
     public ngOnInit(): void {
         this.backendService.loadCurrentUser()
         .subscribe((ok: User | null) => {
             if (ok) {
-                this.curUser = ok;
+                this.contextService.loggedInUsername = ok.username;
             } else {
                 console.log('User not found!');
             }
         });
 
-        this.getFriends();
+        this.refresh();
+    }
+
+    public openChat(username: string): void {
+        this.contextService.currentChatUsername = username;
     }
 
     public acceptRequest(username: string): void {
@@ -58,7 +64,7 @@ export class FriendsComponent implements OnInit {
     }
 
     private getIsSelf(username: string): void {
-        if(this.curUser.username == username) {
+        if(this.contextService.loggedInUsername == username) {
             this.isSelf = true;
         } else {
             this.isSelf = false;
@@ -68,7 +74,6 @@ export class FriendsComponent implements OnInit {
     private getUserExists(username: string): void {
         this.backendService.userExists(username)
         .subscribe((ok: boolean) => {
-            // TODO: skips this when adding??
             console.log('getUserExists: ', ok);
             if (ok) {
                 console.log('user exists: ', username);
@@ -107,8 +112,8 @@ export class FriendsComponent implements OnInit {
     }
 
     public addFriend(): void {
-        console.log(this.addedFriendName);
-        if (this.isValidInput()) {
+        // TODO: says user non existent???
+        // if (this.isValidInput()) {
             this.backendService.friendRequest(this.addedFriendName)
             .subscribe((ok: boolean) => {
                 if (ok) {
@@ -117,9 +122,12 @@ export class FriendsComponent implements OnInit {
                     console.log('error while adding friend!');
                 }
             });
+            this.addedFriendName = '';
+        /*
         } else {
             console.log('invalid input! did not add friend');
         }
+        */
     }
 
     public getFriends(): void {
@@ -133,6 +141,7 @@ export class FriendsComponent implements OnInit {
                 for (let i=0; i < this.friends.length; i++) {
                     this.friends[i].unreadMessages = 0;
                 }
+                console.log(this.friends);
             } else {
                 console.log('friends couldn\'t be loaded');
             }
@@ -152,6 +161,10 @@ export class FriendsComponent implements OnInit {
                 console.log('message count couldn\'t be loaded');
             }
         }); 
+    }
+
+    private refresh() {
+        this.intervalService.setInterval("friends", () => this.getFriends());
     }
 
 }
