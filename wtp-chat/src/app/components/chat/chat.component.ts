@@ -66,6 +66,8 @@ export class ChatComponent implements OnInit, AfterViewChecked {
 
         this.getIsSameLine();
         this.refresh();
+
+        this.scrollToBottom();
     }
 
     public removeFriend() {
@@ -96,7 +98,6 @@ export class ChatComponent implements OnInit, AfterViewChecked {
 
     private refresh() {
         this.intervalService.setInterval("chat", () => this.getMessages());
-        this.intervalService.setInterval("chat", () => this.scrollToBottom());
     }
 
 }
