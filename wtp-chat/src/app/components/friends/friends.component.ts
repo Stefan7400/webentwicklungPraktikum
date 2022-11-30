@@ -21,8 +21,6 @@ export class FriendsComponent implements OnInit {
             private intervalService: IntervalService) {
     }
 
-    // TODO: doesn't refresh on page reload
-
     public ngOnInit(): void {
         this.backendService.loadCurrentUser()
         .subscribe((ok: User | null) => {
@@ -34,6 +32,10 @@ export class FriendsComponent implements OnInit {
         });
 
         this.refresh();
+    }
+
+    public ngOnDestroy(): void {
+        this.intervalService.clearIntervals();
     }
 
     public openChat(username: string): void {
