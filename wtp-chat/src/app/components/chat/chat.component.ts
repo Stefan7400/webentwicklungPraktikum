@@ -3,7 +3,7 @@ import { AfterViewChecked, ElementRef, ViewChild } from '@angular/core';
 import { Message } from 'src/app/models/Message';
 import { User } from 'src/app/models/User';
 import { BackendService } from 'src/app/services/backend.service';
-import { ContextService } from 'src/app/services/context.service';
+import { IntervalService } from 'src/app/services/interval.service';
 
 @Component({
   selector: 'app-chat',
@@ -20,7 +20,8 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     // DIV für Nachrichten (s. Template) als Kind-Element für Aufrufe (s. scrollToBottom()) nutzen
     @ViewChild('messagesDiv') private myScrollContainer: ElementRef;
 
-    public constructor(private backendService: BackendService) { 
+    public constructor(private backendService: BackendService, private intervalService: IntervalService) {
+        intervalService.setInterval("chat", () => this.getMessages()); 
         this.myScrollContainer = new ElementRef(null);
     }
 
@@ -41,7 +42,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
 
     private isSameLine(): boolean {
         // TODO: Entscheidung 2 oder 1-zeilige Chatnachrichten (s. SettingsComponent)
-        // this.sameLine;
+        // this.sameLine = true | false;
         return false;
     }
     
@@ -67,6 +68,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
         .subscribe((ok: User | null) => {
             if (ok) {
                 console.log('current User found: ', ok);
+                this.username = ok.username;
             } else {
                 console.log('User not found!');
             }
@@ -80,15 +82,10 @@ export class ChatComponent implements OnInit, AfterViewChecked {
 
         this.getMessages();
         this.scrollToBottom();
-        this.refresh();
     }
 
     public removeFriend() {
         // TODO: Bestätigung mit js confirm(), danach -> [routerLink]="['/friends']"
-    }
-
-    private refresh() {
-        setInterval("this");
     }
 
 }
