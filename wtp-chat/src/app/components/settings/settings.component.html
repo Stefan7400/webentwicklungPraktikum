@@ -1,1 +1,60 @@
-<h1>SettingsComponent works!</h1>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1-0, user-scalable=no">
+    <title>Settings</title>
+    <link rel="stylesheet" href="settings.component.css">
+</head>
+
+<body>
+    <h1>Profile Settings</h1>
+    <fieldset class="long">
+        <legend>Base Data</legend>
+        <form #nameForm="ngForm" name="nameForm">
+            <div>
+                <label>First Name</label>
+                <input placeholder="Your name" [(ngModel)]="firstName" name="firstName">
+            </div>
+            <div>
+                <label>Last Name</label>
+                <input placeholder="Your surname" [(ngModel)]="lastName" name="lastName">
+            </div>
+            <label>Coffee or Tea?</label>
+            <select name="coffeOrTea" [(ngModel)]="coffeOrTea">
+                <option value="coffee" [ngValue]="1" [selected]="coffeOrTea == '1'">Coffee</option>
+                <option value="tea" [ngValue]="2"  [selected]="coffeOrTea == '2'">Tea</option>
+                <option value="nor" [ngValue]="3" [selected]="coffeOrTea == '3'">Neither nor</option>
+            </select>
+        </form>
+    </fieldset>
+    <fieldset class="long">
+        <legend>Tell Something About You</legend>
+        <textarea name="about" #about="ngModel" [(ngModel)]="description" placeholder="Leave a comment" ></textarea>
+    </fieldset>
+
+    <fieldset class="long">
+        <legend>Preferred Chat Layout</legend>
+        <div>
+            <div class="flex">
+                <input type="radio" id="oneLine" name="preferredChatLayout" [(ngModel)]="layout">
+                <label for="oneLine">Username and message in one line</label>
+            </div>
+        </div>
+        <div>
+            <div class="flex">
+                <input type="radio" id="sepLine" name="preferredChatLayout" [(ngModel)]="layout">
+                <label for="sepLine">Username and message in separate line</label>
+            </div>
+        </div>
+    </fieldset>
+    <div class="center">
+        <a [routerLink]="'/friends'" >
+            <button>Cancel</button>
+        </a>
+        <button class="blueButton" (click)="saveProfile()">Save</button>
+    </div>
+</body>
+
+</html>

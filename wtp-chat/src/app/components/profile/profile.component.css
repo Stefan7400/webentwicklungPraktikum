@@ -1,0 +1,23 @@
+@import "../../../styles.css";
+
+img.profile {
+    width: 30%;
+    height: 30%;
+    border-radius: 0;
+    margin-left: 0;
+    margin-right: 2%;
+}
+
+div.comBox.profile {
+    line-height: 1.2;
+    width: 60%;
+    padding-left: 25px;
+}
+
+
+@media(max-width: 700px) {
+    div.comBox.profile {
+        display: block;
+        width: 100%;
+    }
+}
