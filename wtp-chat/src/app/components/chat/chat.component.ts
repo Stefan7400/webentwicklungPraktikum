@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AfterViewChecked, ElementRef, ViewChild } from '@angular/core';
 import { Message } from 'src/app/models/Message';
+import { User } from 'src/app/models/User';
 import { BackendService } from 'src/app/services/backend.service';
 import { ContextService } from 'src/app/services/context.service';
 
@@ -11,21 +12,15 @@ import { ContextService } from 'src/app/services/context.service';
 })
 
 export class ChatComponent implements OnInit, AfterViewChecked {
-    // private backendService: BackendService = new BackendService(this.http, new ContextService());
     public messages: Array<Message> = [];
     public sameLine: boolean = false;
     public username: string = "";
     public recipient: string = "";
 
-    /*
-    constructor(private http: HttpClient) {
-    }
-    */
-
     // DIV für Nachrichten (s. Template) als Kind-Element für Aufrufe (s. scrollToBottom()) nutzen
     @ViewChild('messagesDiv') private myScrollContainer: ElementRef;
 
-    public constructor() { 
+    public constructor(private backendService: BackendService) { 
         this.myScrollContainer = new ElementRef(null);
     }
 
@@ -51,8 +46,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     }
     
     private getMessages(): void {
-        /*
-        this.backendService.listMessages()
+        this.backendService.listMessages("Tom")
         .subscribe((ok: Array<Message>) => {
             if (ok) {
                 console.log('loaded messages: ', ok);
@@ -61,7 +55,6 @@ export class ChatComponent implements OnInit, AfterViewChecked {
                 console.log('messages couldn\'t be loaded');
             }
         });
-        */
     }
 
 
@@ -70,9 +63,20 @@ export class ChatComponent implements OnInit, AfterViewChecked {
         // TODO: "15.09.2021 15:00:46   https://angular.io/api/common/DatePipe
         // TODO: send message
 
+        this.backendService.loadCurrentUser()
+        .subscribe((ok: User | null) => {
+            if (ok) {
+                console.log('current User found: ', ok);
+            } else {
+                console.log('User not found!');
+            }
+        });
+
+        /*
         this.messages[0] = new Message("Hallo", "Tom", 1);
         this.messages[1] = new Message("Bye", "Jerry", 2);
         this.messages[2] = new Message("Yes", "Tom", 0);
+        */
 
         this.getMessages();
         this.scrollToBottom();

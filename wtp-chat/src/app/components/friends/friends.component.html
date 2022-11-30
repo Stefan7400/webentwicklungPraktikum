@@ -17,9 +17,10 @@
     <div class="comBox">
         <ul>
             <div *ngFor="let friend of friends">
-                <ng-template [ngIf]="friend.status === 'accepted'">
+                <ng-template [ngIf]="friend.status !== 'requested'">
                     <li class="flex">
-                        <a [routerLink]="['/chat']">{{friend.username}}</a><div>{{friend.unreadMessages}}</div>
+                        <a [routerLink]="['/chat']">{{friend.username}}</a>
+                        <div>{{friend.unreadMessages}}</div>
                     </li>
                 </ng-template>
             </div>
@@ -43,8 +44,8 @@
         <input (keyup)="isValidInput()" (keyup.enter)="addFriend()" [(ngModel)]="addedFriendName" id="friendlistInput" placeholder="Add Friend to List"class="longType">
         <button (click)="addFriend()" id="addFriendButton" type="submit" class="longButton">Add</button>
     </div>
-    <p class="errorHighlight" *ngIf="userExists">User does not exist!</p>
-    <p class="errorHighlight" *ngIf="isInFriendlist">User is already your friend!</p>
+    <p class="errorHighlight" *ngIf="!userExists">User does not exist!</p>
+    <p class="errorHighlight" *ngIf="isFriend">User is already your friend!</p>
 </body>
 
 </html>

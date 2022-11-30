@@ -4,6 +4,8 @@ import { ContextService } from 'src/app/services/context.service';
 import { BackendService } from 'src/app/services/backend.service';
 import { User } from 'src/app/models/User';
 import { Friend } from 'src/app/models/Friend';
+import { timeout } from 'rxjs';
+import { IntervalService } from 'src/app/services/interval.service';
 
 @Component({
     selector: 'app-friends',
@@ -11,13 +13,13 @@ import { Friend } from 'src/app/models/Friend';
     styleUrls: ['./friends.component.css']
 })
 export class FriendsComponent implements OnInit {
-    private backendService: BackendService = new BackendService(this.http, new ContextService());
     public friends: Array<Friend> = [];
     public addedFriendName : string = '';
     public userExists : boolean = false;
-    public isInFriendlist : boolean = false;
+    public isFriend : boolean = false;
 
-    constructor(private http: HttpClient) {
+    public constructor(private backendService: BackendService, private intervalService: IntervalService) {
+        intervalService.setInterval("friends", () => this.getFriends());
     }
 
     public ngOnInit(): void {
@@ -31,7 +33,6 @@ export class FriendsComponent implements OnInit {
         });
 
         this.getFriends();
-        this.refresh();
     }
 
     public acceptRequest(username: string): void {
@@ -58,36 +59,37 @@ export class FriendsComponent implements OnInit {
     }
 
     
-    private hasUser(username: string): boolean {
+    private getUserExists(username: string): void {
         this.backendService.userExists(username)
         .subscribe((ok: boolean) => {
+            console.log(ok);
             if (ok) {
                 console.log('user exists: ', username);
                 this.userExists = true;
-                return true;
             } else {
                 console.log('user does not exist!');
                 this.userExists = false;
-                return false;
             }
         });
-        this.userExists = false
-        return false;
+        console.log('hasUser error');   //TODO bugged
+        this.userExists = false;
     }
 
-    private isFriend(username: string): boolean {
+    private getIsFriend(username: string): void {
+        console.log('isFriend');
         for (let i=0; i < this.friends.length; i++) {
             if (this.friends[i].username === username) {
-                this.isInFriendlist = true;
-                return true;
+                console.log('already your friend');
+                this.isFriend = true;
             }
         }
-        this.isInFriendlist = false;
-        return false;
+        this.isFriend = false;
     }
 
     public isValidInput(): boolean {
-        if (this.hasUser(this.addedFriendName) && !this.isFriend(this.addedFriendName)) {
+        this.getUserExists(this.addedFriendName);
+        this.getIsFriend(this.addedFriendName);
+        if (this.userExists && !this.isFriend) {
             return true;
         } else {
             return false;
@@ -95,6 +97,7 @@ export class FriendsComponent implements OnInit {
     }
 
     public addFriend(): void {
+        console.log(this.addedFriendName);
         if (this.isValidInput()) {
             this.backendService.friendRequest(this.addedFriendName)
             .subscribe((ok: boolean) => {
@@ -104,15 +107,19 @@ export class FriendsComponent implements OnInit {
                     console.log('error while adding friend!');
                 }
             });
+        } else {
+            console.log('not valid input! did not add friend');
         }
     }
 
-    private getFriends(): void {
+    public getFriends(): void {
         this.backendService.loadFriends()
         .subscribe((ok: Array<Friend>) => {
             if (ok) {
                 console.log('loaded friends: ', ok);
-                this.friends = ok;
+                for(let receivedFriend of ok){
+                    this.friends.push(receivedFriend);
+                }
                 for (let i=0; i < this.friends.length; i++) {
                     this.friends[i].unreadMessages = 0;
                 }
@@ -120,6 +127,8 @@ export class FriendsComponent implements OnInit {
                 console.log('friends couldn\'t be loaded');
             }
         });
+
+        console.log(this.friends);
 
         this.backendService.unreadMessageCounts()
         .subscribe((ok: Map<string, number>) => {
@@ -135,11 +144,7 @@ export class FriendsComponent implements OnInit {
             } else {
                 console.log('message count couldn\'t be loaded');
             }
-        });
-    }
-
-    private refresh() {
-        setInterval("this");
+        }); 
     }
 
 }
