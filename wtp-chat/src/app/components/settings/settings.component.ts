@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BackendService } from "../../services/backend.service";
 import { ContextService } from "../../services/context.service"
-import { Router } from "@angular/router";
 import { Profile } from "../../models/Profile";
 import { User } from "../../models/User";
 
@@ -24,7 +23,6 @@ export class SettingsComponent implements OnInit {
     public constructor(private backendService: BackendService, private contextService: ContextService) { }
 
     public ngOnInit(): void {
-        // TODO: radio button on oneLine and Select
         // TODO: preselect neither nor for coffeOrTea
         // TODO: if reload profile page dont log out 
         this.backendService.loadCurrentUser().subscribe((user) => {
@@ -48,7 +46,6 @@ export class SettingsComponent implements OnInit {
     }
 
     public saveProfile(): void {
-        // prolly the utmost unefficient way to do this, but my brain be matsch
         this.currentUserProfile.firstName = this.firstName;
         this.currentUserProfile.lastName = this.lastName;
         this.currentUserProfile.coffeeOrTea = this.coffeOrTea;

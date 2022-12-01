@@ -9,30 +9,27 @@
 </head>
 
 <body>
-    <h1>Profile of Tom</h1>
+    <h1>Profile of {{username}}</h1>
 
-    <a [routerLink]="'/chat'" >&lt; Back to chat</a>
+    <a [routerLink]="'/chat'">&lt; Back to chat</a>
     <label> | </label>
     <a [routerLink]="'/friends'" class="remove">Remove Friend</a>
     <div class="flex">
         <img class="profile" src="../../../assets/images/profile.png" alt="profile image">
         <div class="comBox profile">
-            <p>
-                Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt
-                ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo
-                dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
-                Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut
-                labore
-                et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea
-                rebum.
-                Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+            <p [(ngModel)]="description">
+                {{description}}
+            </p>
+            <p *ngIf="!description">
+                Hi, my name is {{username}}!
             </p>
 
             <dl>
                 <dt>Coffee or Tea?</dt>
-                <dd>Tea</dd>
+                <dd>{{coffeOrTea}}</dd>
                 <dt>Name</dt>
-                <dd>Thomas</dd>
+                <dd>{{firstName}} {{lastName}}</dd>
+                <dd *ngIf="!firstName">{{username}}</dd>
             </dl>
         </div>
     </div>
