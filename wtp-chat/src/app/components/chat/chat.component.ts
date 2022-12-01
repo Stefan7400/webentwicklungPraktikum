@@ -105,6 +105,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
         this.backendService.listMessages(this.recipient)
         .subscribe((ok: Array<Message>) => {
             if (ok) {
+                this.messages = [];
                 for (let message of ok) {
                     this.messages.push(message);
                 }
