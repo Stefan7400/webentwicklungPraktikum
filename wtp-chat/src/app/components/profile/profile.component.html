@@ -13,7 +13,7 @@
 
     <a [routerLink]="'/chat'">&lt; Back to chat</a>
     <label> | </label>
-    <a [routerLink]="'/friends'" class="remove">Remove Friend</a>
+    <a [routerLink]="'/friends'" class="remove" (click)="removeFriend()">Remove Friend</a>
     <div class="flex">
         <img class="profile" src="../../../assets/images/profile.png" alt="profile image">
         <div class="comBox profile">

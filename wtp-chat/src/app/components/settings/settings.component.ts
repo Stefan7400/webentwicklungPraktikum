@@ -23,8 +23,6 @@ export class SettingsComponent implements OnInit {
     public constructor(private backendService: BackendService, private contextService: ContextService) { }
 
     public ngOnInit(): void {
-        // TODO: preselect neither nor for coffeOrTea
-        // TODO: if reload profile page dont log out 
         this.backendService.loadCurrentUser().subscribe((user) => {
             if (user != null) {
                 this.contextService.loggedInUsername = user.username;
@@ -56,7 +54,6 @@ export class SettingsComponent implements OnInit {
                 console.log("saving sucessfull, new data: ", this.currentUserProfile);
             } else {
                 console.log("error while saving profile");
-                // TODO: (maybe give alert)
             }
         });
     }

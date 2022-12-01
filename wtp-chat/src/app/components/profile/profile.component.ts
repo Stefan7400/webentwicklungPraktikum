@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BackendService } from "../../services/backend.service";
 import { ContextService } from "../../services/context.service"
-import { Profile } from "../../models/Profile";
 import { User } from "../../models/User";
 
 @Component({
@@ -22,7 +21,7 @@ export class ProfileComponent implements OnInit {
 
     public ngOnInit(): void {
 
-       this.username = this.contextService.currentChatUsername;
+        this.username = this.contextService.currentChatUsername;
 
         this.backendService.loadUser(this.username).subscribe((user) => {
             if (user != null) {
@@ -32,21 +31,31 @@ export class ProfileComponent implements OnInit {
                 const parsedUser = JSON.parse(JSON.stringify(this.currentUser));
                 this.firstName = parsedUser.firstName;
                 this.lastName = parsedUser.lastName;
-                if(parsedUser.coffeeOrTea == 1) {
+                this.description = parsedUser.description;
+                if (parsedUser.coffeeOrTea == 1) {
                     this.coffeOrTea = "Coffee";
-                } else if(parsedUser.coffeeOrTea == 2) {
+                } else if (parsedUser.coffeeOrTea == 2) {
                     this.coffeOrTea = "Tea";
                 } else {
                     this.coffeOrTea = "neither";
                 }
-                //this.coffeOrTea = parsedUser.coffeeOrTea;
-
-                this.description = parsedUser.description;
-                
             } else {
                 console.log("Current User not found!");
             }
         });
+    }
+
+    public removeFriend(): void {
+
+        if (confirm("Are you sure, you want to remove " + this.username + " from your friend list?")) {
+            this.backendService.removeFriend(this.username).subscribe((valid) => {
+                if (valid) {
+                    console.log("user " + this.username + " removed!");
+                } else {
+                    console.log("error while removing friend");
+                }
+            });
+        }
     }
 
 }
