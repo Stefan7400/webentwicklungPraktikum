@@ -25,10 +25,13 @@ export class SettingsComponent implements OnInit {
         // TODO: radio button on oneLine and Select
         // TODO: preselect neither nor for coffeOrTea
         // TODO: load user profile and set data accordingly
-        // TODO: if reload profile page dont log out 
+        // TODO: if reload profile page dont log out
         this.backendService.loadCurrentUser().subscribe((user) => {
             if (user != null) {
                 this.contextService.loggedInUsername = user.username;
+
+                const parsed = JSON.parse(JSON.stringify(user));
+                this.firstName = parsed.firstName;
                 console.log("Current User is: ", user);
                 // assign values, but cant get values cus subscribe only gives me a User not an ArrayBuffer (which is where all da good stuff is)
             } else {
