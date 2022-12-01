@@ -5,6 +5,7 @@ import { Router } from "@angular/router";
 import { Profile } from "../../models/Profile";
 import { User } from "../../models/User";
 
+
 @Component({
     selector: 'app-settings',
     templateUrl: './settings.component.html',
@@ -39,6 +40,7 @@ export class SettingsComponent implements OnInit {
                 this.coffeOrTea = parsedUser.coffeeOrTea;
                 this.description = parsedUser.description;
                 this.layout = parsedUser.layout;
+
             } else {
                 console.log("Current User not found!");
             }

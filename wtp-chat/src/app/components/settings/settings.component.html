@@ -36,18 +36,20 @@
 
     <fieldset class="long">
         <legend>Preferred Chat Layout</legend>
+        <form #layoutForm="ngForm">
         <div>
             <div class="flex">
-                <input type="radio" id="oneLine" name="preferredChatLayout" [(ngModel)]="layout">
+                <input type="radio" id="oneLine" value="1" name="preferredChatLayout" [(ngModel)]="layout">
                 <label for="oneLine">Username and message in one line</label>
             </div>
         </div>
         <div>
             <div class="flex">
-                <input type="radio" id="sepLine" name="preferredChatLayout" [(ngModel)]="layout">
+                <input type="radio" id="sepLine" value="2" name="preferredChatLayout" [(ngModel)]="layout">
                 <label for="sepLine">Username and message in separate line</label>
             </div>
         </div>
+    </form>
     </fieldset>
     <div class="center">
         <a [routerLink]="'/friends'" >

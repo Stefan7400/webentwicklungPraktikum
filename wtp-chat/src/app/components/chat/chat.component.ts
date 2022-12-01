@@ -49,8 +49,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
         this.backendService.loadCurrentUser()
         .subscribe((ok: User | null) => {
             if (ok) {
-                //TODO match layout names
-                if(JSON.parse(JSON.stringify(ok)).layout === "sameLine") {
+                if(JSON.parse(JSON.stringify(ok)).layout === "1") {
                     this.sameLine = true;
                 } else {
                     this.sameLine = false;
