@@ -14,6 +14,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { ContextService } from './services/context.service';
 import { IntervalService } from './services/interval.service';
+import {BackendService} from "./services/backend.service";
 
 @NgModule({
   declarations: [
@@ -32,7 +33,7 @@ import { IntervalService } from './services/interval.service';
     FormsModule,
     HttpClientModule
   ],
-  providers: [ ContextService, IntervalService ],
+  providers: [ ContextService, IntervalService, BackendService ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
