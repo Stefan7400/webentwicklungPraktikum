@@ -38,7 +38,7 @@ export class FriendsComponent implements OnInit {
         this.intervalService.clearIntervals();
     }
 
-    public openChat(username: string): void {
+    public openUserSpecific(username: string): void {
         this.contextService.currentChatUsername = username;
     }
 
@@ -98,29 +98,27 @@ export class FriendsComponent implements OnInit {
         this.isFriend = false;
     }
 
-    public isValidInput(): boolean {
+    public getIsValidInput(): void {
         this.getIsSelf(this.addedFriendName);
         if(!this.isSelf) {
             this.getUserExists(this.addedFriendName);
             this.getIsFriend(this.addedFriendName);
-            if (this.userExists && !this.isFriend) {
-                return true;
-            } else {
-                return false;
-            }
+        }
+    }
+
+    private isValidInput(): boolean {
+        if(!this.isSelf && this.userExists && !this.isFriend) {
+            return true;
         } else {
             return false;
         }
     }
 
     public addFriend(): void {
-        // TODO: says user non existent???
         if (this.isValidInput()) {
             this.backendService.friendRequest(this.addedFriendName)
             .subscribe((ok: boolean) => {
-                if (ok) {
-                    console.log('added friend: ', this.addedFriendName);
-                } else {
+                if (!ok) {
                     console.log('error while adding friend!');
                 }
             });
@@ -141,7 +139,6 @@ export class FriendsComponent implements OnInit {
                 for (let i=0; i < this.friends.length; i++) {
                     this.friends[i].unreadMessages = 0;
                 }
-                console.log(this.friends);
             } else {
                 console.log('friends couldn\'t be loaded');
             }

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AfterViewChecked, ElementRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Message } from 'src/app/models/Message';
+import { User } from 'src/app/models/User';
 import { BackendService } from 'src/app/services/backend.service';
 import { ContextService } from 'src/app/services/context.service';
 import { IntervalService } from 'src/app/services/interval.service';
@@ -45,17 +46,17 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     }
 
     private getIsSameLine(): void {
-        // TODO: Entscheidung 2 oder 1-zeilige Chatnachrichten (s. SettingsComponent)
-        this.sameLine = true;
-    }
-    
-    private getMessages(): void {
-        this.backendService.listMessages(this.recipient)
-        .subscribe((ok: Array<Message>) => {
+        this.backendService.loadCurrentUser()
+        .subscribe((ok: User | null) => {
             if (ok) {
-                this.messages = ok;
+                //TODO match layout names
+                if(JSON.parse(JSON.stringify(ok)).layout === "sameLine") {
+                    this.sameLine = true;
+                } else {
+                    this.sameLine = false;
+                }
             } else {
-                console.log('messages couldn\'t be loaded');
+                console.log('error while getting setting!');
             }
         });
     }
@@ -68,6 +69,10 @@ export class ChatComponent implements OnInit, AfterViewChecked {
         this.refresh();
 
         this.scrollToBottom();
+    }
+
+    public ngOnDestroy(): void {
+        this.intervalService.clearIntervals();
     }
 
     public removeFriend() {
@@ -94,6 +99,19 @@ export class ChatComponent implements OnInit, AfterViewChecked {
             }
         });
         this.inputMessage = '';
+    }
+
+    private getMessages(): void {
+        this.backendService.listMessages(this.recipient)
+        .subscribe((ok: Array<Message>) => {
+            if (ok) {
+                for (let message of ok) {
+                    this.messages.push(message);
+                }
+            } else {
+                console.log('messages couldn\'t be loaded');
+            }
+        });
     }
 
     private refresh() {

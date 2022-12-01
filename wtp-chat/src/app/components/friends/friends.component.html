@@ -19,7 +19,7 @@
             <div *ngFor="let friend of friends">
                 <ng-template [ngIf]="friend.status !== 'requested'">
                     <li class="flex">
-                        <a (click)="openChat(friend.username)" [routerLink]="['/chat']">{{friend.username}}</a>
+                        <a (click)="openUserSpecific(friend.username)" [routerLink]="['/chat']">{{friend.username}}</a>
                         <div>{{friend.unreadMessages}}</div>
                     </li>
                 </ng-template>
@@ -32,7 +32,7 @@
         <div *ngFor="let friend of friends">
             <ng-template [ngIf]="friend.status === 'requested'">
                 <li class="request">
-                    <a [routerLink]="['/profile']">Friend request from <b>{{friend.username}}</b></a>
+                    <a (click)="openUserSpecific(friend.username)" [routerLink]="['/profile']">Friend request from <b>{{friend.username}}</b></a>
                     <button (click)="acceptRequest(friend.username)" class="request">Accept</button>
                     <button (click)="declineRequest(friend.username)" class="request">Decline</button>
                 </li>
@@ -41,7 +41,7 @@
     </ol>
     <hr>
     <div class="flex">
-        <input (keyup)="isValidInput()" (keyup.enter)="addFriend()" [(ngModel)]="addedFriendName" id="friendlistInput" placeholder="Add Friend to List"class="longType">
+        <input (keyup)="getIsValidInput()" (keyup.enter)="addFriend()" [(ngModel)]="addedFriendName" id="friendlistInput" placeholder="Add Friend to List"class="longType">
         <button (click)="addFriend()" id="addFriendButton" type="submit" class="longButton">Add</button>
     </div>
     <p class="errorHighlight" *ngIf="(addedFriendName !== '') && !userExists && !isSelf">User does not exist!</p>
