@@ -17,25 +17,32 @@ export class SettingsComponent implements OnInit {
     public coffeOrTea: string = "";
     public description: string = "";
     public layout: string = "";
-    public currentUserProfile: Profile = new Profile(this.firstName, this.lastName, this.coffeOrTea, this.description, this.layout)
+    public currentUserProfile: Profile = new Profile(this.firstName, this.lastName, this.coffeOrTea, this.description, this.layout);
+    public currentUser: User = new User();
 
     public constructor(private backendService: BackendService, private contextService: ContextService) { }
 
     public ngOnInit(): void {
         // TODO: radio button on oneLine and Select
         // TODO: preselect neither nor for coffeOrTea
-        // TODO: load user profile and set data accordingly
         // TODO: if reload profile page dont log out 
         this.backendService.loadCurrentUser().subscribe((user) => {
             if (user != null) {
                 this.contextService.loggedInUsername = user.username;
+                this.currentUser = user;
                 console.log("Current User is: ", user);
-                // assign values, but cant get values cus subscribe only gives me a User not an ArrayBuffer (which is where all da good stuff is)
+                // assign values
+                const parsedUser =  JSON.parse(JSON.stringify(this.currentUser));
+                
+                this.firstName = parsedUser.firstName;
+                this.lastName = parsedUser.lastName;
+                this.coffeOrTea = parsedUser.coffeeOrTea;
+                this.description = parsedUser.description;
+                this.layout = parsedUser.layout;
             } else {
                 console.log("Current User not found!");
             }
         });
-
     }
 
     public saveProfile(): void {
