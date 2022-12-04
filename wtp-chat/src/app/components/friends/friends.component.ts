@@ -11,6 +11,7 @@ import { ContextService } from 'src/app/services/context.service';
     styleUrls: ['./friends.component.css']
 })
 export class FriendsComponent implements OnInit {
+    public users: Array<string> = [];
     public friends: Array<Friend> = [];
     public addedFriendName : string = '';
     public userExists : boolean = true;
@@ -65,6 +66,17 @@ export class FriendsComponent implements OnInit {
         });
     }
 
+    public autocomplete(username: string): void {
+        this.users = [];
+        this.addedFriendName = username;
+
+        this.getIsSelf(this.addedFriendName);
+        if(!this.isSelf) {
+            this.getUserExists(this.addedFriendName);
+            this.getIsFriend(this.addedFriendName);
+        }
+    }
+
     private getIsSelf(username: string): void {
         if(this.contextService.loggedInUsername == username) {
             this.isSelf = true;
@@ -98,11 +110,37 @@ export class FriendsComponent implements OnInit {
         this.isFriend = false;
     }
 
+    private isAlreadyFriend(username: string) {
+        for (let i=0; i < this.friends.length; i++) {
+            if (this.friends[i].username === username) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public getIsValidInput(): void {
         this.getIsSelf(this.addedFriendName);
         if(!this.isSelf) {
             this.getUserExists(this.addedFriendName);
             this.getIsFriend(this.addedFriendName);
+        }
+
+        if (this.addedFriendName !== '') {
+            this.backendService.listUsers()
+            .subscribe((ok: Array<string>) => {
+                if (ok) {
+                    this.users = [];
+                    for(let i=0; i < ok.length; i++) {
+                        if (!this.isAlreadyFriend(ok[i]) &&
+                            ok[i].substring(0, this.addedFriendName.length).toLowerCase() === this.addedFriendName.toLowerCase()) {
+                            this.users.push(ok[i]);
+                        }
+                    }
+                } else {
+                    console.log('error while listing users!');
+                }
+            });
         }
     }
 

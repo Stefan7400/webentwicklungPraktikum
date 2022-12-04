@@ -43,7 +43,11 @@
     <div class="flex">
         <input (keyup)="getIsValidInput()" (keyup.enter)="addFriend()" [(ngModel)]="addedFriendName" id="friendlistInput" placeholder="Add Friend to List"class="longType">
         <button (click)="addFriend()" id="addFriendButton" type="submit" class="longButton">Add</button>
+        <div class="autocompleteFriends" *ngFor="let user of users">
+            <div (click)="autocomplete(user)">{{user}}</div>
+        </div>
     </div>
+
     <p class="errorHighlight" *ngIf="(addedFriendName !== '') && !userExists && !isSelf">User does not exist!</p>
     <p class="errorHighlight" *ngIf="isSelf">Cannot add yourself!</p>
     <p class="errorHighlight" *ngIf="isFriend">User is already your friend!</p>
