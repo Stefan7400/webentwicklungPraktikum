@@ -20,29 +20,42 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     public username: string = "";
     public recipient: string = "";
     public inputMessage: string = "";
+  /**
+   * Amount of messages needed to track if there is a new message (if there is a new message -> scroll to bottom
+   * @private
+   */
+  private messageAmount: number = 0;
 
     // DIV für Nachrichten (s. Template) als Kind-Element für Aufrufe (s. scrollToBottom()) nutzen
-    @ViewChild('messagesDiv') private myScrollContainer: ElementRef;
+    @ViewChild('messagesDiv') private myScrollContainer!: ElementRef;
 
     public constructor(private backendService: BackendService, private contextService: ContextService,
                         private intervalService: IntervalService, private router: Router) {
-        this.myScrollContainer = new ElementRef(null);
+        //this.myScrollContainer = new ElementRef(null);
     }
 
-    public ngAfterViewChecked() {        
-        this.scrollToBottom();        
-    } 
+    public ngAfterViewChecked() {
+        this.scrollToBottom();
+    }
 
     /**
-     * Setzt in der Nachrichtenliste die Scrollposition ("scrollTop") auf die DIV-Größe ("scrollHeight"). Dies bewirkt ein 
+     * Setzt in der Nachrichtenliste die Scrollposition ("scrollTop") auf die DIV-Größe ("scrollHeight"). Dies bewirkt ein
      * Scrollen ans Ende.
      */
     private scrollToBottom(): void {
-        // TODO: scroll to bottom not working
+      console.log(this.messages.length)
+      if(this.messages.length === this.messageAmount){
+        //No new message -> no need to scroll to the bottom!
+        return;
+      }
+
+      //Update message amount!
+      this.messageAmount = this.messages.length;
         try {
-            this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollHeight;
-        } catch(err) { 
-        }                 
+           window.scrollTo(0,this.myScrollContainer.nativeElement.scrollHeight);
+        } catch(err) {
+
+        }
     }
 
     private getIsSameLine(): void {
@@ -107,7 +120,9 @@ export class ChatComponent implements OnInit, AfterViewChecked {
                 this.messages = [];
                 for (let message of ok) {
                     this.messages.push(message);
+                    this.scrollToBottom();
                 }
+
             } else {
                 console.log('messages couldn\'t be loaded');
             }
