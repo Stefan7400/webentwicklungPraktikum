@@ -74,11 +74,7 @@ export class FriendsComponent implements OnInit {
     }
 
     private isValidInput(): boolean {
-        if(!this.isSelf && this.userExists && !this.isFriend) {
-            return true;
-        } else {
-            return false;
-        }
+      return !this.isSelf && this.userExists && !this.isFriend
     }
 
     public addFriend(): void {
@@ -124,7 +120,7 @@ export class FriendsComponent implements OnInit {
             } else {
                 console.log('message count couldn\'t be loaded');
             }
-        }); 
+        });
     }
 
     private setIsSelf(username: string): void {
@@ -149,25 +145,20 @@ export class FriendsComponent implements OnInit {
     }
 
     private setIsFriend(username: string): void {
-        for (let i=0; i < this.friends.length; i++) {
-            if (this.friends[i].username === username) {
-                this.isFriend = true;
-                return;
-            }
+        this.isFriend = this.isAlreadyFriend(username);
+    }
+
+    private isAlreadyFriend(username : String) : boolean{
+      for (let i=0; i < this.friends.length; i++) {
+        if (this.friends[i].username === username) {
+          return true;
         }
-        this.isFriend = false;
+      }
+      return false;
     }
 
     private isValidRecommend(username: string): boolean {
-        if(this.contextService.loggedInUsername == username) {
-            return false;
-        }
-        for (let i=0; i < this.friends.length; i++) {
-            if (this.friends[i].username === username) {
-                return false;
-            }
-        }
-        return true;
+      return this.contextService.loggedInUsername !== username && !this.isAlreadyFriend(username);
     }
 
     public setIsValidInput(): void {
