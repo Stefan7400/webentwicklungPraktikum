@@ -1,1 +1,7 @@
 @import "../../../styles.css";
+
+
+#savedMessage {
+  text-align: center;
+  color: #317df5;
+}

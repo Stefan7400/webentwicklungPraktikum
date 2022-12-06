@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {BackendService} from "../../services/backend.service";
 import {Router} from "@angular/router";
 
@@ -9,6 +9,8 @@ import {Router} from "@angular/router";
 })
 export class RegisterComponent implements OnInit {
 
+
+  @ViewChild('saveBtn') createBtn! : ElementRef;
   isUsernameValid = false
   doesPasswordMatch = false
   usernameAlreadyUsed = false
@@ -28,10 +30,24 @@ export class RegisterComponent implements OnInit {
   constructor(private backendService : BackendService, private router : Router) { }
 
   ngOnInit(): void {
+
+
+
+  }
+
+  private updateSaveButton() : void {
+    if(!this.activated){
+      this.createBtn.nativeElement.classList.add('savebutton')
+      return;
+    }
+
+    this.createBtn.nativeElement.classList.remove('savebutton')
+
   }
 
   checkUsername() {
       this.activated = false;
+      this.updateSaveButton();
       this.isUsernameValid = false
       this.isUsernameTooShort = this.usernameInputString.length !== 0 && this.usernameInputString.length < 3;
       if(this.isUsernameTooShort){
@@ -47,6 +63,7 @@ export class RegisterComponent implements OnInit {
             this.activated = true
           }
         }
+        this.updateSaveButton();
       })
 
   }
@@ -84,6 +101,7 @@ export class RegisterComponent implements OnInit {
     if(this.doPasswordsMatchAndValid && this.isUsernameValid){
       this.activated = true;
     }
+    this.updateSaveButton();
   }
 
 }

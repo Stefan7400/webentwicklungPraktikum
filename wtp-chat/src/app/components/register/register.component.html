@@ -32,7 +32,7 @@
   </fieldset>
   <div class="center">
     <button [routerLink]="'/login'" type="button" >Cancel</button>
-    <button [disabled]="!activated" type="button" (click)="createAccount($event)" class="blueButton">Create Account</button>
+    <button #saveBtn [disabled]="!activated" type="button" (click)="createAccount($event)" class="blueButton">Create Account</button>
   </div>
 </form>
 </body>
