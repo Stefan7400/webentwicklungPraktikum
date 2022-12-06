@@ -1,6 +1,6 @@
 @import "../../../styles.css";
 
 .comBox {
-    max-height: 500px;
+    max-height: 400px;
     overflow-y: auto;
 }

@@ -59,6 +59,7 @@ export class FriendsComponent implements OnInit {
     }
 
     public autoComplete(username: string): void {
+        this.users = [];
         this.addedFriendName = username;
 
         this.setIsSelf(this.addedFriendName);
