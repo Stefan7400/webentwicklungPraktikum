@@ -7,3 +7,7 @@ p {
 br {
   line-height: 0;
 }
+
+.savebutton:hover {
+  cursor: not-allowed;
+}

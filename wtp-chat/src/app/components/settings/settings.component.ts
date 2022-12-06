@@ -19,6 +19,7 @@ export class SettingsComponent implements OnInit {
     public layout: string = "";
     public currentUserProfile: Profile = new Profile(this.firstName, this.lastName, this.coffeOrTea, this.description, this.layout);
     public currentUser: User = new User();
+    savedMessage : string = "";
 
     public constructor(private backendService: BackendService, private contextService: ContextService) { }
 
@@ -30,7 +31,7 @@ export class SettingsComponent implements OnInit {
                 console.log("Current User is: ", user);
                 // assign values
                 const parsedUser =  JSON.parse(JSON.stringify(this.currentUser));
-                
+
                 this.firstName = parsedUser.firstName;
                 this.lastName = parsedUser.lastName;
                 this.coffeOrTea = parsedUser.coffeeOrTea;
@@ -52,9 +53,17 @@ export class SettingsComponent implements OnInit {
         this.backendService.saveCurrentUserProfile(this.currentUserProfile).subscribe((success) => {
             if (success) {
                 console.log("saving sucessfull, new data: ", this.currentUserProfile);
+                this.highlightSave();
             } else {
                 console.log("error while saving profile");
             }
         });
     }
+
+    public highlightSave() : void{
+      this.savedMessage = "Saved changes!"
+      setTimeout(() => {
+        this.savedMessage = ""
+      },3000);
+  }
 }
