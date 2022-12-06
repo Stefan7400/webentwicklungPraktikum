@@ -33,8 +33,8 @@
             <ng-template [ngIf]="friend.status === 'requested'">
                 <li class="request">
                     <a (click)="openUserSpecific(friend.username)" [routerLink]="['/profile']">Friend request from <b>{{friend.username}}</b></a>
-                    <button (click)="acceptRequest(friend.username)" class="request">Accept</button>
-                    <button (click)="declineRequest(friend.username)" class="request">Decline</button>
+                    <button (click)="acceptRequest(friend.username)" class="request interact">Accept</button>
+                    <button (click)="declineRequest(friend.username)" class="request decline">Decline</button>
                 </li>
             </ng-template>
         </div>
@@ -42,7 +42,7 @@
     <hr>
     <div class="flex">
         <input (keyup)="setIsValidInput()" (keyup.enter)="addFriend()" [(ngModel)]="addedFriendName" id="friendlistInput" placeholder="Add Friend to List"class="longType">
-        <button (click)="addFriend()" id="addFriendButton" type="submit" class="longButton">Add</button>
+        <button (click)="addFriend()" id="addFriendButton" type="submit" class="longButton interact">Add</button>
         <div class="autocompleteFriends">
             <div *ngFor="let user of users">
                 <div (click)="autoComplete(user)">{{user}}</div>

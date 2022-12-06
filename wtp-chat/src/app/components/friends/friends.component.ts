@@ -59,7 +59,6 @@ export class FriendsComponent implements OnInit {
     }
 
     public autoComplete(username: string): void {
-        this.users = [];
         this.addedFriendName = username;
 
         this.setIsSelf(this.addedFriendName);
@@ -152,7 +151,6 @@ export class FriendsComponent implements OnInit {
     private setRecommend(): void {
         this.backendService.listUsers().subscribe((ok: Array<string>) => {
             if (ok) {
-                this.users = [];
                 for(let i=0; i < ok.length; i++) {
                     if (this.contextService.loggedInUsername !== ok[i] && !this.isAlreadyFriend(ok[i]) &&
                         ok[i].substring(0, this.addedFriendName.length).toLowerCase() === this.addedFriendName.toLowerCase()) {
@@ -172,6 +170,7 @@ export class FriendsComponent implements OnInit {
             this.setIsFriend(this.addedFriendName);
         }
 
+        this.users = [];
         if (this.addedFriendName !== '') {
             this.setRecommend();
         }

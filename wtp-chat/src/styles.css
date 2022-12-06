@@ -49,6 +49,14 @@ button.request {
   margin-left: 7px;
 }
 
+button.interact:hover {
+  background-color: #317df5;
+}
+
+button.decline:hover {
+  background-color: red;
+}
+
 button {
   cursor: pointer;
   border: none;
