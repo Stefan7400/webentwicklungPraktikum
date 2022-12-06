@@ -43,8 +43,10 @@
     <div class="flex">
         <input (keyup)="setIsValidInput()" (keyup.enter)="addFriend()" [(ngModel)]="addedFriendName" id="friendlistInput" placeholder="Add Friend to List"class="longType">
         <button (click)="addFriend()" id="addFriendButton" type="submit" class="longButton">Add</button>
-        <div class="autocompleteFriends" *ngFor="let user of users">
-            <div (click)="autoComplete(user)">{{user}}</div>
+        <div class="autocompleteFriends">
+            <div *ngFor="let user of users">
+                <div (click)="autoComplete(user)">{{user}}</div>
+            </div>
         </div>
     </div>
 

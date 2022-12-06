@@ -14,7 +14,7 @@
         
         <hr>
 
-        <div id="chatbox" class="comBox" #messagesDiv>
+        <div id="chatbox" class="comBox" #messagesDiv (scroll)="setDisableScroll(true)" >
             <ng-template [ngIf]="sameLine">
                 <div *ngFor="let message of messages" class="flex">
                     <div>{{message.from}}: {{message.msg}}</div>

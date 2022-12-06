@@ -205,13 +205,13 @@ input[type=radio]{
 }
 
 
-.autocompleteFriends {
+.autocompleteFriends div {
   border: 1px solid #d4d4d4;
   border-bottom: none;
   border-top: none;
 }
 
-.autocompleteFriends div {
+.autocompleteFriends div div {
   padding: 10px;
   cursor: pointer;
   background-color: #fff;

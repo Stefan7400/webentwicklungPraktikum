@@ -19,9 +19,11 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     public username: string = "";
     public recipient: string = "";
     public inputMessage: string = "";
+    private messageAmount: number = 0;
+    private isDisabledScroll: boolean = false;
 
     // DIV für Nachrichten (s. Template) als Kind-Element für Aufrufe (s. scrollToBottom()) nutzen
-    @ViewChild('messagesDiv') private myScrollContainer!: ElementRef;
+    @ViewChild('messagesDiv') private myScrollContainer: ElementRef;
 
     public constructor(private backendService: BackendService, private contextService: ContextService,
                         private intervalService: IntervalService, private router: Router) {
@@ -33,11 +35,13 @@ export class ChatComponent implements OnInit, AfterViewChecked {
      * Scrollen ans Ende.
      */
     private scrollToBottom(): void {
-        try {
-            // this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollHeight;
-            window.scrollTo(0,this.myScrollContainer.nativeElement.scrollHeight);
-        } catch(err) {
+        if(!this.getDisableScroll()) {
+            try {
+                this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollHeight;
+            } catch(err) {
 
+            }
+            this.messageAmount = this.messages.length;  // save cur amnt of messages to check for new ones later
         }
     }    
 
@@ -90,6 +94,18 @@ export class ChatComponent implements OnInit, AfterViewChecked {
             }
         });
         this.inputMessage = '';
+    }
+
+    public setDisableScroll(isDisabled: boolean): void {
+        this.isDisabledScroll = isDisabled;
+    }
+
+    public getDisableScroll(): boolean {
+        if (this.messages.length !== this.messageAmount) {
+            this.isDisabledScroll = false;
+            return false;
+        }
+        return this.isDisabledScroll;
     }
 
     private getMessages(): void {
