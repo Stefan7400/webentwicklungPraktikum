@@ -46,9 +46,7 @@ export class FriendsComponent implements OnInit {
     public acceptRequest(username: string): void {
         this.backendService.acceptFriendRequest(username)
         .subscribe((ok: boolean) => {
-            if (ok) {
-                console.log('accepted request: ', username);
-            } else {
+            if (!ok) {
                 console.log('error while accepting the request!');
             }
         });
@@ -58,89 +56,20 @@ export class FriendsComponent implements OnInit {
     public declineRequest(username: string): void {
         this.backendService.dismissFriendRequest(username)
         .subscribe((ok: boolean) => {
-            if (ok) {
-                console.log('declined request: ', username);
-            } else {
+            if (!ok) {
                 console.log('error while declining the request!');
             }
         });
     }
 
-    public autocomplete(username: string): void {
+    public autoComplete(username: string): void {
         this.users = [];
         this.addedFriendName = username;
 
-        this.getIsSelf(this.addedFriendName);
+        this.setIsSelf(this.addedFriendName);
         if(!this.isSelf) {
-            this.getUserExists(this.addedFriendName);
-            this.getIsFriend(this.addedFriendName);
-        }
-    }
-
-    private getIsSelf(username: string): void {
-        if(this.contextService.loggedInUsername == username) {
-            this.isSelf = true;
-        } else {
-            this.isSelf = false;
-        }
-    }
-
-    private getUserExists(username: string): void {
-        this.backendService.userExists(username)
-        .subscribe((ok: boolean) => {
-            console.log('getUserExists: ', ok);
-            if (ok) {
-                console.log('user exists: ', username);
-                this.userExists = true;
-                return;
-            } else {
-                console.log('user does not exist!');
-            }
-        });
-        this.userExists = false;
-    }
-
-    private getIsFriend(username: string): void {
-        for (let i=0; i < this.friends.length; i++) {
-            if (this.friends[i].username === username) {
-                this.isFriend = true;
-                return;
-            }
-        }
-        this.isFriend = false;
-    }
-
-    private isAlreadyFriend(username: string) {
-        for (let i=0; i < this.friends.length; i++) {
-            if (this.friends[i].username === username) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public getIsValidInput(): void {
-        this.getIsSelf(this.addedFriendName);
-        if(!this.isSelf) {
-            this.getUserExists(this.addedFriendName);
-            this.getIsFriend(this.addedFriendName);
-        }
-
-        if (this.addedFriendName !== '') {
-            this.backendService.listUsers()
-            .subscribe((ok: Array<string>) => {
-                if (ok) {
-                    this.users = [];
-                    for(let i=0; i < ok.length; i++) {
-                        if (!this.isAlreadyFriend(ok[i]) &&
-                            ok[i].substring(0, this.addedFriendName.length).toLowerCase() === this.addedFriendName.toLowerCase()) {
-                            this.users.push(ok[i]);
-                        }
-                    }
-                } else {
-                    console.log('error while listing users!');
-                }
-            });
+            this.setUserExists(this.addedFriendName);
+            this.setIsFriend(this.addedFriendName);
         }
     }
 
@@ -166,7 +95,7 @@ export class FriendsComponent implements OnInit {
         }
     }
 
-    public getFriends(): void {
+    private getFriends(): void {
         this.backendService.loadFriends()
         .subscribe((ok: Array<Friend>) => {
             if (ok) {
@@ -196,6 +125,74 @@ export class FriendsComponent implements OnInit {
                 console.log('message count couldn\'t be loaded');
             }
         }); 
+    }
+
+    private setIsSelf(username: string): void {
+        if(this.contextService.loggedInUsername == username) {
+            this.isSelf = true;
+        } else {
+            this.isSelf = false;
+        }
+    }
+
+    private setUserExists(username: string): void {
+        this.backendService.userExists(username)
+        .subscribe((ok: boolean) => {
+            if (ok) {
+                this.userExists = true;
+                return;
+            } else {
+                console.log('user does not exist!');
+            }
+        });
+        this.userExists = false;
+    }
+
+    private setIsFriend(username: string): void {
+        for (let i=0; i < this.friends.length; i++) {
+            if (this.friends[i].username === username) {
+                this.isFriend = true;
+                return;
+            }
+        }
+        this.isFriend = false;
+    }
+
+    private isValidRecommend(username: string): boolean {
+        if(this.contextService.loggedInUsername == username) {
+            return false;
+        }
+        for (let i=0; i < this.friends.length; i++) {
+            if (this.friends[i].username === username) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public setIsValidInput(): void {
+        this.setIsSelf(this.addedFriendName);
+        if(!this.isSelf) {
+            this.setUserExists(this.addedFriendName);
+            this.setIsFriend(this.addedFriendName);
+        }
+
+        if (this.addedFriendName !== '') {
+            this.backendService.listUsers()
+            .subscribe((ok: Array<string>) => {
+                if (ok) {
+                    this.users = [];
+                    for(let i=0; i < ok.length; i++) {
+                        if (this.isValidRecommend(ok[i]) &&
+                            ok[i].substring(0, this.addedFriendName.length).toLowerCase() === this.addedFriendName.toLowerCase()) {
+                            this.users.push(ok[i]);
+                        }
+                    }
+                } else {
+                    console.log('error while listing users!');
+                }
+            });
+        }
     }
 
     private refresh() {
