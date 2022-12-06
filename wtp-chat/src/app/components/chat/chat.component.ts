@@ -46,8 +46,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     }
 
     private getIsSameLine(): void {
-        this.backendService.loadCurrentUser()
-        .subscribe((ok: User | null) => {
+        this.backendService.loadCurrentUser().subscribe((ok: User | null) => {
             if (ok) {
                 if(JSON.parse(JSON.stringify(ok)).layout === "1") {
                     this.sameLine = true;
@@ -75,8 +74,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
 
     public removeFriend() {
         if(confirm('Do you really want to remove ' + this.recipient + ' as a friend?')) {
-            this.backendService.removeFriend(this.recipient)
-            .subscribe((ok: boolean) => {
+            this.backendService.removeFriend(this.recipient).subscribe((ok: boolean) => {
                 if (!ok) {
                     console.log('error while removing!');
                 }
@@ -86,8 +84,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     }
 
     public sendMessage() {
-        this.backendService.sendMessage(this.recipient, this.inputMessage)
-        .subscribe((ok: boolean) => {
+        this.backendService.sendMessage(this.recipient, this.inputMessage).subscribe((ok: boolean) => {
             if (!ok) {
                 console.log('error while sending message!');
             }
@@ -96,8 +93,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     }
 
     private getMessages(): void {
-        this.backendService.listMessages(this.recipient)
-        .subscribe((ok: Array<Message>) => {
+        this.backendService.listMessages(this.recipient).subscribe((ok: Array<Message>) => {
             if (ok) {
                 this.messages = [];
                 for (let message of ok) {

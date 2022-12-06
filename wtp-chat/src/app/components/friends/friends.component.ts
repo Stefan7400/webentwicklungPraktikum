@@ -23,8 +23,7 @@ export class FriendsComponent implements OnInit {
     }
 
     public ngOnInit(): void {
-        this.backendService.loadCurrentUser()
-        .subscribe((ok: User | null) => {
+        this.backendService.loadCurrentUser().subscribe((ok: User | null) => {
             if (ok) {
                 this.contextService.loggedInUsername = ok.username;
             } else {
@@ -44,18 +43,15 @@ export class FriendsComponent implements OnInit {
     }
 
     public acceptRequest(username: string): void {
-        this.backendService.acceptFriendRequest(username)
-        .subscribe((ok: boolean) => {
+        this.backendService.acceptFriendRequest(username).subscribe((ok: boolean) => {
             if (!ok) {
                 console.log('error while accepting the request!');
             }
         });
-
     }
 
     public declineRequest(username: string): void {
-        this.backendService.dismissFriendRequest(username)
-        .subscribe((ok: boolean) => {
+        this.backendService.dismissFriendRequest(username).subscribe((ok: boolean) => {
             if (!ok) {
                 console.log('error while declining the request!');
             }
@@ -79,8 +75,7 @@ export class FriendsComponent implements OnInit {
 
     public addFriend(): void {
         if (this.isValidInput()) {
-            this.backendService.friendRequest(this.addedFriendName)
-            .subscribe((ok: boolean) => {
+            this.backendService.friendRequest(this.addedFriendName).subscribe((ok: boolean) => {
                 if (!ok) {
                     console.log('error while adding friend!');
                 }
@@ -92,8 +87,7 @@ export class FriendsComponent implements OnInit {
     }
 
     private getFriends(): void {
-        this.backendService.loadFriends()
-        .subscribe((ok: Array<Friend>) => {
+        this.backendService.loadFriends().subscribe((ok: Array<Friend>) => {
             if (ok) {
                 this.friends = [];
                 for (let receivedFriend of ok) {
@@ -107,8 +101,7 @@ export class FriendsComponent implements OnInit {
             }
         });
 
-        this.backendService.unreadMessageCounts()
-        .subscribe((ok: Map<string, number>) => {
+        this.backendService.unreadMessageCounts().subscribe((ok: Map<string, number>) => {
             if (ok) {
                 let messageCount;
                 for (let i=0; i < this.friends.length; i++) {
@@ -132,8 +125,7 @@ export class FriendsComponent implements OnInit {
     }
 
     private setUserExists(username: string): void {
-        this.backendService.userExists(username)
-        .subscribe((ok: boolean) => {
+        this.backendService.userExists(username).subscribe((ok: boolean) => {
             if (ok) {
                 this.userExists = true;
                 return;
@@ -144,21 +136,33 @@ export class FriendsComponent implements OnInit {
         this.userExists = false;
     }
 
+    private isAlreadyFriend(username : String) : boolean{
+        for (let i=0; i < this.friends.length; i++) {
+            if (this.friends[i].username === username) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     private setIsFriend(username: string): void {
         this.isFriend = this.isAlreadyFriend(username);
     }
 
-    private isAlreadyFriend(username : String) : boolean{
-      for (let i=0; i < this.friends.length; i++) {
-        if (this.friends[i].username === username) {
-          return true;
-        }
-      }
-      return false;
-    }
-
-    private isValidRecommend(username: string): boolean {
-      return this.contextService.loggedInUsername !== username && !this.isAlreadyFriend(username);
+    private setRecommend(): void {
+        this.backendService.listUsers().subscribe((ok: Array<string>) => {
+            if (ok) {
+                this.users = [];
+                for(let i=0; i < ok.length; i++) {
+                    if (this.contextService.loggedInUsername !== ok[i] && !this.isAlreadyFriend(ok[i]) &&
+                        ok[i].substring(0, this.addedFriendName.length).toLowerCase() === this.addedFriendName.toLowerCase()) {
+                        this.users.push(ok[i]);
+                    }
+                }
+            } else {
+                console.log('error while listing users!');
+            }
+        });
     }
 
     public setIsValidInput(): void {
@@ -169,20 +173,7 @@ export class FriendsComponent implements OnInit {
         }
 
         if (this.addedFriendName !== '') {
-            this.backendService.listUsers()
-            .subscribe((ok: Array<string>) => {
-                if (ok) {
-                    this.users = [];
-                    for(let i=0; i < ok.length; i++) {
-                        if (this.isValidRecommend(ok[i]) &&
-                            ok[i].substring(0, this.addedFriendName.length).toLowerCase() === this.addedFriendName.toLowerCase()) {
-                            this.users.push(ok[i]);
-                        }
-                    }
-                } else {
-                    console.log('error while listing users!');
-                }
-            });
+            this.setRecommend();
         }
     }
 
