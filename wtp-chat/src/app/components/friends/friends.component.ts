@@ -17,6 +17,7 @@ export class FriendsComponent implements OnInit {
     public userExists : boolean = true;
     public isSelf : boolean = false;
     public isFriend : boolean = false;
+    public curUser: string = '';
 
     public constructor(private backendService: BackendService, private contextService: ContextService,
             private intervalService: IntervalService) {
@@ -26,6 +27,7 @@ export class FriendsComponent implements OnInit {
         this.backendService.loadCurrentUser().subscribe((ok: User | null) => {
             if (ok) {
                 this.contextService.loggedInUsername = ok.username;
+                this.curUser = ok.username;
             } else {
                 console.log('User not found!');
             }
