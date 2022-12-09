@@ -11,7 +11,7 @@
 <body>
     <h1>Profile of Tom</h1>
 
-    <a href="chat.html">&lt Back to chat</a>
+    <a href="chat.html">&lt Back to Chat</a>
     <label>|</label>
     <a href="friends.html" class="remove">Remove Friend</a>
     <div class="flex">
