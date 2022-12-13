@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1-0, user-scalable=no">
     <title>Settings</title>
-    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
@@ -50,8 +50,8 @@
         </div>
     </fieldset>
     <div class="center">
-        <a href="friends.html">
-            <button class="decline">Cancel</button>
+        <a href="friends.php">
+            <button>Cancel</button>
         </a>
         <button class="blueButton">Save</button>
     </div>

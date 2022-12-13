@@ -1,15 +1,32 @@
 <?php
+
 namespace Model;
 
 use JsonSerializable;
 
-class User implements JsonSerializable
+class Friend implements JsonSerializable
 {
     private $username = '';
+    private $status = '';
 
     public function getUsername()
     {
         return $this->username;
+    }
+
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    public function setAccepted()
+    {
+        $this->status = 'accepted';
+    }
+
+    public function setDismissed()
+    {
+        $this->status = 'dismissed';
     }
 
     public function __construct($username = null)
@@ -25,16 +42,17 @@ class User implements JsonSerializable
     /**
      * This method creates User-instances and assigns the right values from the JSON object
      * @param $data : processed JSON-object (to be converted to php-object)
-     * @return User
+     * @return Friend
      */
     public static function fromJson($data)
     {
-        $user = new User("");
+        $friend = new Friend("");
         foreach ($data as $key => $value) {  //key is username
-            $user->{$key} = $value;
+            $friend->{$key} = $value;
         }
-        return $user;
+        return $friend;
     }
 }
+
 
 ?>

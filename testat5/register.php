@@ -5,14 +5,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1-0, user-scalable=no">
     <title>Register</title>
-    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-    <img src="../../images/user.png" alt="user image" class="center">
+    <img src="../../img/user.png" alt="user image" class="center">
     <h1 class="center">Register yourself</h1>
 
-    <form id="form" action="friends.html" method="post">
+    <form id="form" action="friends.php" method="post">
         <fieldset>
             <legend>Register</legend>
             <label for="uname">Username</label>
@@ -26,7 +26,7 @@
             <br>
         </fieldset>
         <div class="center">
-            <a href="login.html">
+            <a href="login.php">
                 <button type="button">Cancel</button>
             </a>
             <button type="submit" class="blueButton">Create Account</button>
