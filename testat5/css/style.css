@@ -45,6 +45,17 @@ legend {
     text-align: center;
 }
 
+button.request {
+	margin-left: 7px;
+}
+
+button.interact:hover {
+	background-color: #317df5;
+}
+
+button.decline:hover {
+	background-color: red;
+}  
 
 button {
     cursor: pointer;
@@ -84,6 +95,8 @@ a:not(ul li a):visited.remove {
     padding-left: 15px;
     margin: auto;
     line-height: 2;
+	max-height: 400px;
+	overflow-y: auto;
 }
 
 hr {

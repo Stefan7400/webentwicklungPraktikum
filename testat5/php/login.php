@@ -5,18 +5,17 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1-0, user-scalable=no">
     <title>Login</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../css/style.css">
 </head>
 
 <body>
-
     <header>
-        <img src="../../img/chat.png" alt="chat icon" class="center">
+        <img src="../../images/chat.png" alt="chat icon" class="center">
     </header>
 
     <h1 class="center">Please sign in</h1>
 
-    <form action="friends.php">
+    <form action="friends.html">
         <fieldset>
             <legend>Login</legend>
             <label for="username">Username
@@ -27,7 +26,7 @@
             </label><br>
         </fieldset>
         <div class="center">
-            <a href="../../php/register.php">
+            <a href="../../testat2/html/register.html">
                 <button type="button">Register</button>
             </a>
 

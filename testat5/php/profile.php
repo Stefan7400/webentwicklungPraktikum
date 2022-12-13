@@ -5,17 +5,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1-0, user-scalable=no">
     <title>Profile</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../css/style.css">
 </head>
 
 <body>
     <h1>Profile of Tom</h1>
 
-    <a href="chat.php">&lt Back to chat</a>
+    <a href="chat.html">&lt Back to Chat</a>
     <label>|</label>
-    <a href="friends.php" class="remove">Remove Friend</a>
+    <a href="friends.html" class="remove">Remove Friend</a>
     <div class="flex">
-        <img class="profile" src="../../img/profile.png" alt="profile image">
+        <img class="profile" src="../../images/profile.png" alt="profile image">
         <div class="comBox profile">
             <p>
                 Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt
