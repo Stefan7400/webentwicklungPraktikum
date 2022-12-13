@@ -5,13 +5,13 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1-0, user-scalable=no">
     <title>Friends</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../css/style.css">
 </head>
 
 <body>
     <h1>Friends</h1>
     <p>
-        <a href="logout.php">&lt Logout</a> | <a href="settings.php">Settings</a>
+        <a href="../php/logout.php">&lt Logout</a> | <a href="../php/settings.php">Settings</a>
     </p>
     <hr>
     <div class="comBox">
@@ -25,7 +25,7 @@
     <hr>
     <h2>New Requests</h2>
     <ol>
-        <li><a href="profile.php">Friend request form <b>Track</b></a> </li>
+        <li><a href="../php/profile.php">Friend request form <b>Track</b></a> </li>
     </ol>
     <hr>
     <form id="friendForm" autocomplete="off" onsubmit="return validateFriendForm();"> 

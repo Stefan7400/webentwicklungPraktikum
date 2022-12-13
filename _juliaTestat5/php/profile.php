@@ -5,15 +5,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1-0, user-scalable=no">
     <title>Profile</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../css/style.css">
 </head>
 
 <body>
     <h1>Profile of Tom</h1>
 
-    <a href="chat.php">&lt Back to chat</a>
+    <a href="../php/chat.php">&lt Back to chat</a>
     <label>|</label>
-    <a href="friends.php" class="remove">Remove Friend</a>
+    <a href="../php/friends.php" class="remove">Remove Friend</a>
     <div class="flex">
         <img class="profile" src="../../img/profile.png" alt="profile image">
         <div class="comBox profile">

@@ -47,5 +47,4 @@ var_dump($service->userExists("Tom"));
 echo "<br><br> getUnread: ";
 var_dump($service->getUnread());
 
-
 ?>
