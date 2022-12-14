@@ -1,12 +1,22 @@
 <?php
-	require('start.php');
 
+use Utils\BackendService;
 
-    function validate_username($username){
-        if(empty($username) || strlen($username) < 3){
+require('start.php');
+    $service = new BackendService(CHAT_SERVER_URL, CHAT_SERVER_ID);
+    $errorMessages = array(
+      "userNameTooShort" => "Given Username is too short!",
+      "userNameAlreadyExists" => "Given Username is already in use!",
+        "passwordTooShort" => "Given Password is too short",
+        "passwordDoesNotMatch" => "Given Password does not match"
+    );
+
+    function validate_username(){
+        if(empty($_POST['userName']) || strlen($_POST['userName']) < 3){
             return false;
         }
-
+        //Username is ok
+        return true;
     }
 
 ?>
@@ -35,14 +45,6 @@
         $passwordRepeated = $_POST['$passwordRepeated'];
     }
 
-    if(!empty($username)) {
-        echo "Username is not empty";
-    } else {
-        echo "Username is empty";
-    }
-
-
-
 ?>
 
 <body>
@@ -54,6 +56,15 @@
             <legend>Register</legend>
             <label for="uname">Username</label>
             <input required id="uname" type="text" name="userName" placeholder="Username">
+            <?php
+                if(isset($_POST['userName'])){
+                    if(!validate_username()){
+                        echo strlen($_POST['userName']);
+                    } else if ($service->userExists($username)){
+                        echo "<p>Username already exists!</p>";
+                    }
+                }
+            ?>
             <br>
             <label for="pwd">Password</label>
             <input required id="pwd" type="password" name="pwd" placeholder="Password">

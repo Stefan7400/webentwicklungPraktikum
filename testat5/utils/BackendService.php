@@ -25,7 +25,8 @@
 			return false;
 		}
 
-		public function register($username, $password) {
+		public function register($username, $password): bool
+        {
 			try {
 				if(!$this->userExists($username)) {
 					$data = HttpClient::post($this->base . "/" . $this->id . "/register",
