@@ -1,5 +1,14 @@
 <?php
 	require('start.php');
+
+
+    function validate_username($username){
+        if(empty($username) || strlen($username) < 3){
+            return false;
+        }
+
+    }
+
 ?>
 
 <!DOCTYPE html>
@@ -54,7 +63,7 @@
             <br>
         </fieldset>
         <div class="center">
-            <a href="login.html">
+            <a href="login.php">
                 <button type="button">Cancel</button>
             </a>
             <button type="submit" class="blueButton">Create Account</button>
