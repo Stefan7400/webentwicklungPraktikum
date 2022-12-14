@@ -25,13 +25,12 @@
 			return false;
 		}
 
-		public function register($username, $password): bool
-        {
+		public function register($username, $password): bool {
 			try {
+				$data = HttpClient::post($this->base . "/" . $this->id . "/register",
+											array("username" => $username, "password" => $password));
+				$_SESSION['chatToken'] = $data->token; // save for subsequent calls
 				if(!$this->userExists($username)) {
-					$data = HttpClient::post($this->base . "/" . $this->id . "/register",
-												array("username" => $username, "password" => $password));
-					$_SESSION['chatToken'] = $data->token; // save for subsequent calls
 					return true;
 				}
 			} catch(\Exception $e) {
