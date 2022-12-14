@@ -1,5 +1,12 @@
 <?php
 	require('start.php');
+
+	$login = false;
+	if($login) {
+        session_unset($_SESSION['user']);
+		header('location: login.php');
+		exit();
+	}
 ?>
 
 <!DOCTYPE html>
@@ -17,7 +24,7 @@
     <img src="../../images/logout.png" alt="logout picture" class="center">
     <h1 class="center">Logged out...</h1>
     <p>See you!</p>
-    <a href="login.html">Login again</a>
+    <a href="login.php" onclick="$login=true;">Login again</a>
     </div>
 </body>
 
