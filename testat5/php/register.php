@@ -1,4 +1,7 @@
-<?php include 'start.php'?>
+<?php
+	require('start.php');
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -58,12 +61,5 @@
         </div>
     </form>
 </body>
-
-<script>
-    window.chatToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiSmVycnkiLCJpYXQiOjE2Njc2NzY4MTZ9.6de3Btm3Et1ZvQ1iVFNwSa_zB9XLFDXGIXfr3bxhdCo";
-    window.chatCollectionId = "b91a2173-80ce-4500-9230-444f5ec567e7";
-    window.chatServer = "https://online-lectures-cs.thi.de/chat";
-</script>
-<script src="../js/register.js" defer></script>
 
 </html>

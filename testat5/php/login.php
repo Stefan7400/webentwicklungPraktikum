@@ -1,3 +1,7 @@
+<?php
+	require('start.php');   # loads file, require == fatal, include == warning
+?>
+
 <!DOCTYPE html>
 <html>
 
@@ -29,9 +33,7 @@
             <a href="../../testat2/html/register.html">
                 <button type="button">Register</button>
             </a>
-
             <button type="submit" class="blueButton">Login</button>
-
         </div>
     </form>
 </body>
