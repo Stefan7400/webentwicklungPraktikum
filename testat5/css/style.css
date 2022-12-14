@@ -201,13 +201,20 @@ input[type=radio]{
     border-bottom: none;
     border-top: none;
   }
-  
-  .autocompleteFriends div {
-    padding: 10px;
-    cursor: pointer;
-    background-color: #fff; 
-    border-bottom: 1px solid #d4d4d4; 
-  }
+
+.autocompleteFriends div {
+padding: 10px;
+cursor: pointer;
+background-color: #fff;
+border-bottom: 1px solid #d4d4d4;
+}
+
+.errorHighlight {
+    margin: 0;
+    color: red;
+    width: 100%;
+    text-align: center;
+}
 
 
 @media(max-width: 700px) {
