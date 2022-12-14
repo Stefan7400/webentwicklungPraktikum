@@ -1,5 +1,36 @@
 <?php
 	require('start.php');   # loads file, require == fatal, include == warning
+
+    if(isset($_SESSION['user'])) {
+		header('location: friends.php');
+		exit();
+	}
+
+    $register = false;
+    if($register) {
+		header('location: register.php');
+		exit();
+	}
+
+	$username = '';
+	$pwd = '';
+    $error = false;
+	if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        if(isset($_POST['username'])) {
+			$username = $_POST['username'];
+		}
+    	if(isset($_POST['pwd'])) {
+			$pwd = $_POST['pwd'];
+		}
+
+        if($service->login($username, $pwd)) {
+            $_SESSION['user'] = $username;
+			header('location: friends.php');
+			exit();
+		} else {
+            $error = true;
+        }
+    }
 ?>
 
 <!DOCTYPE html>
@@ -19,19 +50,26 @@
 
     <h1 class="center">Please sign in</h1>
 
-    <form action="friends.html">
+    <?php
+        if($error) {
+    ?>
+            <p class="errorHighlight">Authentication failed</p>
+    <?php
+        }
+    ?>
+    <form method="post">
         <fieldset>
             <legend>Login</legend>
             <label for="username">Username
-                <input required placeholder="Username" id="username" />
+                <input required id="username" name="username" value="<?= $username; ?>" placeholder="Username"/>
             </label><br>
             <label for="password">Password
-                <input required type="password" placeholder="Password" id="password" />
+                <input required id="password" name="pwd" value="<?= $pwd; ?>" type="password" placeholder="Password"/>
             </label><br>
         </fieldset>
         <div class="center">
-            <a href="../../testat2/html/register.html">
-                <button type="button">Register</button>
+            <a href="register.php">
+                <button type="button" onclick="$register=true">Register</button>
             </a>
             <button type="submit" class="blueButton">Login</button>
         </div>

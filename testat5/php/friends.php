@@ -1,5 +1,11 @@
 <?php
 	require('start.php');
+
+	$logout = false;
+	if($logout) {
+		header('location: logout.php');
+		exit();
+	}
 ?>
 
 <!DOCTYPE html>
@@ -15,15 +21,15 @@
 <body>
     <h1>Friends</h1>
     <p>
-        <a href="logout.html">&lt Logout</a> | <a href="settings.html">Settings</a>
+        <a href="logout.php" onclick="$login=true;">&lt Logout</a> | <a href="settings.php" onclick="$settings=true;">Settings</a>
     </p>
     <hr>
     <div class="comBox">
         <ul>
-            <li class="flex"><a href="chat.html">Tom</a><div>3</div></li>
-            <li class="flex"><a href="chat.html">Marvin</a><div>1</div></li>
-            <li class="flex"><a href="chat.html">Tick</a></li>
-            <li class="flex"><a href="chat.html">Trick</a></li>
+            <li class="flex"><a href="chat.php" onclick="$chat=true;">Tom</a><div>3</div></li>
+            <li class="flex"><a href="chat.php" onclick="$chat=true;">Marvin</a><div>1</div></li>
+            <li class="flex"><a href="chat.php" onclick="$chat=true;">Tick</a></li>
+            <li class="flex"><a href="chat.php" onclick="$chat=true;">Trick</a></li>
         </ul>
     </div>
     <hr>
