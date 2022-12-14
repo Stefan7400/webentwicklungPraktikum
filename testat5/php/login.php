@@ -1,6 +1,10 @@
 <?php
 	require('start.php');   # loads file, require == fatal, include == warning
-    
+    if($_SESSION['user']) {
+		header('location: friends.php');
+		exit();
+	}
+
     $register = false;
     if($register) {
 		header('location: register.php');
@@ -19,6 +23,7 @@
 		}
 
         if($service->login($username, $pwd)) {
+            $_SESSION['user'] = $username;
 			header('location: friends.php');
 			exit();
 		} else {
