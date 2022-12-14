@@ -19,6 +19,18 @@ require('start.php');
         return true;
     }
 
+    function password_valid() {
+        return strlen($_POST['password']) < 8;
+    }
+
+    function doPasswordMatch() {
+        if(isset($_POST['password']) && isset($_POST['passwordRepeated'])){
+            return strcmp($_POST['password'],$_POST['passwordRepeated']);
+        }
+        //Should not be called!
+        return false;
+    }
+
 ?>
 
 <!DOCTYPE html>
@@ -38,11 +50,11 @@ require('start.php');
     if(isset($_POST['userName'])){
         $username = $_POST['userName'];
     }
-    if(isset($_POST['$password'])){
-        $password = $_POST['$password'];
+    if(isset($_POST['password'])){
+        $password = $_POST['password'];
     }
-    if(isset($_POST['$passwordRepeated'])){
-        $passwordRepeated = $_POST['$passwordRepeated'];
+    if(isset($_POST['passwordRepeated'])){
+        $passwordRepeated = $_POST['passwordRepeated'];
     }
 
 ?>
@@ -59,18 +71,32 @@ require('start.php');
             <?php
                 if(isset($_POST['userName'])){
                     if(!validate_username()){
-                        echo strlen($_POST['userName']);
+                        echo "<p>Username is too short</p>";
                     } else if ($service->userExists($username)){
                         echo "<p>Username already exists!</p>";
                     }
                 }
             ?>
             <br>
-            <label for="pwd">Password</label>
-            <input required id="pwd" type="password" name="pwd" placeholder="Password">
+            <label for="password">Password</label>
+            <input required id="password" type="password" name="password" placeholder="Password">
+            <?php
+                if(isset($_POST['password'])){
+                    if(password_valid()){
+                        echo "<p>Password is too short!</p>";
+                    }
+                }
+            ?>
             <br>
-            <label for="$passwordRepeated">Confirm Password</label>
-            <input required id="$passwordRepeated" type="password" name="$passwordRepeated" placeholder="Confirm Password">
+            <label for="passwordRepeated">Confirm Password</label>
+            <input required id="passwordRepeated" type="password" name="passwordRepeated" placeholder="Confirm Password">
+            <?php
+            if(isset($_POST['password']) && isset($_POST['passwordRepeated'])){
+                if(doPasswordMatch()){
+                    echo "<p>Passwords do not match!</p>";
+                }
+            }
+            ?>
             <br>
         </fieldset>
         <div class="center">
