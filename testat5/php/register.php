@@ -67,13 +67,13 @@ require('start.php');
         <fieldset>
             <legend>Register</legend>
             <label for="uname">Username</label>
-            <input required id="uname" type="text" name="userName" placeholder="Username">
+            <input required id="uname" type="text" value="<?= $username; ?>" name="userName" placeholder="Username">
             <?php
                 if(isset($_POST['userName'])){
                     if(!validate_username()){
-                        echo "<p>Username is too short</p>";
-                    } else if ($service->userExists($username)){
-                        echo "<p>Username already exists!</p>";
+                        echo "<p class='errorHighlight'>Username is too short</p>";
+                    } else if (!$service->register($username, $_POST['password'] ? $_POST['password'] : "")){
+                        echo "<p class='errorHighlight'>Username already exists!</p> . $username";
                     }
                 }
             ?>
@@ -83,7 +83,7 @@ require('start.php');
             <?php
                 if(isset($_POST['password'])){
                     if(password_valid()){
-                        echo "<p>Password is too short!</p>";
+                        echo "<p class='errorHighlight'>Password is too short!</p>";
                     }
                 }
             ?>
@@ -93,7 +93,7 @@ require('start.php');
             <?php
             if(isset($_POST['password']) && isset($_POST['passwordRepeated'])){
                 if(doPasswordMatch()){
-                    echo "<p>Passwords do not match!</p>";
+                    echo "<p class='errorHighlight'>Passwords do not match!</p>";
                 }
             }
             ?>

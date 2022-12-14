@@ -30,12 +30,15 @@
 				$data = HttpClient::post($this->base . "/" . $this->id . "/register",
 											array("username" => $username, "password" => $password));
 				$_SESSION['chatToken'] = $data->token; // save for subsequent calls
+
 				if(!$this->userExists($username)) {
 					return true;
 				}
+                session_unset();
 			} catch(\Exception $e) {
 				error_log($e);
 			}
+
 			return false;
 		}
 
