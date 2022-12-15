@@ -2,9 +2,8 @@
 	require('start.php');
 
 	if(empty($_SESSION['user'])) {      // empty also checks isset
-        // TODO fix?
-        header('location: login.php');
-        exit();
+		header('location: login.php');
+		exit();
 	}
 
 	$logout = false;
@@ -18,6 +17,69 @@
 		header('location: chat.php');
 		exit();
 	}
+
+	$profile = false;
+	if($profile) {
+		header('location: profile.php');
+		exit();
+	}
+
+	function displayNoFriends($friends) {
+        // TODO fix
+        foreach ($friends as $friend) {
+            if($friend->username !== null && $friend->status !== '') {
+                return false;
+			}
+?>
+            <div>You don't have any friends</div>
+<?php
+            return true;
+		}
+	}
+
+    function displayAcceptedFriends($service, $friends) {
+		$messages = $service->getUnread();
+
+		foreach ($friends as $friend) {
+			if($friend->status === "accepted") {
+				?>
+                <li class="flex">
+                    <a href="chat.php?friend=<?php echo $friend->username; ?>" onclick="$chat=true;">
+						<?= $friend->username ?>
+                    </a>
+                    <div><?= $messages[$friend->username] ?></div>
+                </li>
+				<?php
+			}
+		}
+	}
+
+    function displayRequestedFriends($friends) {
+        foreach ($friends as $friend) {
+            if($friend->status === "requested") {
+?>
+                <li>
+                    <a href="profile.php?name=<?php echo $friend->username; ?>" onclick="$profile=true;">
+                        Friend request from <b><?= $friend->username ?></b>
+                    </a>
+                </li>
+<?php
+            }
+        }
+    }
+
+	function displayFriends($service, $status) {
+		$friends = $service->loadFriends();
+		if(!displayNoFriends($friends)) {
+            if($status === "accepted") {
+                displayAcceptedFriends($service, $friends);
+			} elseif($status === "requested") {
+                displayRequestedFriends($friends);
+			}
+		}
+	}
+
+    // TODO ab addFriend
 ?>
 
 <!DOCTYPE html>
@@ -39,26 +101,16 @@
     <div class="comBox">
         <ul>
             <?php
-                $friends = $service->loadFriends();
-                $messages = $service->getUnread();
-
-                foreach ($friends as $friend) {
-                    if($friend->status == "accepted") {
-            ?>
-                        <li class="flex">
-                            <a href="chat.php?friend=<?php echo $friend->username; ?>" onclick="$chat=true;"><?= $friend->username ?></a>
-                            <div><?= $messages[$friend->username] ?></div>
-                        </li>
-            <?php
-					}
-                }
+                displayFriends($service, "accepted");
             ?>
         </ul>
     </div>
     <hr>
     <h2>New Requests</h2>
     <ol>
-        <li><a href="profile.html">Friend request form <b>Track</b></a> </li>
+		<?php
+			displayFriends($service, "requested");
+		?>
     </ol>
     <hr>
     <form id="friendForm" autocomplete="off" onsubmit="return validateFriendForm();">
