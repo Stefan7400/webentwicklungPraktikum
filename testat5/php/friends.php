@@ -1,9 +1,21 @@
 <?php
 	require('start.php');
 
+	if(empty($_SESSION['user'])) {      // empty also checks isset
+        // TODO fix?
+        header('location: login.php');
+        exit();
+	}
+
 	$logout = false;
 	if($logout) {
 		header('location: logout.php');
+		exit();
+	}
+
+	$chat = false;
+	if($chat) {
+		header('location: chat.php');
 		exit();
 	}
 ?>
@@ -26,10 +38,21 @@
     <hr>
     <div class="comBox">
         <ul>
-            <li class="flex"><a href="chat.php" onclick="$chat=true;">Tom</a><div>3</div></li>
-            <li class="flex"><a href="chat.php" onclick="$chat=true;">Marvin</a><div>1</div></li>
-            <li class="flex"><a href="chat.php" onclick="$chat=true;">Tick</a></li>
-            <li class="flex"><a href="chat.php" onclick="$chat=true;">Trick</a></li>
+            <?php
+                $friends = $service->loadFriends();
+                $messages = $service->getUnread();
+
+                foreach ($friends as $friend) {
+                    if($friend->status == "accepted") {
+            ?>
+                        <li class="flex">
+                            <a href="chat.php?friend=<?php echo $friend->username; ?>" onclick="$chat=true;"><?= $friend->username ?></a>
+                            <div><?= $messages[$friend->username] ?></div>
+                        </li>
+            <?php
+					}
+                }
+            ?>
         </ul>
     </div>
     <hr>

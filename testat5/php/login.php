@@ -1,7 +1,7 @@
 <?php
 	require('start.php');   # loads file, require == fatal, include == warning
 
-    if(isset($_SESSION['user'])) {
+	if(!empty($_SESSION['user'])) {
 		header('location: friends.php');
 		exit();
 	}

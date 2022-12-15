@@ -1,9 +1,10 @@
 <?php
 	require('start.php');
 
+	session_unset();
+
 	$login = false;
 	if($login) {
-        session_unset($_SESSION['user']);
 		header('location: login.php');
 		exit();
 	}

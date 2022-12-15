@@ -34,7 +34,7 @@
 				if(!$this->userExists($username)) {
 					return true;
 				}
-                session_unset();
+                unset($_SESSION['chatToken']);
 			} catch(\Exception $e) {
 				error_log($e);
 			}
