@@ -15,7 +15,7 @@
 	$username = '';
 	$pwd = '';
     $error = false;
-	if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+	if(isset($_POST['action']) && $_POST['action'] === 'login') {
         if(isset($_POST['username'])) {
 			$username = $_POST['username'];
 		}
@@ -71,7 +71,7 @@
             <a href="register.php">
                 <button type="button" onclick="$register=true">Register</button>
             </a>
-            <button type="submit" class="blueButton">Login</button>
+            <button type="submit" name="action" value="login" class="blueButton">Login</button>
         </div>
     </form>
 </body>
