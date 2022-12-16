@@ -28,43 +28,6 @@
 
     // TODO change everything from $friend->status and ->username to getStatus() and getUsername()
 
-    // display friends
-	function displayNoFriends($friends): bool {
-        foreach ($friends as $friend) {
-            if($friend->username !== null && $friend->status === 'accepted') {
-                return false;
-			}
-        }
-?>
-        <div>You don't have any friends</div>
-<?php
-        return true;
-	}
-
-    function displayAcceptedFriends($friends, $messages) {
-    	if(displayNoFriends($friends)) {
-            return;
-		}
-
-		foreach ($friends as $friend) {
-            if(array_key_exists($friend->username, $messages)) {
-                $message = $messages[$friend->username];
-            } else {
-                $message = 0;
-            }
-			if($friend->status === "accepted") {
-?>
-                <li class="flex">
-                    <a href="chat.php?friend=<?php echo $friend->username; ?>" onclick="$chat=true;">
-						<?= $friend->username ?>
-                    </a>
-                    <div><?= $message ?></div>
-                </li>
-<?php
-			}
-		}
-	}
-
     if(isset($_POST['accept'])) {
         $friend = $_POST['accept'];
 #        $friend->setStatusAccepted();
@@ -78,22 +41,6 @@
 	}
 
 	// TODO react to deleted friends
-
-	function displayRequestedFriends($friends) {
-        foreach ($friends as $friend) {
-            if($friend->status === "requested") {
-?>
-                <li>
-                    <a href="profile.php?name=<?php echo $friend->username; ?>" onclick="$profile=true;">
-                        Friend request from <b><?= $friend->username ?></b>
-                    </a>
-                    <button name="accept" value="<?= $friend->username ?>" type="submit" class="request interact">Accept</button>
-                    <button name="decline" value="<?= $friend->username ?>" type="submit" class="request decline">Decline</button>
-                </li>
-<?php
-            }
-        }
-    }
 
     // add friend
 
@@ -141,8 +88,41 @@
     <div class="comBox">
         <ul>
             <?php
-                displayAcceptedFriends($friends, $service->getUnread());
+				function displayNoFriends($friends): bool {
+					foreach ($friends as $friend) {
+						if($friend->username !== null && $friend->status === 'accepted') {
+							return false;
+						}
+					}
             ?>
+                    <div>You don't have any friends</div>
+            <?php
+					return true;
+				}
+
+				$messages = $service->getUnread();
+				if(displayNoFriends($friends)) {
+					return;
+				}
+
+				foreach ($friends as $friend) {
+					if(array_key_exists($friend->username, $messages)) {
+						$message = $messages[$friend->username];
+					} else {
+						$message = 0;
+					}
+					if($friend->status === "accepted") {
+            ?>
+                        <li class="flex">
+                            <a href="chat.php?friend=<?php echo $friend->username; ?>" onclick="$chat=true;">
+								<?= $friend->username; ?>
+                            </a>
+                            <div><?= $message ?></div>
+                        </li>
+            <?php
+					}
+				}
+			?>
         </ul>
     </div>
     <hr>
@@ -150,7 +130,19 @@
     <form action="friends.php" method="post">
         <ol>
             <?php
-                displayRequestedFriends($friends);
+				foreach ($friends as $friend) {
+					if($friend->status === "requested") {
+            ?>
+                        <li>
+                            <a href="profile.php?name=<?php echo $friend->username; ?>" onclick="$profile=true;">
+                                Friend request from <b><?= $friend->username; ?></b>
+                            </a>
+                            <button name="accept" value="<?= $friend->username; ?>" type="submit" class="request interact">Accept</button>
+                            <button name="decline" value="<?= $friend->username; ?>" type="submit" class="request decline">Decline</button>
+                        </li>
+            <?php
+					}
+				}
             ?>
         </ol>
     </form>
@@ -175,7 +167,7 @@
         window.chatServer = "<?= CHAT_SERVER_URL ?>";
 
         window.setInterval(function() {
-            // TODO refresh works but doesn't refresh the stuff yet
+            // TODO interval works but doesn't refresh the stuff yet
             window.location.href;
         }, 2000);
     </script>
