@@ -4,12 +4,18 @@ use Utils\BackendService;
 
 require('start.php');
     $service = new BackendService(CHAT_SERVER_URL, CHAT_SERVER_ID);
-    $errorMessages = array(
-      "userNameTooShort" => "Given Username is too short!",
-      "userNameAlreadyExists" => "Given Username is already in use!",
-        "passwordTooShort" => "Given Password is too short",
-        "passwordDoesNotMatch" => "Given Password does not match"
-    );
+
+   if(isset($_POST['password']) && isset($_POST['passwordRepeated']) && isset($_POST['userName'])){
+
+       if(validate_username() && !password_not_valid() && doPasswordMatch()){
+            echo $service->register($_POST['userName'],$_POST['password']) ? "TRUE" : "FALSE";
+           if($service->register($_POST['userName'],$_POST['password'])){
+
+               header('location: friends.php');
+               exit();
+           }
+       }
+   }
 
     function validate_username(){
         if(empty($_POST['userName']) || strlen($_POST['userName']) < 3){
@@ -19,13 +25,13 @@ require('start.php');
         return true;
     }
 
-    function password_valid() {
+    function password_not_valid() {
         return strlen($_POST['password']) < 8;
     }
 
     function doPasswordMatch() {
         if(isset($_POST['password']) && isset($_POST['passwordRepeated'])){
-            return strcmp($_POST['password'],$_POST['passwordRepeated']);
+            return !strcmp($_POST['password'],$_POST['passwordRepeated']);
         }
         //Should not be called!
         return false;
@@ -69,30 +75,30 @@ require('start.php');
             <label for="uname">Username</label>
             <input required id="uname" type="text" value="<?= $username; ?>" name="userName" placeholder="Username">
             <?php
-                if(isset($_POST['userName'])){
+                if(isset($_POST['userName']) & isset($_POST['password'])){
                     if(!validate_username()){
                         echo "<p class='errorHighlight'>Username is too short</p>";
-                    } else if (!$service->register($username, $_POST['password'] ? $_POST['password'] : "")){
-                        echo "<p class='errorHighlight'>Username already exists!</p> . $username";
+                    } else if (!$service->register($_POST['userName'], $_POST['password'])){
+                        echo "<p class='errorHighlight'>Username already exists!</p> $username";
                     }
                 }
             ?>
             <br>
             <label for="password">Password</label>
-            <input required id="password" type="password" name="password" placeholder="Password">
+            <input required id="password" type="password" name="password" value="<?= $password; ?>" placeholder="Password">
             <?php
                 if(isset($_POST['password'])){
-                    if(password_valid()){
+                    if(password_not_valid()){
                         echo "<p class='errorHighlight'>Password is too short!</p>";
                     }
                 }
             ?>
             <br>
             <label for="passwordRepeated">Confirm Password</label>
-            <input required id="passwordRepeated" type="password" name="passwordRepeated" placeholder="Confirm Password">
+            <input required id="passwordRepeated" type="password" name="passwordRepeated" value="<?= $passwordRepeated; ?>" placeholder="Confirm Password">
             <?php
             if(isset($_POST['password']) && isset($_POST['passwordRepeated'])){
-                if(doPasswordMatch()){
+                if(!doPasswordMatch()){
                     echo "<p class='errorHighlight'>Passwords do not match!</p>";
                 }
             }
