@@ -5,9 +5,9 @@ use JsonSerializable;
 
 class User implements JsonSerializable {
     private $username;
-    private $firstname = '';
-    private $lastname = '';
-    private $coffeeTea = 0;
+    private $firstName = '';
+    private $lastName = '';
+    private $coffeeOrTea = 0;
     private $description = '';
     private $layout = 0;
 
@@ -19,28 +19,28 @@ class User implements JsonSerializable {
         return $this->username;
     }
 
-    public function getFirstname() {
-        return $this->firstname;
+    public function getFirstName() {
+        return $this->firstName;
     }
 
-    public function setFirstname($firstname) {
-        $this->firstname = $firstname;
+    public function setFirstName($firstName) {
+        $this->firstName = $firstName;
     }
 
-    public function getLastname() {
-        return $this->lastname;
+    public function getLastName() {
+        return $this->lastName;
     }
 
-    public function setLastname($lastname) {
-        $this->lastname = $lastname;
+    public function setLastName($lastName) {
+        $this->lastName = $lastName;
     }
 
-    public function getCoffeeTea() {
-        return $this->coffeeTea;
+    public function getCoffeeOrTea() {
+        return $this->coffeeOrTea;
     }
 
-    public function setCoffeeTea($coffeeTea) {
-        $this->coffeeTea = $coffeeTea;
+    public function setCoffeeOrTea($coffeeOrTea) {
+        $this->coffeeOrTea = $coffeeOrTea;
     }
 
     public function getDescription() {
@@ -71,6 +71,8 @@ class User implements JsonSerializable {
     public static function fromJson($data) {
         $user = new User();
         foreach ($data as $key => $value) {
+            //echo "in USER fromJason: <br><br>";
+            // var_dump($user);
             $user->{$key} = $value;
         }
         return $user;

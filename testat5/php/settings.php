@@ -1,24 +1,35 @@
 <?php
 require("start.php");
 
+// redirect to login if no user is set in session
 if (!isset($_SESSION['user'])) {
     header('location: login.php');
     exit();
 }
 
-// for page redirect
+$curUser = $service->loadUser($_SESSION['user']);
+var_dump($curUser);
+
+// page redirect
 $cancel = false;
-if($cancel) {
+if ($cancel) {
     header('location: friends.php');
     exit();
 }
-//$service = new \Utils\BackendService(CHAT_SERVER_URL, CHAT_SERVER_ID);
-$curUser = $service->loadUser($_SESSION['user']);
-//echo $curUser;
-var_dump($curUser);
-echo "username";
-var_dump($curUser->getDescription());
 
+// saving user data after hitting "save" button
+if ($_POST != null) {
+
+    echo "<br> post POST-Array data: <br>";
+    var_dump($_POST);
+
+    $curUser->setFirstName($_POST['firstName']);
+    $curUser->setLastName($_POST['lastName']);
+    $curUser->setCoffeeOrTea($_POST['coffeeOrTea']);
+    $curUser->setDescription($_POST['description']);
+
+    $service->saveUser($curUser);
+}
 ?>
 
 
@@ -40,23 +51,23 @@ var_dump($curUser->getDescription());
 
         <div>
             <label>First Name</label>
-            <input placeholder="Your name" type="text" name="firstname" value="<?= $curUser->getFirstname() ?>">
+            <input placeholder="Your name" type="text" name="firstName" value="<?= $curUser->getFirstName() ?>">
         </div>
         <div>
             <label>Last Name</label>
-            <input placeholder="Your surname" type="text" name="lastname" value="<?= $curUser->getLastname() ?>">
+            <input placeholder="Your surname" type="text" name="lastName" value="<?= $curUser->getLastName() ?>">
         </div>
         <label>Coffee or Tea?</label>
-        <select name="coffeOrTeaSelection" name="coffeeTea" value="<?= $curUser->getCoffeeTea() ?>">
-            <option value="coffee">Coffee</option>
-            <option value="tea">Tea</option>
-            <option value="nor">Neither nor</option>
+        <select name="coffeeOrTea" name="coffeeOrTea">
+            <option value="0" <?php if($curUser->getCoffeeOrTea() == 0): ?> selected="selected" <?php endif; ?>>Coffee</option>
+            <option value="1" <?php if($curUser->getCoffeeOrTea() == 1): ?> selected="selected" <?php endif; ?>>Tea</option>
+            <option value="2" <?php if($curUser->getCoffeeOrTea() == 2): ?> selected="selected" <?php endif; ?>>Neither nor</option>
         </select>
 
     </fieldset>
     <fieldset class="long">
         <legend>Tell Something About You</legend>
-        <textarea placeholder="Leave a comment" name="description" value="<?= $curUser->getDescription() ?>" ></textarea>
+        <textarea placeholder="Leave a comment" name="description" value="<?= $curUser->getDescription()?>"></textarea>
     </fieldset>
 
     <fieldset class="long">
@@ -75,7 +86,7 @@ var_dump($curUser->getDescription());
         </div>
     </fieldset>
     <div class="center">
-        <a  href="friends.php" >
+        <a href="friends.php">
             <button type="button" onclick="$cancel=true;">Cancel</button>
         </a>
         <button class="blueButton">Save</button>
