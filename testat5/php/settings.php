@@ -1,6 +1,26 @@
 <?php
-	require('start.php');
+require("start.php");
+
+if (!isset($_SESSION['user'])) {
+    header('location: login.php');
+    exit();
+}
+
+// for page redirect
+$cancel = false;
+if($cancel) {
+    header('location: friends.php');
+    exit();
+}
+//$service = new \Utils\BackendService(CHAT_SERVER_URL, CHAT_SERVER_ID);
+$curUser = $service->loadUser($_SESSION['user']);
+//echo $curUser;
+var_dump($curUser);
+echo "username";
+var_dump($curUser->getDescription());
+
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -13,29 +33,30 @@
 </head>
 
 <body>
-    <h1>Profile Settings</h1>
+<h1>Profile Settings</h1>
+<form action="settings.php" method="post">
     <fieldset class="long">
         <legend>Base Data</legend>
-        <form>
-            <div>
-                <label>First Name</label>
-                <input placeholder="Your name">
-            </div>
-            <div>
-                <label>Last Name</label>
-                <input placeholder="Your surname">
-            </div>
-            <label>Coffee or Tea?</label>
-            <select name="coffeOrTeaSelection">
-                <option value="coffee">Coffee</option>
-                <option value="tea">Tea</option>
-                <option value="nor">Neither nor</option>
-            </select>
-        </form>
+
+        <div>
+            <label>First Name</label>
+            <input placeholder="Your name" type="text" name="firstname" value="<?= $curUser->getFirstname() ?>">
+        </div>
+        <div>
+            <label>Last Name</label>
+            <input placeholder="Your surname" type="text" name="lastname" value="<?= $curUser->getLastname() ?>">
+        </div>
+        <label>Coffee or Tea?</label>
+        <select name="coffeOrTeaSelection" name="coffeeTea" value="<?= $curUser->getCoffeeTea() ?>">
+            <option value="coffee">Coffee</option>
+            <option value="tea">Tea</option>
+            <option value="nor">Neither nor</option>
+        </select>
+
     </fieldset>
     <fieldset class="long">
         <legend>Tell Something About You</legend>
-        <textarea placeholder="Leave a comment"></textarea>
+        <textarea placeholder="Leave a comment" name="description" value="<?= $curUser->getDescription() ?>" ></textarea>
     </fieldset>
 
     <fieldset class="long">
@@ -54,11 +75,12 @@
         </div>
     </fieldset>
     <div class="center">
-        <a href="friends.html">
-            <button class="decline">Cancel</button>
+        <a  href="friends.php" >
+            <button type="button" onclick="$cancel=true;">Cancel</button>
         </a>
         <button class="blueButton">Save</button>
     </div>
+</form>
 </body>
 
 </html>
