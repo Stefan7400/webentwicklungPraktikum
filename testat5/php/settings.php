@@ -27,6 +27,7 @@ if ($_POST != null) {
     $curUser->setLastName($_POST['lastName']);
     $curUser->setCoffeeOrTea($_POST['coffeeOrTea']);
     $curUser->setDescription($_POST['description']);
+    $curUser->setLayout($_POST['layout']);
 
     $service->saveUser($curUser);
 }
@@ -59,28 +60,28 @@ if ($_POST != null) {
         </div>
         <label>Coffee or Tea?</label>
         <select name="coffeeOrTea" name="coffeeOrTea">
-            <option value="0" <?php if($curUser->getCoffeeOrTea() == 0): ?> selected="selected" <?php endif; ?>>Coffee</option>
-            <option value="1" <?php if($curUser->getCoffeeOrTea() == 1): ?> selected="selected" <?php endif; ?>>Tea</option>
-            <option value="2" <?php if($curUser->getCoffeeOrTea() == 2): ?> selected="selected" <?php endif; ?>>Neither nor</option>
+            <option value="1" <?php if($curUser->getCoffeeOrTea() == 1): ?> selected="selected" <?php endif; ?>>Coffee</option>
+            <option value="2" <?php if($curUser->getCoffeeOrTea() == 2): ?> selected="selected" <?php endif; ?>>Tea</option>
+            <option value="0" <?php if($curUser->getCoffeeOrTea() == 0): ?> selected="selected" <?php endif; ?>>Neither nor</option>
         </select>
 
     </fieldset>
     <fieldset class="long">
         <legend>Tell Something About You</legend>
-        <textarea placeholder="Leave a comment" name="description" value="<?= $curUser->getDescription()?>"></textarea>
+        <textarea placeholder="Leave a comment" name="description" ><?= $curUser->getDescription()?></textarea>
     </fieldset>
 
     <fieldset class="long">
         <legend>Preferred Chat Layout</legend>
         <div>
             <div class="flex">
-                <input type="radio" id="oneLine" name="preferredChatLayout">
+                <input type="radio" id="oneLine" name="layout" value="0" <?php if($curUser->getLayout() == 0): ?> checked="checked" <?php endif; ?>>
                 <label for="oneLine">Username and message in one line</label>
             </div>
         </div>
         <div>
             <div class="flex">
-                <input type="radio" id="sepLine" name="preferredChatLayout">
+                <input type="radio" id="sepLine" name="layout" value="1" <?php if($curUser->getLayout() == 1): ?> checked="checked" <?php endif; ?>>
                 <label for="sepLine">Username and message in separate line</label>
             </div>
         </div>
