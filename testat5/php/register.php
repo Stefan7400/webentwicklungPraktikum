@@ -5,12 +5,12 @@ use Utils\BackendService;
 require('start.php');
     $service = new BackendService(CHAT_SERVER_URL, CHAT_SERVER_ID);
 
-   if(isset($_POST['password']) && isset($_POST['passwordRepeated']) && isset($_POST['userName'])){
+   if(isset($_POST['password']) && isset($_POST['passwordRepeated']) && isset($_POST['username'])){
 
        if(validate_username() && !password_not_valid() && doPasswordMatch()){
-            if(!$service->stefanUserExists($_POST['userName'])){
-                if($service->stefanRegister($_POST['userName'],$_POST['password'])){
-                    $_SESSION['user'] = $_POST['userName'];
+            if(!$service->stefanUserExists($_POST['username'])){
+                if($service->stefanRegister($_POST['username'],$_POST['password'])){
+                    $_SESSION['user'] = $_POST['username'];
                     header('location: friends.php');
                     exit();
                 }
@@ -19,7 +19,7 @@ require('start.php');
    }
 
     function validate_username(){
-        if(empty($_POST['userName']) || strlen($_POST['userName']) < 3){
+        if(empty($_POST['username']) || strlen($_POST['username']) < 3){
             return false;
         }
         //Username is ok
@@ -54,8 +54,8 @@ require('start.php');
     $username = '';
     $password = '';
     $passwordRepeated = '';
-    if(isset($_POST['userName'])){
-        $username = $_POST['userName'];
+    if(isset($_POST['username'])){
+        $username = $_POST['username'];
     }
     if(isset($_POST['password'])){
         $password = $_POST['password'];
@@ -74,12 +74,12 @@ require('start.php');
         <fieldset>
             <legend>Register</legend>
             <label for="uname">Username</label>
-            <input required id="uname" type="text" value="<?= $username; ?>" name="userName" placeholder="Username">
+            <input required id="uname" type="text" value="<?= $username; ?>" name="username" placeholder="Username">
             <?php
-                if(isset($_POST['userName']) & isset($_POST['password'])){
+                if(isset($_POST['username']) & isset($_POST['password'])){
                     if(!validate_username()){
                         echo "<p class='errorHighlight'>Username is too short</p>";
-                    } else if ($service->stefanUserExists($_POST['userName'])){
+                    } else if ($service->stefanUserExists($_POST['username'])){
                         echo "<p class='errorHighlight'>Username already exists!</p> $username";
                     }
                 }

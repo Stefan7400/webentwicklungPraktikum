@@ -1,5 +1,12 @@
 <?php
 	require('start.php');
+    $service = new Utils\BackendService(CHAT_SERVER_URL, CHAT_SERVER_ID);
+
+    $username = "";
+    if(isset($_SESSION['user'])){
+        $username = $_SESSION['user'];
+    }
+
 ?>
 
 <!DOCTYPE html>
@@ -13,7 +20,10 @@
 </head>
 
 <body>
-    <h1>Chat with Tom</h1>
+<?php
+ echo "<h1>$username's Chat with Tom</h1>"
+ ?>
+
 
     <a href="friends.html">&lt; Back</a> | <a href="profile.html">Profile</a> | <a href="friends.html" class="remove">Remove Friend</a>
 
