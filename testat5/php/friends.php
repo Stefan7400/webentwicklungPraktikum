@@ -26,47 +26,52 @@
 
 	$friends = $service->loadFriends();
 
-    // TODO change everything from $friend->status and ->username to getStatus() and getUsername()
-
     if(isset($_POST['accept'])) {
         $friend = $_POST['accept'];
-#        $friend->setStatusAccepted();
-        // TODO
+        foreach ($friends as $curFriend) {
+            if($curFriend->getUsername() === $friend) {
+                $service->friendAccept($curFriend);
+                break;
+            }
+        }
     }
 
 	if(isset($_POST['decline'])) {
 		$friend = $_POST['decline'];
-#        $friend->setStatusDismissed();
-        // TODO
+		foreach ($friends as $curFriend) {
+			if($curFriend->getUsername() === $friend) {
+				$service->friendDismiss($curFriend);
+				break;
+			}
+		}
 	}
 
 	// TODO react to deleted friends
 
     // add friend
-
-    function addFriend($service, $username, $friends) {
+	function addFriend($service, $username, $friends) {
 		if($_SESSION['user'] !== $username && $service->userExists($username)) {
 			foreach ($friends as $friend) {
-				if($username === $friend->username) {
+				if($username === $friend->getUsername()) {
 					return false;
 				}
 			}
 			return $service->friendRequest($service->loadUser($username));
 		}
-        return false;
-    }
+		return false;
+	}
 
 	$username = '';
-    $error = false;
-    if(isset($_POST['action']) && $_POST['action'] === 'addFriend') {
-        if(isset($_POST['username'])) {
-            $username = $_POST['username'];
-        }
-        $error = !addFriend($service, $username, $friends);
-        if(!$error) {
-            $username = '';
-        }
-    }
+	$error = false;
+	if(isset($_POST['action']) && $_POST['action'] === 'addFriend') {
+		if(isset($_POST['username'])) {
+			$username = $_POST['username'];
+		}
+		$error = !addFriend($service, $username, $friends);
+		if(!$error) {
+			$username = '';
+		}
+	}
 ?>
 
 <!DOCTYPE html>
@@ -80,7 +85,7 @@
 </head>
 
 <body>
-    <h1>Friends</h1>
+    <h1>Friends of <?php echo $_SESSION['user']; ?></h1>
     <p>
         <a href="logout.php" onclick="$login=true;">&lt Logout</a> | <a href="settings.php" onclick="$settings=true;">Settings</a>
     </p>
@@ -90,7 +95,7 @@
             <?php
 				function displayNoFriends($friends): bool {
 					foreach ($friends as $friend) {
-						if($friend->username !== null && $friend->status === 'accepted') {
+						if($friend->getUsername() !== null && $friend->getStatus() === 'accepted') {
 							return false;
 						}
 					}
@@ -106,16 +111,16 @@
 				}
 
 				foreach ($friends as $friend) {
-					if(array_key_exists($friend->username, $messages)) {
-						$message = $messages[$friend->username];
+					if(array_key_exists($friend->getUsername(), $messages)) {
+						$message = $messages[$friend->getUsername()];
 					} else {
 						$message = 0;
 					}
-					if($friend->status === "accepted") {
+					if($friend->getStatus() === "accepted") {
             ?>
                         <li class="flex">
-                            <a href="chat.php?friend=<?php echo $friend->username; ?>" onclick="$chat=true;">
-								<?= $friend->username; ?>
+                            <a href="chat.php?friend=<?php echo $friend->getUsername(); ?>" onclick="$chat=true;">
+								<?= $friend->getUsername(); ?>
                             </a>
                             <div><?= $message ?></div>
                         </li>
@@ -131,14 +136,14 @@
         <ol>
             <?php
 				foreach ($friends as $friend) {
-					if($friend->status === "requested") {
+					if($friend->getStatus() === "requested") {
             ?>
                         <li>
-                            <a href="profile.php?name=<?php echo $friend->username; ?>" onclick="$profile=true;">
-                                Friend request from <b><?= $friend->username; ?></b>
+                            <a href="profile.php?name=<?php echo $friend->getUsername(); ?>" onclick="$profile=true;">
+                                Friend request from <b><?= $friend->getUsername(); ?></b>
                             </a>
-                            <button name="accept" value="<?= $friend->username; ?>" type="submit" class="request interact">Accept</button>
-                            <button name="decline" value="<?= $friend->username; ?>" type="submit" class="request decline">Decline</button>
+                            <button name="accept" value="<?= $friend->getUsername(); ?>" type="submit" class="request interact">Accept</button>
+                            <button name="decline" value="<?= $friend->getUsername(); ?>" type="submit" class="request decline">Decline</button>
                         </li>
             <?php
 					}
@@ -156,7 +161,7 @@
 	?>
     <form action="friends.php" method="post">
         <div class="flex">
-            <input id="friendlistInput" name="username" value="<?= $username; ?>" placeholder="Add Friend to List"class="longType">
+            <input id="friendlistInput" name="username" value="<?= $username; ?>" placeholder="Add Friend to List" class="longType">
             <button id="addFriendButton" name="action" value="addFriend" type="submit" class="longButton interact">Add</button>
         </div>
     </form>
@@ -167,7 +172,7 @@
         window.chatServer = "<?= CHAT_SERVER_URL ?>";
 
         window.setInterval(function() {
-            // TODO interval works but doesn't refresh the stuff yet
+            // TODO refresh friend and request list
             window.location.href;
         }, 2000);
     </script>
