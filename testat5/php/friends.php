@@ -106,26 +106,24 @@
 				}
 
 				$messages = $service->getUnread();
-				if(displayNoFriends($friends)) {
-					return;
-				}
-
-				foreach ($friends as $friend) {
-					if(array_key_exists($friend->getUsername(), $messages)) {
-						$message = $messages[$friend->getUsername()];
-					} else {
-						$message = 0;
-					}
-					if($friend->getStatus() === "accepted") {
+				if(!displayNoFriends($friends)) {
+                    foreach ($friends as $friend) {
+                        if(array_key_exists($friend->getUsername(), $messages)) {
+                            $message = $messages[$friend->getUsername()];
+                        } else {
+                            $message = 0;
+                        }
+                        if($friend->getStatus() === "accepted") {
             ?>
-                        <li class="flex">
-                            <a href="chat.php?friend=<?php echo $friend->getUsername(); ?>" onclick="$chat=true;">
-								<?= $friend->getUsername(); ?>
-                            </a>
-                            <div><?= $message ?></div>
-                        </li>
+                            <li class="flex">
+                                <a href="chat.php?friend=<?php echo $friend->getUsername(); ?>" onclick="$chat=true;">
+                                    <?= $friend->getUsername(); ?>
+                                </a>
+                                <div><?= $message ?></div>
+                            </li>
             <?php
-					}
+					    }
+				    }
 				}
 			?>
         </ul>
