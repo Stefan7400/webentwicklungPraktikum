@@ -107,6 +107,30 @@
 			return false;
 		}
 
+        public function stefanUserExists($username){
+            try {
+                $result = HttpClient::get($this->base . "/" . $this->id . "/user/" . $username);
+                echo $result;
+                return $result;
+            }
+            catch(\Exception $e) {
+                return false;
+            }
+        }
+
+        public function stefanRegister(string $username, string $password) {
+            try {
+                $result = HttpClient::post($this->base . '/' . $this->id . '/register',
+                    array("username" => $username, "password" => $password));
+                $_SESSION['chatToken'] = $result->token;
+                return true;
+            }
+            catch(\Exception $e) {
+                echo "Authentification failed";
+            }
+            return false;
+        }
+
 		public function userExists($username) {
 			try {
 				$result = HttpClient::get($this->base . "/" . $this->id . "/user/" . $username, $_SESSION['chatToken']);

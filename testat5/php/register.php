@@ -8,12 +8,13 @@ require('start.php');
    if(isset($_POST['password']) && isset($_POST['passwordRepeated']) && isset($_POST['userName'])){
 
        if(validate_username() && !password_not_valid() && doPasswordMatch()){
-            echo $service->register($_POST['userName'],$_POST['password']) ? "TRUE" : "FALSE";
-           if($service->register($_POST['userName'],$_POST['password'])){
-
-               header('location: friends.php');
-               exit();
-           }
+            if(!$service->stefanUserExists($_POST['userName'])){
+                if($service->stefanRegister($_POST['userName'],$_POST['password'])){
+                    $_SESSION['user'] = $_POST['userName'];
+                    header('location: friends.php');
+                    exit();
+                }
+            }
        }
    }
 
@@ -78,7 +79,7 @@ require('start.php');
                 if(isset($_POST['userName']) & isset($_POST['password'])){
                     if(!validate_username()){
                         echo "<p class='errorHighlight'>Username is too short</p>";
-                    } else if (!$service->register($_POST['userName'], $_POST['password'])){
+                    } else if ($service->stefanUserExists($_POST['userName'])){
                         echo "<p class='errorHighlight'>Username already exists!</p> $username";
                     }
                 }
