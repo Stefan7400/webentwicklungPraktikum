@@ -49,7 +49,7 @@
 
     <hr>
 
-    <div id="chatbox" class="comBox"></div>
+    <div id="chatbox" class="comBox">
 
         <?php
         if($messages !== null){
@@ -64,7 +64,7 @@
          <?php       }
         } }
             ?>
-
+    </div>
     <hr>
     <form method="post" action="chat.php">
         <div  class="flex">
