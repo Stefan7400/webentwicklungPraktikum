@@ -64,7 +64,12 @@
 		public function loadFriends() {
 			try {
 				$data = HttpClient::get($this->base . "/" . $this->id . "/friend", $_SESSION['chatToken']);
-				return Friend::fromJson($data);
+				$len = count($data);
+				$friends = array();
+				for($i = 0; $i < $len; $i++) {
+					$friends[$i] = Friend::fromJson($data[$i]);
+				}
+				return $friends;
 			} catch (\Exception $e) {
 				error_log($e);
 			}
@@ -82,7 +87,11 @@
 
 		public function friendAccept($friend) {
 			try {
-				return HttpClient::put($this->base . "/" . $this->id . "/friend/" . $friend->getUsername(), $friend, $_SESSION['chatToken']);
+				$result = HttpClient::put($this->base . "/" . $this->id . "/friend/" . $friend->getUsername(), array("status" => "accepted"), $_SESSION['chatToken']);
+				if($result) {
+					$friend->setStatusAccepted();
+				}
+				return $result;
 			} catch (\Exception $e) {
 				error_log($e);
 			}
@@ -91,7 +100,11 @@
 
 		public function friendDismiss($friend) {
 			try {
-				return HttpClient::put($this->base . "/" . $this->id . "/friend/" . $friend->getUsername(), $friend, $_SESSION['chatToken']);
+				$result = HttpClient::put($this->base . "/" . $this->id . "/friend/" . $friend->getUsername(), array("status" => "dismissed"), $_SESSION['chatToken']);
+				if($result) {
+					$friend->setStatusDismissed();
+				}
+				return $result;
 			} catch (\Exception $e) {
 				error_log($e);
 			}
