@@ -164,4 +164,24 @@
 			}
 			return null;
 		}
+
+        public function getMessages() {
+            try {
+
+                return (array) HttpClient::get($this->base . "/" . $this->id . "/message/" . $_SESSION['friend'], $_SESSION['chatToken']);
+            } catch(\Exception $e) {
+                echo "Error while loading messages list";
+            }
+        }
+
+        public function sendMessage($message, $to) {
+            try {
+                $list = HttpClient::post($this->base . "/" . $this->id . "/message",
+                    array("message" => $message, "to" => $to),
+                    $_SESSION['chatToken']);
+                var_dump($list);
+            } catch(\Exception $e) {
+                echo "Error while loading list";
+            }
+        }
 	}
