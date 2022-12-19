@@ -3,7 +3,7 @@
     $service = new Utils\BackendService(CHAT_SERVER_URL, CHAT_SERVER_ID);
 
     $chatPartner = "Unknown";
-    $username = "";
+    $username = "Unknown";
     if(isset($_SESSION['user'])){
         $username = $_SESSION['user'];
     }
@@ -12,12 +12,19 @@
         $_SESSION['friend'] = $_GET['friend'];
     }
 
+    if(isset($_SESSION['friend'])){
+        $chatPartner = $_SESSION['friend'];
+    }
+
     $sendMessage = '';
     if(isset($_POST['sendMessage']) && !empty($_POST['sendMessage'])){
         //A message has been send
         $sendMessage = $_POST['sendMessage'];
         $service->sendMessage($sendMessage,$_SESSION['friend']);
-        $sendMessage = '';
+        echo "DIE NACHRICHT" . $_POST['sendMessage'];
+        unset($_POST['sendMessage']);
+
+        $sendMessage = "";
     }
 
     $data = $service->loadUser($username);
@@ -45,7 +52,7 @@
  ?>
 
 
-    <a href="friends.php">&lt; Back</a> | <a href="profile.php?friend=<?php echo $chatPartner ?>">Profile</a> | <a href="friends.php" class="remove">Remove Friend</a>
+    <a href="friends.php">&lt; Back</a> | <a href="profile.php?friend=<?php echo $chatPartner ?>">Profile</a> | <a href="friends.php?remove=<?php echo $chatPartner ?>" class="remove">Remove Friend</a>
 
     <hr>
 
@@ -68,11 +75,15 @@
     <hr>
     <form method="post" action="chat.php">
         <div  class="flex">
-            <input id="message" class="longType" name="sendMessage" type="text" placeholder="New Message">
+            <input id="message" class="longType" name="sendMessage" value="<?= $sendMessage; ?>" type="text" placeholder="New Message">
             <button id="sendMessage" class="longButton">Send</button>
         </div>
     </form>
-
+<script>
+    window.setInterval(function() {
+        document.getElementById('sendMessage').click();
+    }, 2000);
+</script>
 </body>
 
 </html>
