@@ -8,7 +8,6 @@ if (!isset($_SESSION['user'])) {
 }
 
 $curUser = $service->loadUser($_SESSION['user']);
-var_dump($curUser);
 
 // page redirect
 $cancel = false;
@@ -19,9 +18,6 @@ if ($cancel) {
 
 // saving user data after hitting "save" button
 if ($_POST != null) {
-
-    echo "<br> post POST-Array data: <br>";
-    var_dump($_POST);
 
     $curUser->setFirstName($_POST['firstName']);
     $curUser->setLastName($_POST['lastName']);
