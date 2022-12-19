@@ -15,12 +15,6 @@ if (!isset($_GET['friend'])) {
 
 $displayedFriend = $service->loadUser($_GET['friend']); // load currently displayed friend from URI-Query
 
-// page redirect
-$back = false;
-if ($back) {
-    header('location: friends.php');
-    exit();
-}
 ?>
 
 <!DOCTYPE html>
@@ -31,22 +25,15 @@ if ($back) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1-0, user-scalable=no">
     <title>Profile</title>
     <link rel="stylesheet" href="../css/style.css">
-    <script>
-        function checkRemove() {
-            if(confirm("Are you sure you want to delete this friend?")) {
-                <?php $service->friendRemove($displayedFriend); ?>
-            }
-        }
-    </script>
 </head>
 
 <body>
 <h1>Profile of <?= $displayedFriend->getUsername() ?></h1>
 
-<a href="chat.php" onclick="$back=true">&lt Back to Chat</a>
+<a href="chat.php?friend=<?php echo $displayedFriend->getUsername(); ?>">&lt; Back to Chat</a>
 <label>|</label>
-<a href="friends.php" class="remove" onclick="return checkRemove();">Remove Friend</a>
-<div class="flex">
+<a href="friends.php?remove=<?php echo $displayedFriend->getUsername() ?>" class="remove"> Remove Friend</a>
+<div class=" flex">
     <img class="profile" src="../../images/profile.png" alt="profile image">
     <div class="comBox profile">
         <p>
@@ -62,7 +49,7 @@ if ($back) {
                 ?> </dd>
 
             <dt>Name</dt>
-            <dd><?php if ($displayedFriend->getFirstName() != null) echo $displayedFriend->getFirstName();
+            <dd><?php if ($displayedFriend->getFirstName() != null) echo $displayedFriend->getFirstName() . " " . $displayedFriend->getLastName();
                 else echo $displayedFriend->getUsername() ?></dd>
         </dl>
     </div>
