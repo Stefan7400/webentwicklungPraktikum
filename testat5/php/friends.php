@@ -46,9 +46,16 @@
 		}
 	}
 
-	// TODO react to deleted friends
+    if(isset($_GET['remove'])) {
+		$friend = $_GET['remove'];
+		foreach ($friends as $curFriend) {
+			if($curFriend->getUsername() === $friend) {
+				$service->friendRemove($curFriend);
+				break;
+			}
+		}
+    }
 
-    // add friend
 	function addFriend($service, $username, $friends) {
 		if($_SESSION['user'] !== $username && $service->userExists($username)) {
 			foreach ($friends as $friend) {
@@ -137,7 +144,7 @@
 					if($friend->getStatus() === "requested") {
             ?>
                         <li>
-                            <a href="profile.php?name=<?php echo $friend->getUsername(); ?>" onclick="$profile=true;">
+                            <a href="profile.php?friend=<?php echo $friend->getUsername(); ?>" onclick="$profile=true;">
                                 Friend request from <b><?= $friend->getUsername(); ?></b>
                             </a>
                             <button name="accept" value="<?= $friend->getUsername(); ?>" type="submit" class="request interact">Accept</button>
@@ -170,8 +177,8 @@
         window.chatServer = "<?= CHAT_SERVER_URL ?>";
 
         window.setInterval(function() {
-            // TODO refresh friend and request list
-            window.location.href;
+            // TODO
+            // window.location.reload();
         }, 2000);
     </script>
 </body>

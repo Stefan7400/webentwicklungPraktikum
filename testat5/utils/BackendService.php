@@ -113,7 +113,11 @@
 
 		public function friendRemove($friend) {
 			try {
-				return HttpClient::delete($this->base . "/" . $this->id . "/friend/" . $friend->getUsername(), $_SESSION['chatToken']);
+				$result = HttpClient::delete($this->base . "/" . $this->id . "/friend/" . $friend->getUsername(), $_SESSION['chatToken']);
+				if($result) {
+					$this->friendDismiss($friend);
+				}
+				return $result;
 			} catch (\Exception $e) {
 				error_log($e);
 			}
