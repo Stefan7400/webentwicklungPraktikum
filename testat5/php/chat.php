@@ -7,7 +7,7 @@
     if(isset($_SESSION['user'])){
         $username = $_SESSION['user'];
     }
-    if(isset($_GET['friend'])){
+    if(isset($_GET['friend']) || isset($_SESSION['friend'])){
         $chatPartner = $_GET['friend'];
         $_SESSION['friend'] = $_GET['friend'];
     } else {
