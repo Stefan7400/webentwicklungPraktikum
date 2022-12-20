@@ -75,12 +75,7 @@
     <link rel="stylesheet" href="../css/style.css">
 </head>
 
-<body onload="function() {
-        let input = document.getElementById("friendlistInput");
-        if(input !== undefined && input !== null && input !== "") {
-            input.focus();
-        }
-      }">
+<body>
     <h1>Friends of <?php echo $_SESSION['user']; ?></h1>
     <p>
         <a href="logout.php">&lt Logout</a> | <a href="settings.php">Settings</a>
@@ -166,7 +161,7 @@
         window.chatServer = "<?= CHAT_SERVER_URL ?>";
 
         window.setInterval(function() {
-            let input = document.getElementById("friendlistInput").value;
+            const input = document.getElementById("friendlistInput").value;
             if(input !== undefined && input !== null && input !== "") {
                 if(location.href.indexOf("?") === -1) {
                     // no query exists
@@ -182,6 +177,12 @@
                 window.location = location.href;
             }
         }, 2000);
+
+        const input = document.getElementById("friendlistInput");
+        if(input.value !== undefined && input.value !== null && input.value !== "") {
+            input.focus();
+            input.selectionStart = input.selectionEnd = input.value.length;
+        }
     </script>
 </body>
 
