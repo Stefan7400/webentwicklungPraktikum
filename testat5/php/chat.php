@@ -10,6 +10,8 @@
     if(isset($_GET['friend'])){
         $chatPartner = $_GET['friend'];
         $_SESSION['friend'] = $_GET['friend'];
+    } else {
+        header('location: friends.php');
     }
 
     if(isset($_SESSION['friend'])){

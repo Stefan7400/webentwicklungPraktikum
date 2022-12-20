@@ -126,9 +126,7 @@
 
         public function stefanUserExists($username){
             try {
-                $result = HttpClient::get($this->base . "/" . $this->id . "/user/" . $username);
-                echo $result;
-                return $result;
+                return HttpClient::get($this->base . "/" . $this->id . "/user/" . $username);
             }
             catch(\Exception $e) {
                 return false;
