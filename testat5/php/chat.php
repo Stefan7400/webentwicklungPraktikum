@@ -4,6 +4,7 @@
 
     $back = false;
     if($back){
+        unset($_SESSION['friend']);
         header('location: friends.php');
     }
     $chatPartner = "Unknown";
