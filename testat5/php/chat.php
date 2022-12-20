@@ -56,7 +56,7 @@
  ?>
 
 
-    <a href="friends.php" onclick="<?php unset($_SESSION['friend']); ?>">&lt; Back</a> | <a href="profile.php?friend=<?php echo $chatPartner ?>">Profile</a> | <a href="friends.php?remove=<?php echo $chatPartner ?>" class="remove">Remove Friend</a>
+    <a href="friends.php">&lt; Back</a> | <a href="profile.php?friend=<?php echo $chatPartner ?>">Profile</a> | <a href="friends.php?remove=<?php echo $chatPartner ?>" class="remove">Remove Friend</a>
 
     <hr>
 
@@ -85,7 +85,12 @@
     </form>
 <script>
     window.setInterval(function() {
-        document.getElementById('sendMessage').click();
+        if (location.href.indexOf("?") === -1) {
+            window.location = location.href += "?friend=" <?php $chatPartner?>;
+        }
+        else {
+            window.location = location.href;
+        }
     }, 2000);
 </script>
 </body>
