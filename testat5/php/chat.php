@@ -23,7 +23,6 @@
         //A message has been send
         $sendMessage = $_POST['sendMessage'];
         $service->sendMessage($sendMessage,$_SESSION['friend']);
-        echo "DIE NACHRICHT" . $_POST['sendMessage'];
         unset($_POST['sendMessage']);
 
         $sendMessage = "";
@@ -85,7 +84,7 @@
             ?>
     </div>
     <hr>
-    <form method="post" action="chat.php">
+    <form method="post" action="chat.php?friend=<?php echo $chatPartner ?>">
         <div  class="flex">
             <input id="message" class="longType" name="sendMessage" value="<?= $sendMessage; ?>" type="text" placeholder="New Message">
             <button id="sendMessage" class="longButton">Send</button>
