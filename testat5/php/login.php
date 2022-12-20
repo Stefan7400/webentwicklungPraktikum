@@ -6,12 +6,6 @@
 		exit();
 	}
 
-    $register = false;
-    if($register) {
-		header('location: register.php');
-		exit();
-	}
-
 	$username = '';
 	$pwd = '';
     $error = false;
@@ -69,7 +63,7 @@
         </fieldset>
         <div class="center">
             <a href="register.php">
-                <button type="button" onclick="$register=true">Register</button>
+                <button type="button">Register</button>
             </a>
             <button type="submit" name="action" value="login" class="blueButton">Login</button>
         </div>
