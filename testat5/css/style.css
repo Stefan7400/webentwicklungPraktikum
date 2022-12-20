@@ -126,6 +126,15 @@ hr {
     flex-wrap: wrap;
 }
 
+ul.seperatedMessage {
+    margin: 0px;
+}
+
+ul.seperatedMessage li {
+    padding-left: 15px;
+    line-height: 8px;
+}
+
 ul {
     list-style-type: none;
     padding: 5px;

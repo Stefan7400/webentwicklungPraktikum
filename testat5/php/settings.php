@@ -71,13 +71,13 @@ if ($_POST != null) {
         <legend>Preferred Chat Layout</legend>
         <div>
             <div class="flex">
-                <input type="radio" id="oneLine" name="layout" value="0" <?php if($curUser->getLayout() == 0): ?> checked="checked" <?php endif; ?>>
+                <input type="radio" id="oneLine" name="layout" value="0" <?php if($curUser->getLayout() === "0"): ?> checked="checked" <?php endif; ?>>
                 <label for="oneLine">Username and message in one line</label>
             </div>
         </div>
         <div>
             <div class="flex">
-                <input type="radio" id="sepLine" name="layout" value="1" <?php if($curUser->getLayout() == 1): ?> checked="checked" <?php endif; ?>>
+                <input type="radio" id="sepLine" name="layout" value="1" <?php if($curUser->getLayout() === "1"): ?> checked="checked" <?php endif; ?>>
                 <label for="sepLine">Username and message in separate line</label>
             </div>
         </div>

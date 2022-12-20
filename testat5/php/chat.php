@@ -29,9 +29,8 @@
         $sendMessage = "";
     }
 
-    $data = $service->loadUser($username);
-    $user = new Model\User($data->getUsername());
-    if ($data->getLayout() === null) {
+    $user = $service->loadUser($username);
+	if ($user->getLayout() === null) {
         $user->setLayout("1");
     }
 
@@ -62,7 +61,7 @@
 
         <?php
         if($messages !== null){
-            if($user->getLayout() === 0){
+            if($user->getLayout() === "0"){
                 foreach ($messages as $message) {
 
              ?>
