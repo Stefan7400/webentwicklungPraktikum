@@ -7,9 +7,11 @@
     if(isset($_SESSION['user'])){
         $username = $_SESSION['user'];
     }
-    if(isset($_GET['friend']) || isset($_SESSION['friend'])){
+    if(isset($_GET['friend'])){
         $chatPartner = $_GET['friend'];
         $_SESSION['friend'] = $_GET['friend'];
+    } elseif (isset($_SESSION['friend'])) {
+        $chatPartner = $_SESSION['friend'];
     } else {
         header('location: friends.php');
     }
