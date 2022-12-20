@@ -2,11 +2,6 @@
 	require('start.php');
     $service = new Utils\BackendService(CHAT_SERVER_URL, CHAT_SERVER_ID);
 
-    $back = false;
-    if($back){
-        unset($_SESSION['friend']);
-        header('location: friends.php');
-    }
     $chatPartner = "Unknown";
     $username = "Unknown";
     if(isset($_SESSION['user'])){
@@ -61,7 +56,7 @@
  ?>
 
 
-    <a href="friends.php" onclick="<?php $back=true ?>">&lt; Back</a> | <a href="profile.php?friend=<?php echo $chatPartner ?>">Profile</a> | <a href="friends.php?remove=<?php echo $chatPartner ?>" class="remove">Remove Friend</a>
+    <a href="friends.php" onclick="<?php unset($_SESSION['friend']); ?>">&lt; Back</a> | <a href="profile.php?friend=<?php echo $chatPartner ?>">Profile</a> | <a href="friends.php?remove=<?php echo $chatPartner ?>" class="remove">Remove Friend</a>
 
     <hr>
 
