@@ -75,7 +75,12 @@
     <link rel="stylesheet" href="../css/style.css">
 </head>
 
-<body>
+<body onload="function() {
+        let input = document.getElementById("friendlistInput");
+        if(input !== undefined && input !== null && input !== "") {
+            input.focus();
+        }
+      }">
     <h1>Friends of <?php echo $_SESSION['user']; ?></h1>
     <p>
         <a href="logout.php">&lt Logout</a> | <a href="settings.php">Settings</a>
