@@ -23,9 +23,8 @@
         //A message has been send
         $sendMessage = $_POST['sendMessage'];
         $service->sendMessage($sendMessage,$_SESSION['friend']);
-        echo "DIE NACHRICHT" . $_POST['sendMessage'];
         unset($_POST['sendMessage']);
-
+        unset($_GET['input']);
         $sendMessage = "";
     }
 
@@ -33,6 +32,10 @@
 	if ($user->getLayout() === null) {
         $user->setLayout("1");
     }
+
+if(isset($_GET['input'])) {
+    $sendMessage = $_GET['input'];
+}
 
     $messages = $service->getMessages();
 ?>
@@ -85,7 +88,7 @@
             ?>
     </div>
     <hr>
-    <form method="post" action="chat.php">
+    <form method="post" action="chat.php?friend=<?php echo $chatPartner ?>">
         <div  class="flex">
             <input id="message" class="longType" name="sendMessage" value="<?= $sendMessage; ?>" type="text" placeholder="New Message">
             <button id="sendMessage" class="longButton">Send</button>
@@ -93,13 +96,26 @@
     </form>
 <script>
     window.setInterval(function() {
-        if (location.href.indexOf("?") === -1) {
-            window.location = location.href += "?friend=" <?php $chatPartner?>;
-        }
-        else {
+        let input = document.getElementById("message").value;
+        if(input !== undefined && input !== null && input !== "") {
+            if(location.href.indexOf("?") === -1) {
+                // no query exists
+                window.location = location.href += "?input=" + input;
+            } else if(location.href.search("input") !== -1) {
+                // input query exists
+                window.location = location.href.substring(0, location.href.lastIndexOf("input=")+6) + input;
+            } else {
+                // only other query exists
+                window.location = location.href + "&input=" + input;
+            }
+        } else {
             window.location = location.href;
         }
     }, 2000);
+
+    const input = document.getElementById("message");
+    input.focus();
+    input.selectionStart = input.selectionEnd = input.value.length;
 </script>
 </body>
 
