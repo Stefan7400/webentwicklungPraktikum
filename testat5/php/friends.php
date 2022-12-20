@@ -60,6 +60,8 @@
 		if(!$error) {
 			$username = '';
 		}
+	} else if(isset($_GET['input'])) {
+		$username = $_GET['input'];
 	}
 ?>
 
@@ -159,8 +161,21 @@
         window.chatServer = "<?= CHAT_SERVER_URL ?>";
 
         window.setInterval(function() {
-            // TODO
-            // window.location.reload();
+            let input = document.getElementById("friendlistInput").value;
+            if(input !== undefined && input !== null && input !== "") {
+                if(location.href.indexOf("?") === -1) {
+                    // no query exists
+                    window.location = location.href += "?input=" + input;
+                } else if(location.href.search("input") !== -1) {
+                    // input query exists
+                    window.location = location.href.substring(0, location.href.lastIndexOf("input=")+6) + input;
+                } else {
+                    // only other query exists
+                    window.location = location.href + "&&input=" + input;
+                }
+            } else {
+                window.location = location.href;
+            }
         }, 2000);
     </script>
 </body>
