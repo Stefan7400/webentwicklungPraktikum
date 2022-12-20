@@ -113,7 +113,9 @@ if(isset($_GET['input'])) {
         }
     }, 2000);
 
-    document.getElementById("message").focus();
+    const input = document.getElementById("message");
+    input.focus();
+    input.selectionStart = input.selectionEnd = input.value.length;
 </script>
 </body>
 
