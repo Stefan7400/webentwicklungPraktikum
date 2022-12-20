@@ -70,7 +70,18 @@
                         <div class="time"><?php echo date("d/m/Y H:i:s", $message->time / 1000)  ?></div>
                     </div>
          <?php       }
-        } }
+        } else {
+                foreach ($messages as $message) {
+                    ?>
+                <div class="flex">
+                    <ul class="seperatedMessage"><?php echo $message->from . ": "?>
+                        <li><?php echo $message->msg?></li>
+                    </ul>
+                    <div class="time"><?php echo date("d/m/Y H:i:s", $message->time / 1000)  ?></div>
+                </div>
+            <?php   }
+            }
+        }
             ?>
     </div>
     <hr>
