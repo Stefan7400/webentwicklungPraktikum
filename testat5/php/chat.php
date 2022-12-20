@@ -24,7 +24,7 @@
         $sendMessage = $_POST['sendMessage'];
         $service->sendMessage($sendMessage,$_SESSION['friend']);
         unset($_POST['sendMessage']);
-
+        unset($_GET['input']);
         $sendMessage = "";
     }
 
@@ -32,6 +32,10 @@
 	if ($user->getLayout() === null) {
         $user->setLayout("1");
     }
+
+if(isset($_GET['input'])) {
+    $sendMessage = $_GET['input'];
+}
 
     $messages = $service->getMessages();
 ?>
@@ -92,13 +96,24 @@
     </form>
 <script>
     window.setInterval(function() {
-        if (location.href.indexOf("?") === -1) {
-            window.location = location.href += "?friend=" <?php $chatPartner?>;
-        }
-        else {
+        let input = document.getElementById("message").value;
+        if(input !== undefined && input !== null && input !== "") {
+            if(location.href.indexOf("?") === -1) {
+                // no query exists
+                window.location = location.href += "?input=" + input;
+            } else if(location.href.search("input") !== -1) {
+                // input query exists
+                window.location = location.href.substring(0, location.href.lastIndexOf("input=")+6) + input;
+            } else {
+                // only other query exists
+                window.location = location.href + "&input=" + input;
+            }
+        } else {
             window.location = location.href;
         }
     }, 2000);
+
+    document.getElementById("message").focus();
 </script>
 </body>
 
