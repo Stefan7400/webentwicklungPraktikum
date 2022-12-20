@@ -6,24 +6,6 @@
 		exit();
 	}
 
-	$logout = false;
-	if($logout) {
-		header('location: logout.php');
-		exit();
-	}
-
-	$chat = false;
-	if($chat) {
-		header('location: chat.php');
-		exit();
-	}
-
-	$profile = false;
-	if($profile) {
-		header('location: profile.php');
-		exit();
-	}
-
 	$friends = $service->loadFriends();
 
     if(isset($_POST['accept'])) {
@@ -94,7 +76,7 @@
 <body>
     <h1>Friends of <?php echo $_SESSION['user']; ?></h1>
     <p>
-        <a href="logout.php" onclick="$login=true;">&lt Logout</a> | <a href="settings.php" onclick="$settings=true;">Settings</a>
+        <a href="logout.php">&lt Logout</a> | <a href="settings.php">Settings</a>
     </p>
     <hr>
     <div class="comBox">
@@ -123,7 +105,7 @@
                         if($friend->getStatus() === "accepted") {
             ?>
                             <li class="flex">
-                                <a href="chat.php?friend=<?php echo $friend->getUsername(); ?>" onclick="$chat=true;">
+                                <a href="chat.php?friend=<?php echo $friend->getUsername(); ?>">
                                     <?= $friend->getUsername(); ?>
                                 </a>
                                 <div><?= $message ?></div>
@@ -144,7 +126,7 @@
 					if($friend->getStatus() === "requested") {
             ?>
                         <li>
-                            <a href="profile.php?friend=<?php echo $friend->getUsername(); ?>" onclick="$profile=true;">
+                            <a href="profile.php?friend=<?php echo $friend->getUsername(); ?>">
                                 Friend request from <b><?= $friend->getUsername(); ?></b>
                             </a>
                             <button name="accept" value="<?= $friend->getUsername(); ?>" type="submit" class="request interact">Accept</button>
