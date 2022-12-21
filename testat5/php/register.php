@@ -80,7 +80,7 @@ require('start.php');
                     if(!validate_username()){
                         echo "<p class='errorHighlight'>Username is too short</p>";
                     } else if ($service->stefanUserExists($_POST['username'])){
-                        echo "<p class='errorHighlight'>Username already exists!</p> $username";
+                        echo "<p class='errorHighlight'>Username already exists!</p>";
                     }
                 }
             ?>
